@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Quiz Earn</string>
+    <string name="todo">TODO</string>
+    <string name="todo1">TODO</string>
+    <string name="_1_10">1/10</string>
+    <string name="_24">24</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="todo2">TODO</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="current_coins">Current Coins</string>
+    <string name="_26000">26000</string>
+    <string name="_50_000_coins_required_to_withdraw">50,000 coins required to withdraw</string>
+    <string name="paypal_email_address">Paypal Email Address</string>
+    <string name="send_request">SEND REQUEST</string>
+    <string name="_1">#1</string>
+</resources>
