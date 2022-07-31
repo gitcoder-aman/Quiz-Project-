@@ -134,7 +134,7 @@
                 tools:ignore="TextContrastCheck" />
 
             <Button
-                android:id="@+id/submitbtn"
+                android:id="@+id/createNewBtn"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginStart="10dp"
@@ -149,7 +149,7 @@
                 tools:ignore="TextContrastCheck" />
 
             <Button
-                android:id="@+id/loginbtn"
+                android:id="@+id/loginBtn"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginStart="10dp"
@@ -157,7 +157,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/have_an_account"
+                android:background="@drawable/login_btn"
                 android:text="Already have an Account?"
                 android:textColor="@color/color_white"
                 app:backgroundTint="@color/Green"

@@ -12,7 +12,7 @@ android {
     }
     defaultConfig {
         applicationId "com.example.quizearn"
-        minSdk 16
+        minSdk 19
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -57,4 +57,5 @@ dependencies {
     //for connecting firebase
     implementation platform('com.google.firebase:firebase-bom:30.3.1')
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth'
 }
