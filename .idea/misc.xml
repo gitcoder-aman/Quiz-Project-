@@ -15,10 +15,11 @@
         <entry key="..\:/QuizProject/app/src/main/res/font/roboto_light.xml" value="0.1" />
         <entry key="..\:/QuizProject/app/src/main/res/font/roboto_mono_thin.xml" value="0.1" />
         <entry key="..\:/QuizProject/app/src/main/res/layout/activity_login.xml" value="0.16666666666666666" />
-        <entry key="..\:/QuizProject/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/QuizProject/app/src/main/res/layout/activity_main.xml" value="0.16666666666666666" />
         <entry key="..\:/QuizProject/app/src/main/res/layout/activity_quiz.xml" value="0.16666666666666666" />
         <entry key="..\:/QuizProject/app/src/main/res/layout/activity_result.xml" value="0.1" />
         <entry key="..\:/QuizProject/app/src/main/res/layout/activity_signup.xml" value="0.16666666666666666" />
+        <entry key="..\:/QuizProject/app/src/main/res/layout/fragment_home.xml" value="0.1796875" />
         <entry key="..\:/QuizProject/app/src/main/res/layout/fragment_leaderboards.xml" value="0.1796875" />
         <entry key="..\:/QuizProject/app/src/main/res/layout/fragment_profile.xml" value="0.14666666666666667" />
         <entry key="..\:/QuizProject/app/src/main/res/layout/fragment_wallet.xml" value="0.22" />

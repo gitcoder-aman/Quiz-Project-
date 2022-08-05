@@ -101,6 +101,7 @@
         android:background="@drawable/button_3"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/update_profile"
+        android:textColor="@color/color_white"
         app:backgroundTint="#3c599f"
         app:layout_constraintEnd_toEndOf="@+id/passwordBox_profile"
         app:layout_constraintStart_toStartOf="@+id/passwordBox_profile"

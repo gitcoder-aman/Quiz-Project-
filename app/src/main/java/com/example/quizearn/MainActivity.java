@@ -1,28 +1,24 @@
 package com.example.quizearn;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.quizearn.databinding.ActivityMainBinding;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
+import me.ibrahimsn.lib.OnItemSelectedListener;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Toolbar toolbar;
     ActivityMainBinding binding;
-    FirebaseFirestore database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,27 +29,38 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater()); // No need to findViewId because viewbinding is true in gradle app
         setContentView(binding.getRoot());
 
-        //setSupportActionBar(binding.toolbar); // set title name "App name " in toolbar
+        //before set in Manifest android:theme = "Theme.AppCompat.Light.NoActionBar"
+        setSupportActionBar(binding.toolbar); // set title name "App name " in toolbar
 
-        database = FirebaseFirestore.getInstance();
-        ArrayList<CategoryModel>categories = new ArrayList<>();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content,new HomeFragment());  //FragmentXML are replaced when clicked bottom Buttons
+        transaction.commit();
 
-//        categories.add(new CategoryModel("", "Mathematics", "https://img.freepik.com/premium-vector/math-icon-with-formular-tools_1639-26099.jpg"));
-//        categories.add(new CategoryModel("", "Science", "https://img.freepik.com/premium-vector/math-icon-with-formular-tools_1639-26099.jpg"));
-//        categories.add(new CategoryModel("", "History", "https://img.freepik.com/premium-vector/math-icon-with-formular-tools_1639-26099.jpg"));
-//        categories.add(new CategoryModel("", "Language", "https://img.freepik.com/premium-vector/math-icon-with-formular-tools_1639-26099.jpg"));
-
-        CategoryAdapter adapter = new CategoryAdapter(this,categories);
-
-        database.collection("Categories")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {  //Automatic update data in UI
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-
-                    }
-                });
-        binding.categoryList.setLayoutManager(new GridLayoutManager(this,2));
-        binding.categoryList.setAdapter(adapter);
+        binding.bottomBar.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public boolean onItemSelect(int i) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                switch(i){
+                    case 0:
+                        transaction.replace(R.id.content,new HomeFragment());
+                        transaction.commit();
+                        break;
+                    case 1:
+                        transaction.replace(R.id.content,new LeaderboardsFragment());
+                        transaction.commit();
+                        break;
+                    case 2:
+                        transaction.replace(R.id.content,new WalletFragment());
+                        transaction.commit();
+                        break;
+                    case 3:
+                        transaction.replace(R.id.content,new ProfileFragment());
+                        transaction.commit();
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     //for wallet image show in home page
