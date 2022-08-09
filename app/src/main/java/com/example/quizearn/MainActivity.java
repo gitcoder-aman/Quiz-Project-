@@ -32,14 +32,14 @@ public class MainActivity extends AppCompatActivity {
         //before set in Manifest android:theme = "Theme.AppCompat.Light.NoActionBar"
         setSupportActionBar(binding.toolbar); // set title name "App name " in toolbar
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction(); //already click on Home button
         transaction.replace(R.id.content,new HomeFragment());  //FragmentXML are replaced when clicked bottom Buttons
         transaction.commit();
 
         binding.bottomBar.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public boolean onItemSelect(int i) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();  //already click on Home button
                 switch(i){
                     case 0:
                         transaction.replace(R.id.content,new HomeFragment());

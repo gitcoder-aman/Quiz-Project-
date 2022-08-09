@@ -2,6 +2,7 @@ package com.example.quizearn;
 
 public class UserDatabase {
     private String name,email,pass,referCode;
+    private long coins = 25;
 
     public UserDatabase() {  //for firebase
     }
@@ -43,5 +44,13 @@ public class UserDatabase {
 
     public void setReferCode(String referCode) {
         this.referCode = referCode;
+    }
+
+    public long getCoins() {
+        return coins;
+    }
+
+    public void setCoins(long coins) {
+        this.coins = coins;
     }
 }
