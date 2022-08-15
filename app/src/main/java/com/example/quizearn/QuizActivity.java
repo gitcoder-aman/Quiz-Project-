@@ -4,6 +4,7 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import static java.security.AccessController.getContext;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -14,8 +15,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.quizearn.databinding.ActivityQuizBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -27,6 +33,8 @@ public class QuizActivity extends AppCompatActivity {
     int checkClick = 0;
     Question question;
     CountDownTimer countDownTimer;
+    FirebaseFirestore database;
+    int correctAnswer = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +43,52 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         questions = new ArrayList<>();
-        questions.add(new Question("What is Earth?","Planet","Sun","Human","Car","Planet"));
-        questions.add(new Question("What is Samosa?","Planet","Food","Human","Car","Food"));
+//        questions.add(new Question("What is Earth?","Planet","Sun","Human","Car","Planet"));
+//        questions.add(new Question("What is Samosa?","Planet","Food","Human","Car","Food"));
+
+        database = FirebaseFirestore.getInstance();
+       final String catId = getIntent().getStringExtra("catId"); // come CategoryAdapter Unique CatId for any category
+
+        Random random = new Random();
+        final int rand = random.nextInt(15);
+        database.collection("Categories")
+                        .document(catId)
+                            .collection("questions")
+                                .whereGreaterThanOrEqualTo("index",rand)
+                                        .orderBy("index")
+                                                .limit(5).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if(queryDocumentSnapshots.getDocuments().size() < 5){
+                            database.collection("Categories")
+                                    .document(catId)
+                                    .collection("questions")
+                                    .whereLessThanOrEqualTo("index",rand)
+                                    .orderBy("index")
+                                    .limit(5).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                                                for(DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                                                    Question question = snapshot.toObject(Question.class);
+                                                    questions.add(question);
+                                                }
+                                                setNextQuestion();
+                                        }
+                                    });
+
+                        }
+                        else{
+                            //come 5 quesitons
+                            for(DocumentSnapshot snapshot : queryDocumentSnapshots){
+                                Question question = snapshot.toObject(Question.class);
+                                questions.add(question);
+                            }
+                            setNextQuestion();
+                        }
+                    }
+                });
+
 
         StartTimer();
         setNextQuestion();
@@ -55,12 +107,11 @@ public class QuizActivity extends AppCompatActivity {
                      index++;
 
                      if(index != questions.size()){ //when we will reached last position of question then restOption will not call.
-
                          resetOption();
-                         Toast.makeText(QuizActivity.this, "Quiz Finished.", Toast.LENGTH_SHORT).show();
                      }
 
-                     if(checkClick == 0) //if user no check any option then handle
+                 //if user no check any option then handle
+                        checkClick = 0;
                          countClick++;
 
                      setNextQuestion();
@@ -110,6 +161,7 @@ public class QuizActivity extends AppCompatActivity {
     private void checkAnswer(TextView textView){
         String selectedAnswer = textView.getText().toString();
         if(selectedAnswer.equals(question.getAnswer())){
+            correctAnswer++;
             textView.setBackground(getResources().getDrawable(R.drawable.option_right));
             Toast.makeText(this, "Correct Answer", Toast.LENGTH_SHORT).show();
         }else{
@@ -142,6 +194,7 @@ public class QuizActivity extends AppCompatActivity {
                     countClick++;
                     checkClick = 1; //just check any one option is selected.?
                 }
+                if(index == questions.size()-1) index++;
                 break;
 
             case R.id.Nextbtn:
@@ -153,13 +206,22 @@ public class QuizActivity extends AppCompatActivity {
 
                     if(checkClick == 0) //if user no check any option then handle.
                         countClick++;
+                    else {
+                        checkClick = 0; // if user check any option then checkClick is 0 for next question.
+                    }
 
                     setNextQuestion();
                 }
                 else{
+                    //for Going to ResultActivity Class and set correctAnswer and totalQuestions
+                    Intent intent = new Intent(QuizActivity.this,ResultActivity.class);
+                    intent.putExtra("correct",correctAnswer);
+                    intent.putExtra("total",questions.size());
+                    startActivity(intent);
                     Toast.makeText(this, "Quiz Finished.", Toast.LENGTH_SHORT).show();
                 }
                 break;
+
         }
     }
 
