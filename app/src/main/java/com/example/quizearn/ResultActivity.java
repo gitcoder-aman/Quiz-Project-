@@ -1,5 +1,6 @@
 package com.example.quizearn;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,5 +24,13 @@ public class ResultActivity extends AppCompatActivity {
 
         binding.score.setText(String.format("%d/%d",correctAnswers,totalQuestions));
         binding.earnedCoins.setText(String.valueOf(points));// direct integer not passes in Activity XML.
+
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        Intent intent = new Intent(ResultActivity.this,MainActivity.class);
+        startActivity(intent);
     }
 }

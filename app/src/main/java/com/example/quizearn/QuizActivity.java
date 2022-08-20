@@ -100,7 +100,6 @@ public class QuizActivity extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 binding.timer.setText(String.valueOf(millisUntilFinished/1000));
             }
-
              @Override
              public void onFinish() {
                  if(index < questions.size()) {
