@@ -6,6 +6,9 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.quizearn.databinding.ActivityResultBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -25,6 +28,11 @@ public class ResultActivity extends AppCompatActivity {
         binding.score.setText(String.format("%d/%d",correctAnswers,totalQuestions));
         binding.earnedCoins.setText(String.valueOf(points));// direct integer not passes in Activity XML.
 
+        //Wallet update
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection("users")
+                .document(FirebaseAuth.getInstance().getUid()) //unique id get of user
+                .update("coins", FieldValue.increment(points));
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.example.quizearn;
 
 public class UserDatabase {
-    private String name,email,pass,referCode;
+    private String name,email,profile,pass,referCode;
     private long coins = 25;
 
     public UserDatabase() {  //for firebase
@@ -52,5 +52,13 @@ public class UserDatabase {
 
     public void setCoins(long coins) {
         this.coins = coins;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 }

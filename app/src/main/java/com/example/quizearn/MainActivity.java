@@ -78,4 +78,19 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    int counter = 1;
+    @Override
+    public void onBackPressed() {
+
+        if(counter == 2){
+            super.onBackPressed();
+            this.finishAffinity();
+        }
+        else{
+            counter++;
+            Toast.makeText(this, "Press again", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 }
