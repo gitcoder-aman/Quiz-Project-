@@ -1,11 +1,13 @@
 package com.example.quizearn;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +70,13 @@ public class HomeFragment extends Fragment {
         binding.categoryList.setLayoutManager(new GridLayoutManager(getContext(),2));
         binding.categoryList.setAdapter(adapter);
 
+        binding.spinWheel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("Aman","Found");
+                startActivity(new Intent(getContext(),SpinnerActivity.class));
+            }
+        });
         // Inflate the layout for this fragment
         return binding.getRoot();
     }
