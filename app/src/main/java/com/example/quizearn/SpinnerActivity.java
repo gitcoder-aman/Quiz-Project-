@@ -4,12 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
+import com.example.quizearn.SpinWheel.LuckyWheelView;
 import com.example.quizearn.SpinWheel.model.LuckyItem;
 import com.example.quizearn.databinding.ActivitySpinnerBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SpinnerActivity extends AppCompatActivity {
 
@@ -80,5 +88,61 @@ public class SpinnerActivity extends AppCompatActivity {
 
         binding.wheelview.setData(data);
         binding.wheelview.setRound(5);
+
+        binding.spinBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Random r = new Random();
+                int randomNumber = r.nextInt(8);
+
+                binding.wheelview.startLuckyWheelWithTargetIndex(randomNumber);
+            }
+        });
+        binding.wheelview.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
+            @Override
+            public void LuckyRoundItemSelected(int index) {
+                updateCash(index);
+            }
+        });
+    }
+    void updateCash(int index){
+        long cash = 0;
+        switch (index){
+
+            case 0:
+                cash = 10;
+                break;
+            case 1:
+                cash = 200;
+                break;
+            case 2:
+                cash = 50;
+                break;
+            case 3:
+                cash = 100;
+                break;
+            case 4:
+                cash = 150;
+                break;
+            case 5:
+                cash = 25;
+                break;
+            case 6:
+                cash = 500;
+                break;
+            case 7:
+                cash = 0;
+                break;
+        }
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database
+                .collection("users")
+                .document(FirebaseAuth.getInstance().getUid())
+                .update("coins", FieldValue.increment(cash)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(SpinnerActivity.this, "Coins added in account.", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
