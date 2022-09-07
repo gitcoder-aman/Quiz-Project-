@@ -56,7 +56,7 @@ public class WalletFragment extends Fragment {
             public void onClick(View view) {
                 if(userdatabase.getCoins() >= 50000){
                     String uid = FirebaseAuth.getInstance().getUid();
-                    String paypal = binding.paypalEmailBox.getText().toString();
+                    String paypal = binding.paytmEmailBox.getText().toString();
                     WithdrawRequest request = new WithdrawRequest(uid,paypal,userdatabase.getName());
                     database
                             .collection("withdraw")

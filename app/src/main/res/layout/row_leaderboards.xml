@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#E4E4E4">
+    android:background="#E4E4E4E4">
 
     <TextView
         android:id="@+id/index"
@@ -39,12 +39,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/roboto_bold"
         android:text="Aman Kumar"
-        android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textColor="@color/orange"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/profileImage"
         app:layout_constraintStart_toEndOf="@+id/profileImage"
         app:layout_constraintTop_toTopOf="parent" />
@@ -55,12 +54,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/roboto_bold"
-        android:text="24665"
+        android:text="24665 "
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="18sp"
+        app:drawableRightCompat="@drawable/coins"
         app:layout_constraintBottom_toBottomOf="@+id/name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/name" />

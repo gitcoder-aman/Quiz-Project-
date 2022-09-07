@@ -73,8 +73,22 @@ public class HomeFragment extends Fragment {
         binding.spinWheel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("Aman","Found");
+//                Log.d("Aman","Found");
                 startActivity(new Intent(getContext(),SpinnerActivity.class));
+            }
+        });
+
+        //invite Friends
+        binding.inviteFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT,"Play Games & Earn Money QuizEarn App-");
+                sendIntent.setType("text/plain");
+
+                Intent shareIntent = Intent.createChooser(sendIntent,null);
+                startActivity(shareIntent);
             }
         });
         // Inflate the layout for this fragment

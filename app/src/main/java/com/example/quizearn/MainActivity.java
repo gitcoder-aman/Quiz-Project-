@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                         transaction.commit();
                         break;
                     case 3:
-                        transaction.replace(R.id.content,new ProfileFragment());
+                        transaction.replace(R.id.content,new checkPasswordFragment());
                         transaction.commit();
                         break;
                 }
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    //for when you clicked on wallet image then show toast
+  //  for when you clicked on wallet image then show toast
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.wallet)
