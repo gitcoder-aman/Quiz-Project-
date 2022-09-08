@@ -1,5 +1,6 @@
 package com.example.quizearn;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -35,6 +36,7 @@ public class checkPasswordFragment extends Fragment {
     FragmentCheckPasswordBinding binding;
     FirebaseFirestore database;
     UserDatabase userdatabase;
+    FirebaseAuth auth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,36 +44,28 @@ public class checkPasswordFragment extends Fragment {
 
         binding = FragmentCheckPasswordBinding.inflate(inflater,container,false);
         database = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+
+        FragmentManager fragmentManager = getParentFragmentManager(); // fragment calling
+        FragmentTransaction transaction = fragmentManager.beginTransaction(); //fragment
 
         binding.checkPasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                transaction.replace(R.id.content,new ProfileFragment());
+                transaction.commit();
 
-                String EnteredPassword = binding.checkPasswordBox.getText().toString();
+            }
+        });
 
-                database.collection("users")
-                        .document(FirebaseAuth.getInstance().getUid())
-                        .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                userdatabase = documentSnapshot.toObject(UserDatabase.class);
-                                String  originalPassword = userdatabase.getPass();
+        //Logout Functionality
 
-                                //Check entered Password from original password
-                                if(originalPassword.equals(EnteredPassword)){
-                                    FragmentManager fragmentManager = getParentFragmentManager();
-                                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                                    transaction.replace(R.id.content,new ProfileFragment());
-                                    transaction.commit();
-
-                                }else if(EnteredPassword.equals("")){
-                                    Toast.makeText(getContext(), "Enter Your Password", Toast.LENGTH_SHORT).show();
-                                }
-                                else{
-                                    Toast.makeText(getActivity(), "Wrong Password", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+        binding.logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth.signOut();
+                startActivity(new Intent(getActivity(),LoginActivity.class));
+//                ((Activity) getActivity()).overridePendingTransition(1, 1);
 
             }
         });
