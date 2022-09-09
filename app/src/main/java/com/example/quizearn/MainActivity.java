@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         transaction.commit();
                         break;
                     case 3:
-                        transaction.replace(R.id.content,new checkPasswordFragment());
+                        transaction.replace(R.id.content,new ProfileFragment());
                         transaction.commit();
                         break;
                 }
@@ -85,8 +85,16 @@ public class MainActivity extends AppCompatActivity {
             Intent shareIntent = Intent.createChooser(sendIntent, null);
             startActivity(shareIntent);
         }
+        if(item.getItemId() == R.id.about) {
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.content,new ProfileFragment());  //FragmentXML are replaced when clicked bottom Buttons
+            transaction.commit();
+        }
+
         return super.onOptionsItemSelected(item);
     }
+
 
     int counter = 1;
     @Override

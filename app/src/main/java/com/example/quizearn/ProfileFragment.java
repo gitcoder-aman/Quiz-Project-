@@ -1,6 +1,7 @@
 package com.example.quizearn;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.quizearn.databinding.FragmentProfileBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +22,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProfileFragment extends Fragment {
@@ -40,6 +43,7 @@ public class ProfileFragment extends Fragment {
     FragmentProfileBinding binding;
     FirebaseFirestore database;
     FirebaseAuth auth;
+    UserDatabase userdatabase;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,27 +53,23 @@ public class ProfileFragment extends Fragment {
         database = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
+        database
+                .collection("users")
+                .document(FirebaseAuth.getInstance().getUid())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        userdatabase = documentSnapshot.toObject(UserDatabase.class);
+                        binding.profileName.setText(String.valueOf(userdatabase.getName()));
+                    }
+                });
 
-        binding.updateProfileBtn.setOnClickListener(new View.OnClickListener() {
+        binding.logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                auth.signOut();
 
-
-                String emailAddress = binding.emailBoxProfile.getText().toString();
-                String name = binding.nameBoxProfile.getText().toString();
-                String password = binding.passwordBoxProfile.getText().toString();
-//
-//                database
-//                        .collection("users")
-//                        .document(FirebaseAuth.getInstance().getUid())
-//                        .update("name",name,"email",emailAddress,"pass",password).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                            public void onSuccess(Void unused) {
-//                                Toast.makeText(getActivity(), "Updated Profile", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-
-
+                Toast.makeText(getContext(), "Logged Out Successful", Toast.LENGTH_SHORT).show();
             }
         });
 
