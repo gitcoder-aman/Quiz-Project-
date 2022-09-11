@@ -7,6 +7,25 @@
     android:background = "@drawable/background_orange"
     tools:context=".SpinnerActivity">
 
+    <TextView
+        android:id="@+id/coinsShow"
+        android:layout_width="104dp"
+        android:layout_height="28dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/coin_box"
+        android:drawablePadding="2dp"
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:drawableRightCompat="@drawable/coins"
+        app:layout_constraintBottom_toTopOf="@+id/imageView10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="380dp"

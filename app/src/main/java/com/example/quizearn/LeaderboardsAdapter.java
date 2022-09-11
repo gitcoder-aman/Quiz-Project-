@@ -34,7 +34,7 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
         UserDatabase user = users.get(position);
 
         holder.binding.name.setText(user.getName());
-        holder.binding.coins.setText(String.valueOf(user.getCoins()));
+        holder.binding.coinsShow.setText(String.valueOf(user.getCoins()));
         holder.binding.index.setText(String.format("#%d",position+1));
 
         //image loading in leaderboard

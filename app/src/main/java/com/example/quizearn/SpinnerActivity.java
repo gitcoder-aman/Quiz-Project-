@@ -10,8 +10,10 @@ import android.widget.Toast;
 import com.example.quizearn.SpinWheel.LuckyWheelView;
 import com.example.quizearn.SpinWheel.model.LuckyItem;
 import com.example.quizearn.databinding.ActivitySpinnerBinding;
+import com.example.quizearn.databinding.FragmentWalletBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -22,6 +24,7 @@ import java.util.Random;
 public class SpinnerActivity extends AppCompatActivity {
 
     ActivitySpinnerBinding binding;
+    UserDatabase userdatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +92,22 @@ public class SpinnerActivity extends AppCompatActivity {
         binding.wheelview.setData(data);
         binding.wheelview.setRound(5);
 
+        //Current coins Show in Spinner Activity
+        FirebaseFirestore database;
+        database = FirebaseFirestore.getInstance();
+
+        database.collection("users")
+                .document(FirebaseAuth.getInstance().getUid())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        userdatabase = documentSnapshot.toObject(UserDatabase.class);
+                        binding.coinsShow.setText(String.valueOf(userdatabase.getCoins()));
+
+                        //binding.currentCoins.setText(user.getCoins() + " "); you can also write this.
+                    }
+                });
+
         binding.spinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,6 +124,7 @@ public class SpinnerActivity extends AppCompatActivity {
             }
         });
     }
+
     void updateCash(int index){
         long cash = 0;
         switch (index){
@@ -145,5 +165,21 @@ public class SpinnerActivity extends AppCompatActivity {
                         Toast.makeText(SpinnerActivity.this, "Coins added in account.", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+        //Current coins Show in Spinner Activity
+        database = FirebaseFirestore.getInstance();
+
+        database.collection("users")
+                .document(FirebaseAuth.getInstance().getUid())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        userdatabase = documentSnapshot.toObject(UserDatabase.class);
+                        binding.coinsShow.setText(String.valueOf(userdatabase.getCoins()));
+
+                        //binding.currentCoins.setText(user.getCoins() + " "); you can also write this.
+                    }
+                });
+
     }
 }
