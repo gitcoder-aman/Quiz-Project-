@@ -14,6 +14,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.quizearn.databinding.ActivityMainBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 import me.ibrahimsn.lib.OnItemSelectedListener;
 
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
   //  for when you clicked on wallet image then show toast
+    FirebaseAuth auth;
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.shareApp) {
@@ -85,11 +87,11 @@ public class MainActivity extends AppCompatActivity {
             Intent shareIntent = Intent.createChooser(sendIntent, null);
             startActivity(shareIntent);
         }
-        if(item.getItemId() == R.id.about) {
+        auth = FirebaseAuth.getInstance();
+        if(item.getItemId() == R.id.logout) {
 
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.content,new ProfileFragment());  //FragmentXML are replaced when clicked bottom Buttons
-            transaction.commit();
+            auth.signOut();
+            Toast.makeText(MainActivity.this, "Logged Out Successful", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
