@@ -72,6 +72,21 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(getContext(), "Logged Out Successful", Toast.LENGTH_SHORT).show();
             }
         });
+        binding.privacyPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),privacy.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.termConditions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),termCondition.class);
+                startActivity(intent);
+            }
+        });
 
         // Inflate the layout for this fragment
         return binding.getRoot();

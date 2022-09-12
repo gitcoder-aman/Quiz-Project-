@@ -10,8 +10,11 @@
     <string name="update_profile">Update Profile</string>
     <string name="current_coins">Current Coins</string>
     <string name="Money_Load">Load ...</string>
-    <string name="_50_000_coins_required_to_withdraw">50,000 coins required to withdraw</string>
+    <string name="_50_000_coins_required_to_withdraw">20,000 coins required to withdraw</string>
     <string name="paytm_number">Enter Paytm Number</string>
     <string name="send_request">SEND REQUEST</string>
     <string name="_1">#10000</string>
+    <string name="moneytext">You Will Received Your Withdrawal in 24 Hours 100% guaranteed, Minimum Withdraw 100 Rs. Money, If You
+     Faced Any Problems With The Payment You Can Contact Us.. Thanks for Using Our App.</string>
+    <string name="realIncome">Your Real Income is = 20000 -> Rs 100</string>
 </resources>
