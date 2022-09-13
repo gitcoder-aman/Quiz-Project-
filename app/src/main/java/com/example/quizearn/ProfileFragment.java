@@ -1,7 +1,10 @@
 package com.example.quizearn;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +25,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.protocol.HTTP;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -85,6 +89,36 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),termCondition.class);
                 startActivity(intent);
+            }
+        });
+        binding.facebookId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Uri location = Uri.parse("https://www.facebook.com/coder.amankumargupta");
+                Intent intent = new Intent(Intent.ACTION_VIEW, location);
+
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getContext(), "Link failed", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        binding.help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                String[] strTo = { "amankumar93578@gmail.com" };
+                intent.putExtra(Intent.EXTRA_EMAIL, strTo);
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+                intent.putExtra(Intent.EXTRA_TEXT, "Body");
+                intent.setType("message/rfc822");
+                intent.setPackage("com.google.android.gm");
+                startActivity(intent);
+
             }
         });
 

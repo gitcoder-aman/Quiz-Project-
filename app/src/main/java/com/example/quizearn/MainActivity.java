@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             counter++;
-            Toast.makeText(this, "Press again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
         }
 
     }
