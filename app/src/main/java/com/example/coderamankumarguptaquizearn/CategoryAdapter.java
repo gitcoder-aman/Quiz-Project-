@@ -1,4 +1,4 @@
-package com.example.quizearn;
+package com.example.coderamankumarguptaquizearn;
 //for item category xml
 import android.content.Context;
 import android.content.Intent;

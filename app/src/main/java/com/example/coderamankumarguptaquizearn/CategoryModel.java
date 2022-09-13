@@ -1,4 +1,4 @@
-package com.example.quizearn;
+package com.example.coderamankumarguptaquizearn;
 
 public class CategoryModel {
     private String categoryId,categoryName,categoryImage;

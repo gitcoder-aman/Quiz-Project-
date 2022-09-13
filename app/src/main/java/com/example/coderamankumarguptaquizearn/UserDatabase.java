@@ -1,4 +1,4 @@
-package com.example.quizearn;
+package com.example.coderamankumarguptaquizearn;
 
 public class UserDatabase {
     private String name,email,profile = "https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png",pass,referCode;

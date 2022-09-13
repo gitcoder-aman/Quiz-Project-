@@ -12,7 +12,7 @@ android {
         viewBinding true;
     }
     defaultConfig {
-        applicationId "com.example.quizearn"
+        applicationId "com.example.coderamankumarguptaquizearn"
         minSdk 19
         targetSdk 32
         versionCode 1

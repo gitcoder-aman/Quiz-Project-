@@ -1,26 +1,18 @@
-package com.example.quizearn;
-
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
-import static java.security.AccessController.getContext;
+package com.example.coderamankumarguptaquizearn;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.quizearn.databinding.ActivityQuizBinding;
-import com.google.android.gms.tasks.OnFailureListener;
+import com.example.coderamankumarguptaquizearn.databinding.ActivityQuizBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;

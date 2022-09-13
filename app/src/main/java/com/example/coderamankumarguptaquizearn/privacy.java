@@ -1,10 +1,9 @@
-package com.example.quizearn;
+package com.example.coderamankumarguptaquizearn;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
-import android.view.Menu;
 import android.webkit.WebView;
 
 public class privacy extends AppCompatActivity {

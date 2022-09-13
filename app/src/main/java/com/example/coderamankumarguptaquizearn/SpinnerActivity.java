@@ -1,4 +1,4 @@
-package com.example.quizearn;
+package com.example.coderamankumarguptaquizearn;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.quizearn.SpinWheel.LuckyWheelView;
-import com.example.quizearn.SpinWheel.model.LuckyItem;
-import com.example.quizearn.databinding.ActivitySpinnerBinding;
-import com.example.quizearn.databinding.FragmentWalletBinding;
+import com.example.coderamankumarguptaquizearn.SpinWheel.LuckyWheelView;
+import com.example.coderamankumarguptaquizearn.SpinWheel.model.LuckyItem;
+import com.example.coderamankumarguptaquizearn.databinding.ActivitySpinnerBinding;
+import com.example.coderamankumarguptaquizearn.databinding.FragmentWalletBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;

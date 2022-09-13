@@ -1,4 +1,4 @@
-package com.example.quizearn;
+package com.example.coderamankumarguptaquizearn;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.quizearn.databinding.RowLeaderboardsBinding;
+import com.example.coderamankumarguptaquizearn.databinding.RowLeaderboardsBinding;
 
 import java.util.ArrayList;
 

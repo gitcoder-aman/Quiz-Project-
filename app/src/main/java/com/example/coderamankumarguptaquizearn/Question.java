@@ -1,4 +1,4 @@
-package com.example.quizearn;
+package com.example.coderamankumarguptaquizearn;
 
 public class Question {
     private String question,option1,option2,option3,option4,answer;

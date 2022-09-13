@@ -1,4 +1,4 @@
-package com.example.quizearn.SpinWheel;
+package com.example.coderamankumarguptaquizearn.SpinWheel;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,8 +12,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.example.quizearn.R;
-import com.example.quizearn.SpinWheel.model.LuckyItem;
+import com.example.coderamankumarguptaquizearn.R;
+import com.example.coderamankumarguptaquizearn.SpinWheel.model.LuckyItem;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.quizearn;
+package com.example.coderamankumarguptaquizearn;
 
 import androidx.appcompat.app.AppCompatActivity;
 

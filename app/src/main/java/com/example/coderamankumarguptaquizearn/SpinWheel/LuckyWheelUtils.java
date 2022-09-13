@@ -1,4 +1,4 @@
-package com.example.quizearn.SpinWheel;
+package com.example.coderamankumarguptaquizearn.SpinWheel;
 
 import android.content.Context;
 import android.graphics.Bitmap;

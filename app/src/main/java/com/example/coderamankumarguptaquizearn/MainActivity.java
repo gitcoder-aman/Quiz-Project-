@@ -1,19 +1,17 @@
-package com.example.quizearn;
+package com.example.coderamankumarguptaquizearn;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
-import android.widget.Toolbar;
-
-import com.example.quizearn.databinding.ActivityMainBinding;
+import com.example.coderamankumarguptaquizearn.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
 import me.ibrahimsn.lib.OnItemSelectedListener;

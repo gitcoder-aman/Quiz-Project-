@@ -1,4 +1,4 @@
-package com.example.quizearn.SpinWheel.model;
+package com.example.coderamankumarguptaquizearn.SpinWheel.model;
 
 /**
  * Created by kiennguyen on 11/5/16.
