@@ -13,8 +13,11 @@
     <string name="_50_000_coins_required_to_withdraw">100000 coins required to withdraw</string>
     <string name="paytm_number">Enter Paytm Number</string>
     <string name="send_request">SEND REQUEST</string>
-    <string name="_1">#10000</string>
+    <string name="_1">#1000</string>
     <string name="moneytext">You Will Received Your Withdrawal in 24 Hours 100% guaranteed, Minimum Withdraw 100 Rs. Money, If You
      Faced Any Problems With The Payment You Can Contact Us.. Thanks for Using Our App.</string>
     <string name="realIncome">Your Real Income is = 100000 -> Rs 10</string>
+    <string name="ruleShare">Rule: if you will share to friends and if they will created a account then you will get 50,000 coins on each friends as well as your friend will get 10,000 coins.</string>
+    <string name="shareText">Hey Hey Hey!!&#128525;&#128525;&#128525;</string>
+
 </resources>

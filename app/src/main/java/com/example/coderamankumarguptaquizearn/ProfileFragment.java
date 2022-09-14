@@ -99,7 +99,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
 
                 Intent intent = new Intent(Intent.ACTION_SEND);
-                String[] strTo = { "amankumar93578@gmail.com" };
+                String[] strTo = { "aman.nittc@gmail.com" };
                 intent.putExtra(Intent.EXTRA_EMAIL, strTo);
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
                 intent.putExtra(Intent.EXTRA_TEXT, "Body");

@@ -161,11 +161,11 @@ public class QuizActivity extends AppCompatActivity {
         if(selectedAnswer.equals(question.getAnswer())){
             correctAnswer++;
             textView.setBackground(getResources().getDrawable(R.drawable.option_right));
-            Toast.makeText(this, "Correct Answer", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "Correct Answer", Toast.LENGTH_SHORT).show();
         }else{
             showAnswer();
             textView.setBackground(getResources().getDrawable(R.drawable.option_wrong));
-            Toast.makeText(this, "Wrong Answer", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "Wrong Answer", Toast.LENGTH_SHORT).show();
         }
     }
     private void resetOption(){

@@ -53,7 +53,8 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_privacy.xml" value="0.22743055555555555" />
         <entry key="app/src/main/res/layout/activity_quiz.xml" value="0.2671875" />
-        <entry key="app/src/main/res/layout/activity_refer.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_refer.xml" value="0.2289156626506024" />
+        <entry key="app/src/main/res/layout/activity_result.xml" value="0.22848360655737704" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.2957427536231884" />
         <entry key="app/src/main/res/layout/activity_spinner.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_term_condition.xml" value="0.2375" />

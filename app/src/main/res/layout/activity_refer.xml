@@ -4,20 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background = "@drawable/background_orange"
+    android:background = "@drawable/background_image1"
     tools:context=".referActivity">
 
     <ImageView
         android:id="@+id/imageView8"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_marginTop="4dp"
+        android:padding="60dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/refer" />
+        app:srcCompat="@drawable/refer_image" />
 
     <TextView
         android:id="@+id/textView14"
@@ -37,7 +38,7 @@
         android:id="@+id/referralBox"
         android:layout_width="150dp"
         android:layout_height="60dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="14dp"
         android:background="@drawable/rounded_box"
         android:fontFamily="@font/roboto_bold"
         android:gravity="center"
@@ -46,4 +47,49 @@
         app:layout_constraintEnd_toEndOf="@+id/textView14"
         app:layout_constraintStart_toStartOf="@+id/textView14"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="0dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="11dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/referralBox"
+        app:srcCompat="@drawable/gift" />
+
+    <TextView
+        android:id="@+id/invite"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/button_2"
+        android:drawableLeft="@drawable/share"
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="center"
+        android:paddingLeft="25dp"
+        android:paddingEnd="45dp"
+        android:paddingRight="2dp"
+        android:text="Invite"
+        android:textColor="@color/color_white"
+        android:textSize="40sp"
+        app:drawableTint="@color/color_white"
+        app:layout_constraintEnd_toEndOf="@+id/imageView12"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView12"
+        app:layout_constraintTop_toBottomOf="@+id/imageView12" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/ruleShare"
+        android:textColor="@color/white"
+        android:paddingStart="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/invite"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/invite"
+        app:layout_constraintTop_toBottomOf="@+id/invite" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
