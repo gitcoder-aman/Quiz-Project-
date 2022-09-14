@@ -1,8 +1,13 @@
 package com.example.coderamankumarguptaquizearn;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.net.ConnectivityManagerCompat;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -69,7 +74,7 @@ public class SpinnerActivity extends AppCompatActivity {
         data.add(item5);
 
         LuckyItem item6 = new LuckyItem();
-        item6.topText = "25";
+        item6.topText = "90";
         item6.secondaryText = "COINS";
         item6.color = Color.parseColor("#dc0000");
         item6.textColor = Color.parseColor("#eceff1");
@@ -108,21 +113,45 @@ public class SpinnerActivity extends AppCompatActivity {
                     }
                 });
 
+        MediaPlayer mp = MediaPlayer.create(this, R.raw.spin_sound);
+
         binding.spinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Random r = new Random();
                 int randomNumber = r.nextInt(8);
-
+                mp.start();
                 binding.wheelview.startLuckyWheelWithTargetIndex(randomNumber);
             }
         });
         binding.wheelview.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
+
             @Override
             public void LuckyRoundItemSelected(int index) {
-                updateCash(index);
+
+                if(isConnected()){
+                    updateCash(index);
+                }else{
+                    Toast.makeText(SpinnerActivity.this, "INTERNET NOT AVAILABLE", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
+    }
+
+    private boolean isConnected() {
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if(networkInfo != null){
+            if(networkInfo.isConnected()){
+                return true;
+            }else return false;
+        }else{
+            return false;
+        }
     }
 
     void updateCash(int index){
@@ -145,7 +174,7 @@ public class SpinnerActivity extends AppCompatActivity {
                 cash = 150;
                 break;
             case 5:
-                cash = 25;
+                cash = 90;
                 break;
             case 6:
                 cash = 500;

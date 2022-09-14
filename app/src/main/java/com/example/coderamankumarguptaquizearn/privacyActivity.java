@@ -6,7 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 import android.webkit.WebView;
 
-public class privacy extends AppCompatActivity {
+public class privacyActivity extends AppCompatActivity {
 
     WebView webView;
     public String fileName = "privacy.html";

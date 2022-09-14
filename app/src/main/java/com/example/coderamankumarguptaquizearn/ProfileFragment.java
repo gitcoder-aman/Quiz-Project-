@@ -67,7 +67,7 @@ public class ProfileFragment extends Fragment {
         binding.privacyPolicy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),privacy.class);
+                Intent intent = new Intent(getActivity(), privacyActivity.class);
                 startActivity(intent);
             }
         });
@@ -75,7 +75,7 @@ public class ProfileFragment extends Fragment {
         binding.termConditions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),termCondition.class);
+                Intent intent = new Intent(getActivity(), termConditionActivity.class);
                 startActivity(intent);
             }
         });

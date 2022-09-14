@@ -17,28 +17,31 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name="com.example.coderamankumarguptaquizearn.termCondition"
+            android:name=".referActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.coderamankumarguptaquizearn.privacy"
+            android:name=".termConditionActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.coderamankumarguptaquizearn.SpinnerActivity"
+            android:name=".privacyActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.coderamankumarguptaquizearn.ResultActivity"
+            android:name=".SpinnerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ResultActivity"
             android:exported="true" />
         <activity
-            android:name="com.example.coderamankumarguptaquizearn.MainActivity"
+            android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name="com.example.coderamankumarguptaquizearn.SignupActivity"
+            android:name=".SignupActivity"
             android:exported="true" />
         <activity
-            android:name="com.example.coderamankumarguptaquizearn.QuizActivity"
+            android:name=".QuizActivity"
             android:exported="true" />
         <activity
-            android:name="com.example.coderamankumarguptaquizearn.LoginActivity"
+            android:name=".LoginActivity"
             android:exported="true">
 
             <!-- First Time Show Activity -->

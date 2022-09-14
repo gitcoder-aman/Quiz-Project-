@@ -13,7 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class ResultActivity extends AppCompatActivity {
 
     ActivityResultBinding binding;
-    int POINTS = 10;
+    int POINTS = 100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

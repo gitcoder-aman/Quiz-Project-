@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.WebView;
 
-public class termCondition extends AppCompatActivity {
+public class termConditionActivity extends AppCompatActivity {
 
     WebView webView;
     public String fileName = "termCondition.html";

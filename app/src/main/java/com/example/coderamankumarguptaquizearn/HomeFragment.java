@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.view.LayoutInflater;
@@ -81,13 +83,15 @@ public class HomeFragment extends Fragment {
         binding.inviteFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT,"Play Games & Earn Money QuizEarn App-");
-                sendIntent.setType("text/plain");
 
-                Intent shareIntent = Intent.createChooser(sendIntent,null);
-                startActivity(shareIntent);
+                startActivity(new Intent(getContext(),referActivity.class));
+//                Intent sendIntent = new Intent();
+//                sendIntent.setAction(Intent.ACTION_SEND);
+//                sendIntent.putExtra(Intent.EXTRA_TEXT,"Play Games & Earn Money QuizEarn App-");
+//                sendIntent.setType("text/plain");
+//
+//                Intent shareIntent = Intent.createChooser(sendIntent,null);
+//                startActivity(shareIntent);
             }
         });
         // Inflate the layout for this fragment
