@@ -1,5 +1,6 @@
 package com.example.coderamankumarguptaquizearn;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -23,6 +24,8 @@ public class ResultActivity extends AppCompatActivity {
     ActivityResultBinding binding;
     UserDatabase userdatabase;
     FirebaseFirestore database;
+    ProgressDialog dialog;
+
     int POINTS = 100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +80,20 @@ public class ResultActivity extends AppCompatActivity {
                         });
             }
         });
+
+        dialog = new ProgressDialog(ResultActivity.this);
+        dialog.setMessage("Wait...");
+        dialog.setIndeterminate(false);
+        dialog.setCancelable(true);
             binding.restartBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(ResultActivity.this,QuizActivity.class));
+
+                    startActivity(new Intent(ResultActivity.this,MainActivity.class));
+                    dialog.show();
+
+                   // nDialog.setTitle("Checking Network");
+
                 }
             });
 
@@ -101,7 +114,8 @@ public class ResultActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+
         super.onBackPressed();
-        startActivity(new Intent(ResultActivity.this,HomeFragment.class));
+        startActivity(new Intent(ResultActivity.this,MainActivity.class));
     }
 }

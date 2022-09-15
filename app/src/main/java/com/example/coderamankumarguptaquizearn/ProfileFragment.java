@@ -60,8 +60,8 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 auth.signOut();
-
                 Toast.makeText(getContext(), "Logged Out Successful", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(),splashActivity.class));
             }
         });
         binding.privacyPolicy.setOnClickListener(new View.OnClickListener() {

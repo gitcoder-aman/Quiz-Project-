@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,13 +60,18 @@ public class HomeFragment extends Fragment {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {  //Automatic update data in UI
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        categories.clear(); // when create category then all previous categories will be cleared.
-                        for(DocumentSnapshot snapshot : value.getDocuments()){
-                            CategoryModel model = snapshot.toObject(CategoryModel.class); // categoryName,categoryImage change in CategoryModel then show image and name in UI.
-                            model.setCategoryId(snapshot.getId()); //Unique category id set in firestore Database
-                            categories.add(model);
+
+                        if (error != null) {
+                            Log.d("Error:", error.getMessage());
+                        } else {
+                            categories.clear(); // when create category then all previous categories will be cleared.
+                            for (DocumentSnapshot snapshot : value.getDocuments()) {
+                                CategoryModel model = snapshot.toObject(CategoryModel.class); // categoryName,categoryImage change in CategoryModel then show image and name in UI.
+                                model.setCategoryId(snapshot.getId()); //Unique category id set in firestore Database
+                                categories.add(model);
+                            }
+                            adapter.notifyDataSetChanged(); // Data changed  in firestore then update in UI.
                         }
-                        adapter.notifyDataSetChanged(); // Data changed  in firestore then update in UI.
                     }
                 });
         binding.categoryList.setLayoutManager(new GridLayoutManager(getContext(),2));

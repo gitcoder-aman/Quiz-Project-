@@ -1,10 +1,14 @@
 package com.example.coderamankumarguptaquizearn;
 
+import android.app.ProgressDialog;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -33,7 +37,7 @@ public class LeaderboardsFragment extends Fragment {
     }
 
     FragmentLeaderboardsBinding binding;
-
+    ProgressDialog dialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,6 +52,11 @@ public class LeaderboardsFragment extends Fragment {
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        dialog = new ProgressDialog(getContext());
+        dialog.setMessage("Wait...");
+        dialog.setIndeterminate(false);
+        dialog.setCancelable(true);
+
         database.collection("users")
                 .orderBy("coins", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -57,7 +66,7 @@ public class LeaderboardsFragment extends Fragment {
                             UserDatabase user = snapshot.toObject(UserDatabase.class);
                             users.add(user);
                         }
-                        adapter.notifyDataSetChanged();
+                       adapter.notifyDataSetChanged();
                     }
                 });
         return binding.getRoot();

@@ -127,6 +127,7 @@
         android:layout_height="83dp"
         android:layout_marginTop="8dp"
         android:text="@string/moneytext"
+        android:textColor = "#FF0000"
         app:layout_constraintEnd_toEndOf="@+id/sendRequestBtn"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/sendRequestBtn"

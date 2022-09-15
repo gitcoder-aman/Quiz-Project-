@@ -1,15 +1,18 @@
 package com.example.coderamankumarguptaquizearn;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.coderamankumarguptaquizearn.databinding.ActivityQuizBinding;
@@ -70,9 +73,13 @@ public class QuizActivity extends AppCompatActivity {
 
                                                 for(DocumentSnapshot snapshot : queryDocumentSnapshots) {
                                                     Question question = snapshot.toObject(Question.class);
+
                                                     questions.add(question);
                                                 }
+
+                                            countDownTimer.cancel();
                                                 setNextQuestion();
+//                                            dialog.dismiss();
                                         }
                                     });
 
@@ -215,38 +222,46 @@ public class QuizActivity extends AppCompatActivity {
                     Intent intent = new Intent(QuizActivity.this,ResultActivity.class);
                     intent.putExtra("correct",correctAnswer);
                     intent.putExtra("total",questions.size());
+                    countDownTimer.cancel();
                     startActivity(intent);
                     Toast.makeText(this, "Quiz Finished.", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.quitBtn:
 
-                AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(view.getContext());
-                passwordResetDialog.setTitle("Quit");
-                passwordResetDialog.setMessage("Are you sure quit now ?");
-
-                passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //extract the email and send reset link
-
-                        countDownTimer.cancel();
-
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction(); //already click on Home button
-                        transaction.replace(R.id.content,new HomeFragment());  //FragmentXML are replaced when clicked bottom Buttons
-                        transaction.commit();
-                    }
-                });
-                passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //close the dialog
-                        //nothing to happen
-                    }
-                });
-                passwordResetDialog.create().show();
-
+                ExitAlertdialog();
         }
     }
 
+    private void ExitAlertdialog() {
+
+        AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(QuizActivity.this);
+        passwordResetDialog.setTitle("Alert !");
+        passwordResetDialog.setMessage("Do You want to exit ?");
+
+        passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.e("aman","found");
+                //extract the email and send reset link
+
+                countDownTimer.cancel();
+                startActivity(new Intent(QuizActivity.this,MainActivity.class));
+            }
+        });
+        passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                //close the dialog
+                //nothing to happen
+            }
+        });
+        passwordResetDialog.create().show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        ExitAlertdialog();
+    }
 }

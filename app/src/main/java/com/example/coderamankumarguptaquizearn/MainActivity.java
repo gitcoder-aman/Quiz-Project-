@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
             auth.signOut();
             Toast.makeText(MainActivity.this, "Logged Out Successful", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this,splashActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
