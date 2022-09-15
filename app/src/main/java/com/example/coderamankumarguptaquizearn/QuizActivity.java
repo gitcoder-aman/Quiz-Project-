@@ -74,12 +74,12 @@ public class QuizActivity extends AppCompatActivity {
                                                 for(DocumentSnapshot snapshot : queryDocumentSnapshots) {
                                                     Question question = snapshot.toObject(Question.class);
 
+                                                    binding.progressBarId.setVisibility(View.GONE);
                                                     questions.add(question);
                                                 }
 
                                             countDownTimer.cancel();
                                                 setNextQuestion();
-//                                            dialog.dismiss();
                                         }
                                     });
 
@@ -88,6 +88,7 @@ public class QuizActivity extends AppCompatActivity {
                             //come 5 quesitons
                             for(DocumentSnapshot snapshot : queryDocumentSnapshots){
                                 Question question = snapshot.toObject(Question.class);
+                                binding.progressBarId.setVisibility(View.GONE);
                                 questions.add(question);
                             }
                             setNextQuestion();

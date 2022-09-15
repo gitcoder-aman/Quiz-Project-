@@ -4,8 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -15,7 +17,9 @@ import java.util.ArrayList;
 
 public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapter.LeaderboardViewHolder>{
 
+    ProgressBar progressBar;
     Context context;
+
     ArrayList<UserDatabase>users;
     public LeaderboardsAdapter(Context context, ArrayList<UserDatabase>users){
         this.context = context;
@@ -55,6 +59,7 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
             super(itemView);
 
             binding = RowLeaderboardsBinding.bind(itemView);
+
         }
     }
 

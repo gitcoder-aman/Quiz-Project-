@@ -15,11 +15,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.auth.User;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -28,6 +30,7 @@ public class SignupActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseFirestore database;
     ProgressDialog dialog;
+    UserDatabase userdatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class SignupActivity extends AppCompatActivity {
         dialog = new ProgressDialog(this);
         dialog.setMessage("We're creating new account...");
 
+//        String referShareCode = binding.referBox.getText().toString();
         binding.createNewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,9 +68,10 @@ public class SignupActivity extends AppCompatActivity {
 
                 String referCode = referCodeGenerate(6);
 //                uniqueReferCoderCheck(referCode);
+//                newUserEarn(referShareCode);
+                
 
                 final UserDatabase user = new UserDatabase(name,email,pass,referCode);
-
 
                     dialog.show();
                     auth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -84,7 +89,7 @@ public class SignupActivity extends AppCompatActivity {
                                                 if (task.isSuccessful()) {
                                                 Toast.makeText(SignupActivity.this, "Account Created", Toast.LENGTH_SHORT).show();
                                                     startActivity(new Intent(SignupActivity.this, LoginActivity.class));
-                                                    processSearch(referShareCode);
+                                                    newUserEarn(referShareCode);
                                                     finish();
                                                 } else {
                                                     Toast.makeText(SignupActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
@@ -101,6 +106,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
+
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,7 +115,7 @@ public class SignupActivity extends AppCompatActivity {
         });
 
     }
-
+    
 //    private void uniqueReferCoderCheck(String referCode) {
 //
 //        database.collection("users")
@@ -139,25 +145,29 @@ public class SignupActivity extends AppCompatActivity {
 //    }
 
     //find the existing referral code
-    private void processSearch(String referShareCode) {
+    private void newUserEarn(String referShareCode) {
 
         database.collection("users")
+//                .document("referCode",Query.Direction.valueOf(referShareCode)).get()
                 .orderBy("coins", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
 
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
+                        Toast.makeText(SignupActivity.this, "Enter Success", Toast.LENGTH_SHORT).show();
                         int flag = 0;
                         for(DocumentSnapshot snapshot : queryDocumentSnapshots){
-                            
+
                             UserDatabase user = snapshot.toObject(UserDatabase.class);
 
-                            if(user.getReferCode().equals(referShareCode)){
+//                            Toast.makeText(SignupActivity.this, user.getReferCode(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(SignupActivity.this, FirebaseAuth.getInstance().getUid(), Toast.LENGTH_SHORT).show();
 
+                            if(user.getReferCode().equals(referShareCode)){
                                 flag = 1;
                                 database
                                         .collection("users")
-                                        .document(FirebaseAuth.getInstance().getUid())
+                                        .document(FirebaseAuth.getInstance().getUid()) //find userId current user
                                         .update("coins", FieldValue.increment(500)).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
@@ -171,6 +181,7 @@ public class SignupActivity extends AppCompatActivity {
                             Toast.makeText(SignupActivity.this, "Invalid Referral code!", Toast.LENGTH_SHORT).show();
                         }
                     }
+
                 });
     }
 
