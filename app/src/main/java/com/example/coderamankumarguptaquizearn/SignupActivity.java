@@ -154,14 +154,10 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                        Toast.makeText(SignupActivity.this, "Enter Success", Toast.LENGTH_SHORT).show();
                         int flag = 0;
                         for(DocumentSnapshot snapshot : queryDocumentSnapshots){
 
                             UserDatabase user = snapshot.toObject(UserDatabase.class);
-
-//                            Toast.makeText(SignupActivity.this, user.getReferCode(), Toast.LENGTH_SHORT).show();
-//                            Toast.makeText(SignupActivity.this, FirebaseAuth.getInstance().getUid(), Toast.LENGTH_SHORT).show();
 
                             if(user.getReferCode().equals(referShareCode)){
                                 flag = 1;
