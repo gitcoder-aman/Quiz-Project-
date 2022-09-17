@@ -1,19 +1,26 @@
 package com.example.coderamankumarguptaquizearn;
 
 public class UserDatabase {
-    private String name,email,profile = "https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png",pass,referCode;
-    private long coins = 25;
+    private String name,email,pass,referCode,uid,profile = "https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png";
+    private long coins = 0;
 
     public UserDatabase() {  //for firebase
     }
 
-    public UserDatabase(String name, String email, String pass, String referCode) {
+    public UserDatabase(String name, String email, String pass, String referCode,String uid) {
         this.name = name;
         this.email = email;
         this.pass = pass;
         this.referCode = referCode;
+        this.uid = uid;
     }
 
+    public String getUid(){
+        return uid;
+    }
+    public  void setUid(){
+        this.uid = uid;
+    }
     public String getName() {
         return name;
     }

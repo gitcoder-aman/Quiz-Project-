@@ -117,5 +117,7 @@ public class ResultActivity extends AppCompatActivity {
 
         super.onBackPressed();
         startActivity(new Intent(ResultActivity.this,MainActivity.class));
+
     }
+
 }

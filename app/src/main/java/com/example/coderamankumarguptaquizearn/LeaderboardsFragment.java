@@ -71,5 +71,6 @@ public class LeaderboardsFragment extends Fragment {
                     }
                 });
         return binding.getRoot();
+
     }
 }

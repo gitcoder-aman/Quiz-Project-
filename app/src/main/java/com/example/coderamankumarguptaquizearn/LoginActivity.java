@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,7 +27,6 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth auth;
     ProgressDialog dialog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,33 +38,47 @@ public class LoginActivity extends AppCompatActivity {
         dialog = new ProgressDialog(this);
         dialog.setMessage("Logging in...");
 
-        if(auth.getCurrentUser() != null){ //for auto login when user had before login
-            startActivity(new Intent(LoginActivity.this,MainActivity.class));
-            finish();
-        }
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 String email,pass;
                 email = binding.emailBox.getText().toString();
                 pass = binding.passwordBox.getText().toString();
 
-                if(email.equals("")) {
-                    Toast.makeText(LoginActivity.this, "Please Enter Your Email", Toast.LENGTH_SHORT).show();
+                if(TextUtils.isEmpty(email)){
+                    binding.emailBox.setError("*");
                     return;
-                }else if(pass.equals("")){
-                    Toast.makeText(LoginActivity.this, "Please Enter a Password", Toast.LENGTH_SHORT).show();
+                } else{
+                    binding.emailBox.setError(null);
+                    binding.emailBox.clearFocus();
+                }
+
+                if(TextUtils.isEmpty(pass)){
+                    binding.passwordBox.setError("*");
                     return;
+                } else{
+                    binding.passwordBox.setError(null);
+                    binding.passwordBox.clearFocus();
                 }
                 dialog.show();
+
                 auth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         dialog.dismiss();
+
                         if(task.isSuccessful()){
-                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                            finish();
-                            Toast.makeText(LoginActivity.this, "Successful Login", Toast.LENGTH_SHORT).show();
+                            if(auth.getCurrentUser().isEmailVerified()) {
+
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
+                                Toast.makeText(LoginActivity.this, "Successful Login", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(LoginActivity.this, "Please verify your email address", Toast.LENGTH_SHORT).show();
+                            }
                         }
                         else{
                             dialog.dismiss();
@@ -118,7 +132,19 @@ public class LoginActivity extends AppCompatActivity {
                 });
                 passwordResetDialog.create().show();
            }
-           
         });
+    }
+
+    int counter = 1;
+    @Override
+    public void onBackPressed() {
+        if(counter == 2){
+            super.onBackPressed();
+            this.finishAffinity();
+        }
+        else{
+            counter++;
+            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -14,6 +14,9 @@ import androidx.fragment.app.Fragment;
 import com.example.coderamankumarguptaquizearn.databinding.FragmentProfileBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -37,11 +40,15 @@ public class ProfileFragment extends Fragment {
     FirebaseAuth auth;
     UserDatabase userdatabase;
 
+    FirebaseUser user;
+    DatabaseReference reference;
+    String oppositeUID;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        binding = FragmentProfileBinding.inflate(inflater,container,false);
+        binding = FragmentProfileBinding.inflate(inflater, container, false);
         database = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
@@ -61,7 +68,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 auth.signOut();
                 Toast.makeText(getContext(), "Logged Out Successful", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getActivity(),splashActivity.class));
+                startActivity(new Intent(getActivity(), splashActivity.class));
             }
         });
         binding.privacyPolicy.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +106,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
 
                 Intent intent = new Intent(Intent.ACTION_SEND);
-                String[] strTo = { "aman.nittc@gmail.com" };
+                String[] strTo = {"aman.nittc@gmail.com"};
                 intent.putExtra(Intent.EXTRA_EMAIL, strTo);
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
                 intent.putExtra(Intent.EXTRA_TEXT, "Body");
@@ -113,4 +120,7 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         return binding.getRoot();
     }
+
+
+
 }

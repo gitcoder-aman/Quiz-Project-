@@ -2,6 +2,7 @@ package com.example.coderamankumarguptaquizearn;
 
 import android.os.Bundle;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,10 +55,18 @@ public class WalletFragment extends Fragment {
         binding.sendRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String paytm = binding.paytmEmailBox.getText().toString();
+                if(TextUtils.isEmpty(paytm)){
+                    binding.paytmEmailBox.setError("*");
+                   return;
+                }
+               else{
+                    binding.paytmEmailBox.setError(null);
+                    binding.paytmEmailBox.clearFocus();
+                }
                 if(userdatabase.getCoins() >= 50000){
                     String uid = FirebaseAuth.getInstance().getUid();
-                    String paypal = binding.paytmEmailBox.getText().toString();
-                    WithdrawRequest request = new WithdrawRequest(uid,paypal,userdatabase.getName());
+                    WithdrawRequest request = new WithdrawRequest(uid,paytm,userdatabase.getName());
                     database
                             .collection("withdraw")
                             .document(FirebaseAuth.getInstance().getUid())
@@ -72,6 +81,7 @@ public class WalletFragment extends Fragment {
                 }
             }
         });
+
         return binding.getRoot();
     }
 }

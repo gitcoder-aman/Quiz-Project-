@@ -6,16 +6,16 @@ import java.util.Date;
 
 public class WithdrawRequest {
     private String userId;
-    private String emailAddress;
+    private String paytmNo;
     private String requestedBy;
 
 
     public WithdrawRequest() {
     }
 
-    public WithdrawRequest(String userId, String emailAddress, String requestedBy) {
+    public WithdrawRequest(String userId, String paytmNo, String requestedBy) {
         this.userId = userId;
-        this.emailAddress = emailAddress;
+        this.paytmNo = paytmNo;
         this.requestedBy = requestedBy;
     }
 
@@ -28,12 +28,12 @@ public class WithdrawRequest {
         this.userId = userId;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getPaytmNo() {
+        return paytmNo;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setPaytmNo(String paytmNo) {
+        this.paytmNo = paytmNo;
     }
 
     public String getRequestedBy() {
