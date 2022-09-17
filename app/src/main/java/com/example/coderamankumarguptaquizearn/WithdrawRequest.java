@@ -1,5 +1,7 @@
 package com.example.coderamankumarguptaquizearn;
 
+import android.widget.EditText;
+
 import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.Date;
@@ -8,17 +10,27 @@ public class WithdrawRequest {
     private String userId;
     private String paytmNo;
     private String requestedBy;
+    private long noOfCoins;
 
 
     public WithdrawRequest() {
     }
 
-    public WithdrawRequest(String userId, String paytmNo, String requestedBy) {
+    public WithdrawRequest(String userId, String paytmNo, String requestedBy, long noOfCoins) {
         this.userId = userId;
         this.paytmNo = paytmNo;
         this.requestedBy = requestedBy;
+        this.noOfCoins = noOfCoins;
     }
 
+
+    public long getNoOfCoins() {
+        return noOfCoins;
+    }
+
+    public void setNoOfCoins(long noOfCoins) {
+        this.noOfCoins = noOfCoins;
+    }
 
     public String getUserId() {
         return userId;

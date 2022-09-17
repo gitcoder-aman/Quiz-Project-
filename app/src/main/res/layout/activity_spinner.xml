@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/coinsShow"
-        android:layout_width="104dp"
+        android:layout_width="150dp"
         android:layout_height="28dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/coin_box"

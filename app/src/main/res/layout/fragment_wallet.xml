@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/roboto_light"
-        android:text="@string/_50_000_coins_required_to_withdraw"
+        android:text="@string/required_to_withdraw"
         android:textColor="@color/color_white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/currentCoins"
@@ -91,14 +91,12 @@
         android:layout_width="0dp"
         android:layout_height="49dp"
         android:layout_marginTop="4dp"
-        android:autofillHints=""
         android:background="@drawable/textbox"
         android:drawableStart="@drawable/paytm"
-        android:drawableLeft="@drawable/paytm"
         android:drawablePadding="10dp"
         android:ems="10"
         android:hint="@string/paytm_number"
-        android:inputType="textPersonName"
+        android:inputType="phone"
         android:padding="15dp"
         android:textColorHint="#757575"
         app:layout_constraintEnd_toEndOf="@+id/view6"
@@ -107,19 +105,37 @@
         app:layout_constraintTop_toBottomOf="@+id/view6"
         tools:ignore="TextContrastCheck" />
 
+    <EditText
+        android:id="@+id/numberOfCoins"
+        android:layout_width="0dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/textbox"
+        android:drawableStart="@drawable/coins"
+        android:drawablePadding="10dp"
+        android:ems="10"
+        android:hint="Enter Coins for Withdraw"
+        android:inputType="phone"
+        android:padding="15dp"
+        android:textColorHint="#757575"
+        app:layout_constraintEnd_toEndOf="@+id/paytmEmailBox"
+        app:layout_constraintStart_toStartOf="@+id/paytmEmailBox"
+        app:layout_constraintTop_toBottomOf="@+id/paytmEmailBox"
+        tools:ignore="TextContrastCheck" />
+
     <Button
         android:id="@+id/sendRequestBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/button_3"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/send_request"
         android:textColor="@color/color_white"
         app:backgroundTint="#3c599f"
-        app:layout_constraintEnd_toEndOf="@+id/paytmEmailBox"
-        app:layout_constraintStart_toStartOf="@+id/paytmEmailBox"
-        app:layout_constraintTop_toBottomOf="@+id/paytmEmailBox" />
+        app:layout_constraintEnd_toEndOf="@+id/numberOfCoins"
+        app:layout_constraintStart_toStartOf="@+id/numberOfCoins"
+        app:layout_constraintTop_toBottomOf="@+id/numberOfCoins" />
 
     <TextView
         android:id="@+id/textView10"
@@ -132,4 +148,6 @@
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/sendRequestBtn"
         app:layout_constraintTop_toBottomOf="@+id/sendRequestBtn" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.example.coderamankumarguptaquizearn;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -21,8 +22,19 @@ public class splashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                progressBar.setVisibility(View.GONE);
-                startActivity(new Intent(splashActivity.this,LoginActivity.class));
+                SharedPreferences sharedPreferences = splashActivity.this.getSharedPreferences(LoginActivity.PREFS_NAME, 0);
+                boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn",false);
+
+                if(hasLoggedIn){
+                    progressBar.setVisibility(View.GONE);
+                    splashActivity.this.startActivity(new Intent(splashActivity.this, MainActivity.class));
+                    finish();
+                }else{
+                    progressBar.setVisibility(View.GONE);
+                    startActivity(new Intent(splashActivity.this,LoginActivity.class));
+                    finish();
+                }
+
             }
         },2000);
 

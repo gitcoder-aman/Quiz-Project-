@@ -33,28 +33,28 @@
             android:exported="false" />
         <activity
             android:name=".termConditionActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".privacyActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".SpinnerActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".ResultActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".SignupActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".QuizActivity"
-            android:exported="true" />
+            android:exported="true"/>
         <activity
             android:name=".LoginActivity"
-            android:exported="false"/>
+            android:exported="true"/>
 
         <meta-data
             android:name="preloaded_fonts"

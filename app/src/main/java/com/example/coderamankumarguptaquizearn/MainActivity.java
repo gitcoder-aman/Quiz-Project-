@@ -1,6 +1,7 @@
 package com.example.coderamankumarguptaquizearn;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -110,9 +111,14 @@ public class MainActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         if(item.getItemId() == R.id.logout) {
 
+            SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME,0);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("hasLoggedIn",false);
+            editor.commit();
+
             auth.signOut();
             Toast.makeText(MainActivity.this, "Logged Out Successful", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(MainActivity.this,splashActivity.class));
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
