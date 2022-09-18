@@ -4,28 +4,34 @@ import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.Date;
 
-public class WithdrawRequest {
-    private String userId;
+public class adminNotification {
     private String paytmNo;
     private String requestedBy;
     private long noOfCoins;
     private String status;
     private long rupees;
+    String uid;
 
-
-    public WithdrawRequest() {
+    public adminNotification() {
     }
 
-    public WithdrawRequest(String userId, String paytmNo, String requestedBy, long noOfCoins,String status,long rupees) {
-        this.userId = userId;
+    public adminNotification(String uid,String paytmNo, String requestedBy, long noOfCoins, String status,long rupees) {
         this.paytmNo = paytmNo;
         this.requestedBy = requestedBy;
         this.noOfCoins = noOfCoins;
         this.status = status;
         this.rupees = rupees;
+        this.uid = uid;
     }
 
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
     public long getRupees() {
         return rupees;
     }
@@ -33,6 +39,7 @@ public class WithdrawRequest {
     public void setRupees(long rupees) {
         this.rupees = rupees;
     }
+
 
     public String getStatus() {
         return status;
@@ -48,14 +55,6 @@ public class WithdrawRequest {
 
     public void setNoOfCoins(long noOfCoins) {
         this.noOfCoins = noOfCoins;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getPaytmNo() {

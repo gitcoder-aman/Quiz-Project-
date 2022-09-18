@@ -42,6 +42,7 @@ public class WithdrawHistoryAdapter extends RecyclerView.Adapter<WithdrawHistory
         holder.binding.wCoins.setText (String.valueOf(request.getNoOfCoins()));
         holder.binding.wSendTime.setText((String.valueOf(request.getCreateAt())));
         holder.binding.wPaymentStatus.setText(request.getStatus());
+        holder.binding.wRupees.setText("Rs: "+String.valueOf(request.getRupees()));
 
     }
 

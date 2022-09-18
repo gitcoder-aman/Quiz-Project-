@@ -14,9 +14,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.coderamankumarguptaquizearn.databinding.FragmentWalletBinding;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -94,20 +96,18 @@ public class WalletFragment extends Fragment {
                         }
                     long numberOfCoins = Long.parseLong(Coins);
                     if (numberOfCoins >= 10000 && numberOfCoins <= userdatabase.getCoins()) {
+                        binding.sendRequestBtn.setVisibility(View.INVISIBLE);
                         String uid = FirebaseAuth.getInstance().getUid();
-                        WithdrawRequest request = new WithdrawRequest(uid, paytm, userdatabase.getName(), numberOfCoins,"Pending");
+                        long rupees = numberOfCoins/1000;
 
-                        String uniqueId = generateId(10);
+                        adminNotification notification = new adminNotification(uid,paytm, userdatabase.getName(), numberOfCoins,"Pending",rupees);
                         database
-                                .collection("withdraw")
-                                .document(FirebaseAuth.getInstance().getUid())
-                                .collection("History")
-                                .document(uniqueId)
-                                .set(request).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                .collection("adminNotification")
+                                .document(generateId(20))
+                                .set(notification).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        Toast.makeText(getContext(), "Request sent successfully", Toast.LENGTH_SHORT).show();
-                                        binding.sendRequestBtn.setVisibility(View.INVISIBLE);
+                                        Toast.makeText(getContext(), "Request sent successfully.", Toast.LENGTH_SHORT).show();
 
                                         Toast toast = Toast.makeText(getContext(), "Another request some time after", Toast.LENGTH_LONG);
                                         View toastView = toast.getView(); // This'll return the default View of the Toast.
@@ -122,6 +122,25 @@ public class WalletFragment extends Fragment {
                                         toastView.setBackgroundColor(Color.CYAN);
                                         toast.show();
 
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getContext(), "Request sent Fail.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                        WithdrawRequest request = new WithdrawRequest(uid, paytm, userdatabase.getName(), numberOfCoins,"Pending",rupees);
+
+                        String uniqueId = generateId(10);
+                        database
+                                .collection("withdraw")
+                                .document(FirebaseAuth.getInstance().getUid())
+                                .collection("History")
+                                .document(uniqueId)
+                                .set(request).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
                                         //Wallet update
                                         long coinsMinus = userdatabase.getCoins() - numberOfCoins;
                                         database = FirebaseFirestore.getInstance();

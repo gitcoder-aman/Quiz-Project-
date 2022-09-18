@@ -121,13 +121,13 @@
                     android:background="@drawable/textbox"
                     android:drawablePadding="10dp"
                     android:ems="10"
-                    android:hint = "Password"
-                    app:passwordToggleEnabled = "true"
+                    android:hint="Password"
                     android:inputType="textPassword"
                     android:minHeight="48dp"
                     android:padding="15dp"
                     android:textColorHint="#757575"
-                    tools:ignore="TextContrastCheck"/>
+                    app:passwordToggleEnabled="true"
+                    tools:ignore="TextContrastCheck,SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <EditText

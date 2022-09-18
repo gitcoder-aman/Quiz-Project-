@@ -46,7 +46,7 @@ public class SpinnerActivity extends AppCompatActivity {
         data.add(item1);
 
         LuckyItem item2 = new LuckyItem();
-        item2.topText = "200";
+        item2.topText = "100";
         item2.secondaryText = "Coins";
         item2.color = Color.parseColor("#4CAF50");
         item2.textColor = Color.parseColor("#ffffff");
@@ -60,7 +60,7 @@ public class SpinnerActivity extends AppCompatActivity {
         data.add(item3);
 
         LuckyItem item4 = new LuckyItem();
-        item4.topText = "100";
+        item4.topText = "75";
         item4.secondaryText = "COINS";
         item4.color = Color.parseColor("#7f00d9");
         item4.textColor = Color.parseColor("#eceff1");
@@ -81,7 +81,7 @@ public class SpinnerActivity extends AppCompatActivity {
         data.add(item6);
 
         LuckyItem item7 = new LuckyItem();
-        item7.topText = "500";
+        item7.topText = "200";
         item7.secondaryText = "COINS";
         item7.color = Color.parseColor("#FFFFFFFF");
         item7.textColor = Color.parseColor("#FF000000");
@@ -162,22 +162,22 @@ public class SpinnerActivity extends AppCompatActivity {
                 cash = 10;
                 break;
             case 1:
-                cash = 200;
+                cash = 100;
                 break;
             case 2:
                 cash = 50;
                 break;
             case 3:
-                cash = 100;
-                break;
-            case 4:
                 cash = 150;
                 break;
-            case 5:
+            case 4:
                 cash = 90;
                 break;
+            case 5:
+                cash = 200;
+                break;
             case 6:
-                cash = 500;
+                cash = 75;
                 break;
             case 7:
                 cash = 0;

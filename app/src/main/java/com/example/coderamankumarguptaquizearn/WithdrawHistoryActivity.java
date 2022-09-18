@@ -1,24 +1,16 @@
 package com.example.coderamankumarguptaquizearn;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.content.Context;
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.coderamankumarguptaquizearn.databinding.ActivityLoginBinding;
 import com.example.coderamankumarguptaquizearn.databinding.ActivityWithdrawHistoryBinding;
-import com.example.coderamankumarguptaquizearn.databinding.FragmentLeaderboardsBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -47,7 +39,6 @@ public class WithdrawHistoryActivity extends AppCompatActivity {
 
         binding.recyclerView1.setLayoutManager(new LinearLayoutManager(this));
 
-
         database.collection("withdraw")
                 .document(FirebaseAuth.getInstance().getUid())
                 .collection("History")
@@ -59,7 +50,18 @@ public class WithdrawHistoryActivity extends AppCompatActivity {
                             requests.add(request);
                         }
                         if(requests.size() == 0){
-                            Toast.makeText(WithdrawHistoryActivity.this, "Anyone No Withdraw ", Toast.LENGTH_SHORT).show();
+                            Toast toast = Toast.makeText(WithdrawHistoryActivity.this, "No Withdraw Request", Toast.LENGTH_LONG);
+                            View toastView = toast.getView(); // This'll return the default View of the Toast.
+
+                            /* And now you can get the TextView of the default View of the Toast. */
+                            TextView toastMessage = (TextView) toastView.findViewById(android.R.id.message);
+                            toastMessage.setTextSize(25);
+                            toastMessage.setTextColor(Color.RED);
+                            toastMessage.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.paytm, 0, 0, 0);
+                            toastMessage.setGravity(Gravity.CENTER);
+                            toastMessage.setCompoundDrawablePadding(16);
+                            toastView.setBackgroundColor(Color.CYAN);
+                            toast.show();
                         }else{
                             adapter.notifyDataSetChanged();
                         }

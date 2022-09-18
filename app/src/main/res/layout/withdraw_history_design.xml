@@ -23,7 +23,7 @@
         android:id="@+id/view10"
         android:layout_width="1dp"
         android:layout_height="211dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="25dp"
         android:background = "@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="45dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="25dp"
         android:background = "@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -96,7 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="80dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="25dp"
         android:background = "@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -120,11 +120,21 @@
         android:layout_width="0dp"
         android:layout_height="21dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="4dp"
-        android:fontFamily = "@font/roboto_bold"
-        app:layout_constraintEnd_toEndOf="@+id/w_paytm"
-        app:layout_constraintHorizontal_bias="1.0"
+        android:layout_marginEnd="80dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/roboto_bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView19"
+        app:layout_constraintTop_toBottomOf="@+id/view12" />
+
+    <TextView
+        android:id="@+id/w_rupees"
+        android:layout_width="0dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/roboto_bold"
+        app:layout_constraintEnd_toEndOf="@+id/w_paytm"
+        app:layout_constraintStart_toEndOf="@+id/w_coins"
         app:layout_constraintTop_toBottomOf="@+id/view12" />
 
     <View
@@ -132,7 +142,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="115dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="25dp"
         android:background = "@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -157,8 +167,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/roboto_bold"
-        app:layout_constraintEnd_toEndOf="@+id/w_coins"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView24"
         app:layout_constraintTop_toBottomOf="@+id/view13" />
 
@@ -167,7 +176,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="165dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="25dp"
         android:background = "@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -192,8 +201,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/roboto_bold"
-        app:layout_constraintEnd_toEndOf="@+id/w_sendTime"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView25"
         app:layout_constraintTop_toBottomOf="@+id/view14" />
 
