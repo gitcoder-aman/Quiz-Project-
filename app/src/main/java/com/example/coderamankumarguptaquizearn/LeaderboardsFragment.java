@@ -39,8 +39,6 @@ public class LeaderboardsFragment extends Fragment {
     }
 
     FragmentLeaderboardsBinding binding;
-    ProgressDialog dialog;
-    ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -130,8 +130,8 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         if(counter == 2){
-            super.onBackPressed();
-            this.finishAffinity();
+         super.onBackPressed();
+         this.finishAffinity();
         }
         else{
             counter++;

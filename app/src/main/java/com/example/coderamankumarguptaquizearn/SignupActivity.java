@@ -38,10 +38,8 @@ public class SignupActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseFirestore database;
     ProgressDialog dialog;
-    UserDatabase userdatabase;
     DatabaseReference reference;
 
-//    final FirebaseUser fUser = auth.getCurrentUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -211,7 +209,7 @@ public class SignupActivity extends AppCompatActivity {
                                 database
                                         .collection("users")
                                         .document(FirebaseAuth.getInstance().getUid()) //find userId current user
-                                        .update("coins", FieldValue.increment(500)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        .update("coins", FieldValue.increment(5000)).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
 

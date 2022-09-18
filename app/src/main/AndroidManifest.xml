@@ -17,44 +17,46 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".WithdrawHistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".splashActivity"
             android:exported="true">
 
-        <!-- First Time Show Activity -->
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <!-- First Time Show Activity -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-
         <activity
             android:name=".referActivity"
             android:exported="false" />
         <activity
             android:name=".termConditionActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".privacyActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".SpinnerActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ResultActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".SignupActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".QuizActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true"/>
+            android:exported="true" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -64,7 +64,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/roboto_bold"
-        android:text="@string/Money_Load"
         android:textColor="@color/color_white"
         android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="@+id/textView11"
@@ -132,6 +131,7 @@
         android:fontFamily="@font/roboto_bold"
         android:text="@string/send_request"
         android:textColor="@color/color_white"
+        android:visibility="visible"
         app:backgroundTint="#3c599f"
         app:layout_constraintEnd_toEndOf="@+id/numberOfCoins"
         app:layout_constraintStart_toStartOf="@+id/numberOfCoins"
@@ -148,6 +148,17 @@
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/sendRequestBtn"
         app:layout_constraintTop_toBottomOf="@+id/sendRequestBtn" />
+
+    <ProgressBar
+        android:id="@+id/progressBarId"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/currentCoins"
+        app:layout_constraintTop_toTopOf="@+id/currentCoins" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
