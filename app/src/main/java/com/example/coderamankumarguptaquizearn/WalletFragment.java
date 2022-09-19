@@ -100,10 +100,11 @@ public class WalletFragment extends Fragment {
                         String uid = FirebaseAuth.getInstance().getUid();
                         long rupees = numberOfCoins/1000;
 
-                        adminNotification notification = new adminNotification(uid,paytm, userdatabase.getName(), numberOfCoins,"Pending",rupees);
+                        String generateId = generateId(20);
+                        adminNotification notification = new adminNotification(generateId,paytm, userdatabase.getName(), numberOfCoins,"Pending",rupees);
                         database
                                 .collection("adminNotification")
-                                .document(generateId(20))
+                                .document(generateId)
                                 .set(notification).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
@@ -130,14 +131,13 @@ public class WalletFragment extends Fragment {
                                     }
                                 });
 
-                        WithdrawRequest request = new WithdrawRequest(uid, paytm, userdatabase.getName(), numberOfCoins,"Pending",rupees);
+                        WithdrawRequest request = new WithdrawRequest(generateId, paytm, userdatabase.getName(), numberOfCoins,"Pending",rupees);
 
-                        String uniqueId = generateId(10);
                         database
                                 .collection("withdraw")
                                 .document(FirebaseAuth.getInstance().getUid())
                                 .collection("History")
-                                .document(uniqueId)
+                                .document(generateId)
                                 .set(request).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {

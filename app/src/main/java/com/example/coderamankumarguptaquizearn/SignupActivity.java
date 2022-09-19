@@ -88,7 +88,7 @@ public class SignupActivity extends AppCompatActivity {
                     binding.passwordBox.clearFocus();
                 }
 
-                String referCode = referCodeGenerate(6);
+                String referCode = referCodeGenerate(8);
 
                     dialog.show();
                     auth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -110,6 +110,7 @@ public class SignupActivity extends AppCompatActivity {
                                                 if (task.isSuccessful()) {
                                                         startActivity(new Intent(SignupActivity.this, LoginActivity.class));
                                                         newUserEarn(referShareCode);
+                                                        redeemReferralCode(referShareCode);
                                                         finish();
 
                                                 } else {
@@ -159,35 +160,6 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
-//    private void uniqueReferCoderCheck(String referCode) {
-//
-//        database.collection("users")
-//                .orderBy("coins", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//
-//                    @Override
-//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                        Toast.makeText(SignupActivity.this, "enter onSuccess", Toast.LENGTH_SHORT).show();
-//                        int flag = 0;
-//                        for(DocumentSnapshot snapshot : queryDocumentSnapshots){
-//
-//                            UserDatabase user = snapshot.toObject(UserDatabase.class);
-//                            if(user.getReferCode().equals(referCode)){
-//                                flag = 1;
-//                                Toast.makeText(SignupActivity.this, "not unique", Toast.LENGTH_SHORT).show();
-////                                 referCode = referCodeGenerate(6);
-//                            }
-//                            else{
-//                                Toast.makeText(SignupActivity.this, "Unique referCode", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                        if(flag == 1){
-//
-//                            Toast.makeText(SignupActivity.this, "Invalid Referral code!", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
-//    }
-
     //find the existing referral code
     private void newUserEarn(String referShareCode) {
 
@@ -205,7 +177,6 @@ public class SignupActivity extends AppCompatActivity {
                             if(user.getReferCode().equals(referShareCode)){
                                 flag = 1;
 
-                                Toast.makeText(SignupActivity.this, user.getUid(), Toast.LENGTH_SHORT).show();
                                 database
                                         .collection("users")
                                         .document(FirebaseAuth.getInstance().getUid()) //find userId current user
@@ -226,65 +197,32 @@ public class SignupActivity extends AppCompatActivity {
                 });
     }
 
-    FirebaseUser user;
-    String oppositeUID;
-    private void redeemQuery(String referShareCode) {
+    private void redeemReferralCode(String referShareCode) {
 
-        Toast.makeText(SignupActivity.this, "Enter ", Toast.LENGTH_SHORT).show();
-        com.google.firebase.database.Query query = reference.orderByChild("referCode").equalTo(referShareCode);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Toast.makeText(SignupActivity.this, "Enter Data", Toast.LENGTH_SHORT).show();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    oppositeUID = dataSnapshot.getKey();
+        database
+                .collection("users")
+                .whereEqualTo("referCode",referShareCode).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (DocumentSnapshot snapshot : queryDocumentSnapshots){
 
-                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            String opposite = snapshot.child(oppositeUID).child("coins").getValue().toString();
-                            int currentCoins = Integer.parseInt(opposite);
-                            int updateCoins = currentCoins + 500;
-
-                            String my = snapshot.child(user.getUid()).child("coins").getValue().toString();
-                            int myCurrentCoins = Integer.parseInt(opposite);
-                            int myUpdateCoins = myCurrentCoins + 500;
-
-                            HashMap<String,Object> map = new HashMap<>();
-                            map.put("coins",updateCoins);
-
-                            HashMap<String,Object>myMap = new HashMap<>();
-                            myMap.put("coins",myUpdateCoins);
-
-                            reference.child(oppositeUID).updateChildren(map);
-                            reference.child(user.getUid()).updateChildren(myMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isComplete()){
-                                        Toast.makeText(SignupActivity.this, "Congrates", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(SignupActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                            UserDatabase user = snapshot.toObject(UserDatabase.class);
+                            if(user.getReferCode().equals(referShareCode)){
+                                String uid = user.getUid();
+                                Toast.makeText(SignupActivity.this, uid, Toast.LENGTH_SHORT).show();
+                                database
+                                        .collection("users")
+                                        .document(uid)
+                                        .update("coins",FieldValue.increment(5000));
+                            }
                         }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Toast.makeText(SignupActivity.this, "Error2", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(SignupActivity.this, "Error3", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(SignupActivity.this, "Referral Code Invalid !", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
     String referCodeGenerate(int n){
 

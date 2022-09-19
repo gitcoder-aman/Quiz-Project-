@@ -18,7 +18,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/refer_image" />
+        app:srcCompat="@drawable/refer_image"
+        android:contentDescription="TODO" />
 
     <TextView
         android:id="@+id/textView14"
@@ -32,12 +33,13 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView8"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/referralBox"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
         android:layout_marginTop="14dp"
         android:background="@drawable/rounded_box"
         android:fontFamily="@font/roboto_bold"
@@ -48,14 +50,26 @@
         app:layout_constraintStart_toStartOf="@+id/textView14"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Tap to Copy"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/referralBox"
+        app:layout_constraintStart_toStartOf="@+id/referralBox"
+        app:layout_constraintTop_toBottomOf="@+id/referralBox" />
+
     <ImageView
         android:id="@+id/imageView12"
         android:layout_width="0dp"
         android:layout_height="130dp"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/referralBox"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:srcCompat="@drawable/gift" />
 
     <TextView
@@ -77,7 +91,8 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView12"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/imageView12"
-        app:layout_constraintTop_toBottomOf="@+id/imageView12" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView12"
+        tools:ignore="TextContrastCheck,TextContrastCheck" />
 
     <TextView
         android:id="@+id/textView16"

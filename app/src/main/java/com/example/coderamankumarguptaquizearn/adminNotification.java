@@ -10,27 +10,27 @@ public class adminNotification {
     private long noOfCoins;
     private String status;
     private long rupees;
-    String uid;
+    String paymentId;
 
     public adminNotification() {
     }
 
-    public adminNotification(String uid,String paytmNo, String requestedBy, long noOfCoins, String status,long rupees) {
+    public adminNotification(String paymentId,String paytmNo, String requestedBy, long noOfCoins, String status,long rupees) {
         this.paytmNo = paytmNo;
         this.requestedBy = requestedBy;
         this.noOfCoins = noOfCoins;
         this.status = status;
         this.rupees = rupees;
-        this.uid = uid;
+        this.paymentId = paymentId;
     }
 
 
-    public String getUid() {
-        return uid;
+    public String getPaymentId() {
+        return paymentId;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
     }
     public long getRupees() {
         return rupees;
