@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                                     "Most popular money making app in India!!!\uD83D\uDC9B\uD83E\uDD0D\uD83D\uDC9A \n" +
                                     "Download APP, everyone can get ₹40!!!\uD83D\uDE3B\uD83D\uDE3B\uD83D\uDE3B \n" +
                                     "It's 100% true! \uD83D\uDE39 \n" +
-                                    "Click the link，you can get ₹500 a week like me! YOUR REFERRAL CODE=" +userdatabase.getReferCode());
+                                    "Click the link，you can get ₹500 a week like me! use REFERRAL CODE=" +userdatabase.getReferCode());
                             sendIntent.setType("text/plain");
 
                             Intent shareIntent = Intent.createChooser(sendIntent, null);

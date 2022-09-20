@@ -11,6 +11,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,10 +24,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import javax.net.ssl.SSLEngineResult;
 
 public class WalletFragment extends Fragment {
 
@@ -43,7 +42,8 @@ public class WalletFragment extends Fragment {
     FragmentWalletBinding binding;
     FirebaseFirestore database;
     UserDatabase userdatabase;
-//    String status = "Done";
+
+    String[] paymentMethod = {"PhonePe","Google pay","Paytm","UPI"};
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,13 +65,13 @@ public class WalletFragment extends Fragment {
                });
        //send button request process
 
-
         binding.sendRequestBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
                 if (isConnected()) {
+//                    String[] paymentMethod = paymentOption();
                     String Coins = binding.numberOfCoins.getText().toString();
                     String paytm = binding.paytmEmailBox.getText().toString();
                     if (TextUtils.isEmpty(paytm)) {
@@ -101,7 +101,7 @@ public class WalletFragment extends Fragment {
                         long rupees = numberOfCoins/1000;
 
                         String generateId = generateId(20);
-                        adminNotification notification = new adminNotification(generateId,paytm, userdatabase.getName(), numberOfCoins,"Pending",rupees);
+                        adminNotification notification = new adminNotification(generateId,paytm, userdatabase.getName(), numberOfCoins,"Pending",rupees,uid);
                         database
                                 .collection("adminNotification")
                                 .document(generateId)
@@ -160,7 +160,30 @@ public class WalletFragment extends Fragment {
             }
         });
 
+
+        paymentOption();
         return binding.getRoot();
+    }
+
+    private void paymentOption() {
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, paymentMethod);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.payOptionBtn.setAdapter(adapter);
+
+        binding.payOptionBtn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String OptionValue = parent.getItemAtPosition(position).toString();
+                binding.paymentTypeBox.setText(OptionValue);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private String generateId(int n) {

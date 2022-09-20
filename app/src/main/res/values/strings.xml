@@ -19,5 +19,7 @@
     <string name="ruleShare">Rule: if you will share to friends and if they will created a account then you will get 5000 coins on each friends as well as your friend will get 5000 coins.</string>
     <string name="shareText">Hey Hey Hey!!&#128525;&#128525;&#128525;</string>
     <string name="terms_condition">Terms &amp; Conditions</string>
+    <string name="paymentMethod">Select Payment Type</string>
+    <string name="enterCoin">Enter coins for withdraw</string>
 
 </resources>

@@ -85,23 +85,62 @@
         app:layout_constraintStart_toStartOf="@+id/currentCoins"
         app:layout_constraintTop_toBottomOf="@+id/currentCoins" />
 
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:fontFamily="@font/roboto_light"
+        android:hint="@string/paymentMethod"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView15"
+        app:layout_constraintHorizontal_bias="0.528"
+        app:layout_constraintStart_toStartOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/view6"
+        tools:ignore="TextContrastCheck" />
+
+    <Spinner
+        android:id="@+id/payOptionBtn"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="2dp"
+        android:background="@android:drawable/btn_dropdown"
+        app:layout_constraintEnd_toStartOf="@+id/paymentTypeBox"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/view6"
+        app:layout_constraintTop_toBottomOf="@+id/textView17"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/paymentTypeBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:background = "@drawable/textbox"
+        android:textSize="14sp"
+        android:textColor = "@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/textView17"
+        app:layout_constraintStart_toStartOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
     <EditText
         android:id="@+id/paytmEmailBox"
         android:layout_width="0dp"
         android:layout_height="49dp"
-        android:layout_marginTop="4dp"
         android:background="@drawable/textbox"
         android:drawableStart="@drawable/paytm"
         android:drawablePadding="10dp"
         android:ems="10"
         android:hint="@string/paytm_number"
+        android:layout_marginTop="2dp"
         android:inputType="phone"
         android:padding="15dp"
         android:textColorHint="#757575"
         app:layout_constraintEnd_toEndOf="@+id/view6"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/view6"
-        app:layout_constraintTop_toBottomOf="@+id/view6"
+        app:layout_constraintTop_toBottomOf="@+id/payOptionBtn"
         tools:ignore="TextContrastCheck" />
 
     <EditText
@@ -113,7 +152,7 @@
         android:drawableStart="@drawable/coins"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="Enter Coins for Withdraw"
+        android:hint="@string/enterCoin"
         android:inputType="phone"
         android:padding="15dp"
         android:textColorHint="#757575"
@@ -143,11 +182,12 @@
         android:layout_height="83dp"
         android:layout_marginTop="8dp"
         android:text="@string/moneytext"
-        android:textColor = "#FF0000"
+        android:textColor="#FF0000"
         app:layout_constraintEnd_toEndOf="@+id/sendRequestBtn"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/sendRequestBtn"
-        app:layout_constraintTop_toBottomOf="@+id/sendRequestBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/sendRequestBtn"
+        tools:ignore="TextContrastCheck" />
 
     <ProgressBar
         android:id="@+id/progressBarId"
