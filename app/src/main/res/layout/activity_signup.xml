@@ -126,7 +126,6 @@
                     android:minHeight="48dp"
                     android:padding="15dp"
                     android:textColorHint="#757575"
-                    app:passwordToggleEnabled="true"
                     tools:ignore="TextContrastCheck,SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 

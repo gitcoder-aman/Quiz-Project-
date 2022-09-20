@@ -236,29 +236,22 @@ public class QuizActivity extends AppCompatActivity {
 
     private void ExitAlertdialog() {
 
-        AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(QuizActivity.this);
-        passwordResetDialog.setTitle("Alert !");
-        passwordResetDialog.setMessage("Do You want to exit ?");
-
-        passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Log.e("aman","found");
-                //extract the email and send reset link
-
-                countDownTimer.cancel();
-                startActivity(new Intent(QuizActivity.this,MainActivity.class));
-            }
-        });
-        passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                //close the dialog
-                //nothing to happen
-            }
-        });
-        passwordResetDialog.create().show();
+        new AlertDialog.Builder(QuizActivity.this)
+                .setIcon(R.drawable.ic_baseline_warning_24)
+                .setTitle("Exit")
+                .setMessage("Do You want to Exit?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        countDownTimer.cancel();
+                      finish();
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
     }
 
     @Override

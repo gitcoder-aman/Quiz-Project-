@@ -209,7 +209,7 @@ public class SignupActivity extends AppCompatActivity {
                             UserDatabase user = snapshot.toObject(UserDatabase.class);
                             if(user.getReferCode().equals(referShareCode)){
                                 String uid = user.getUid();
-                                Toast.makeText(SignupActivity.this, uid, Toast.LENGTH_SHORT).show();
+
                                 database
                                         .collection("users")
                                         .document(uid)

@@ -1,21 +1,23 @@
 package com.example.coderamankumarguptaquizearn;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.net.ConnectivityManagerCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.coderamankumarguptaquizearn.SpinWheel.LuckyWheelView;
 import com.example.coderamankumarguptaquizearn.SpinWheel.model.LuckyItem;
 import com.example.coderamankumarguptaquizearn.databinding.ActivitySpinnerBinding;
-import com.example.coderamankumarguptaquizearn.databinding.FragmentWalletBinding;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -123,6 +125,7 @@ public class SpinnerActivity extends AppCompatActivity {
                 int randomNumber = r.nextInt(8);
                 mp.start();
                 binding.wheelview.startLuckyWheelWithTargetIndex(randomNumber);
+
             }
         });
         binding.wheelview.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
@@ -138,8 +141,8 @@ public class SpinnerActivity extends AppCompatActivity {
 
             }
         });
-    }
 
+    }
     private boolean isConnected() {
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -168,30 +171,43 @@ public class SpinnerActivity extends AppCompatActivity {
                 cash = 50;
                 break;
             case 3:
-                cash = 150;
+                cash = 75;
                 break;
             case 4:
-                cash = 90;
+                cash = 150;
                 break;
             case 5:
-                cash = 200;
+                cash = 90;
                 break;
             case 6:
-                cash = 75;
+                cash = 200;
                 break;
             case 7:
                 cash = 0;
                 break;
         }
+
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         database
                 .collection("users")
                 .document(FirebaseAuth.getInstance().getUid())
                 .update("coins", FieldValue.increment(cash)).addOnSuccessListener(new OnSuccessListener<Void>() {
+
                     @Override
                     public void onSuccess(Void unused) {
 
-                        Toast.makeText(SpinnerActivity.this, "Coins added in account.", Toast.LENGTH_SHORT).show();
+                        Toast toast = Toast.makeText(SpinnerActivity.this, "Coins added in account", Toast.LENGTH_LONG);
+                        View toastView = toast.getView(); // This'll return the default View of the Toast.
+
+                        /* And now you can get the TextView of the default View of the Toast. */
+                        TextView toastMessage = (TextView) toastView.findViewById(android.R.id.message);
+                        toastMessage.setTextSize(20);
+                        toastMessage.setTextColor(Color.RED);
+                        toastMessage.setCompoundDrawablesWithIntrinsicBounds(R.drawable.coins, 0, 0, 0);
+                        toastMessage.setGravity(Gravity.CENTER);
+                        toastMessage.setCompoundDrawablePadding(16);
+                        toastView.setBackgroundColor(Color.CYAN);
+                        toast.show();
                     }
                 });
 

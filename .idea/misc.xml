@@ -42,6 +42,7 @@
         <entry key="app/src/main/res/drawable/background_profile.xml" value="0.163" />
         <entry key="app/src/main/res/drawable/button_1.xml" value="0.163" />
         <entry key="app/src/main/res/drawable/coin_box.xml" value="0.2485" />
+        <entry key="app/src/main/res/drawable/ic_baseline_warning_24.xml" value="0.294" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2485" />
         <entry key="app/src/main/res/drawable/ic_trophy.xml" value="0.2485" />
         <entry key="app/src/main/res/drawable/login_btn.xml" value="0.2485" />
@@ -59,7 +60,7 @@
         <entry key="app/src/main/res/layout/activity_refer.xml" value="0.29243266353142366" />
         <entry key="app/src/main/res/layout/activity_result.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.2957427536231884" />
-        <entry key="app/src/main/res/layout/activity_spinner.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_spinner.xml" value="0.21622846781504987" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.18446601941747573" />
         <entry key="app/src/main/res/layout/activity_term_condition.xml" value="0.2375" />
         <entry key="app/src/main/res/layout/activity_withdraw_history.xml" value="0.2848101265822785" />

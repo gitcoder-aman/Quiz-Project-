@@ -1,5 +1,7 @@
 package com.example.coderamankumarguptaquizearn;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -124,19 +126,29 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    int counter = 1;
     @Override
     public void onBackPressed() {
 
-        if(counter == 2){
-         super.onBackPressed();
-         this.finishAffinity();
-        }
-        else{
-            counter++;
-            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
-        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        //new AlertDialog.Builder(MainActivity.this)
+        builder.setIcon(R.drawable.ic_baseline_warning_24);
+        builder.setTitle("Exit");
+        builder.setMessage("Are you sure you want to exit this App?");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+
+//        builder.setPositiveButton(getResources().getDrawable(R.drawable.i))
+             builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
 
     }
   
