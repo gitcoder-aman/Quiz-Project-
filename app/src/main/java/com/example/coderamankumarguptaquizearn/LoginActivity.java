@@ -51,8 +51,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 String email,pass;
-                email = binding.emailBox.getText().toString();
-                pass = binding.passwordBox.getText().toString();
+                email = binding.emailBox.getText().toString().trim();
+                pass = binding.passwordBox.getText().toString().trim();
 
                 if(TextUtils.isEmpty(email)){
                     binding.emailBox.setError("*");

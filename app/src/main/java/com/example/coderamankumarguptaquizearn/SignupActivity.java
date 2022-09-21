@@ -53,16 +53,15 @@ public class SignupActivity extends AppCompatActivity {
         dialog = new ProgressDialog(this);
         dialog.setMessage("We're creating new account...");
 
-//        String referShareCode = binding.referBox.getText().toString();
         binding.createNewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email,pass,name,referShareCode;
                 
-                email = binding.emailBox.getText().toString();
-                pass = binding.passwordBox.getText().toString();
-                name = binding.nameBox.getText().toString();
-                referShareCode = binding.referBox.getText().toString();
+                email = binding.emailBox.getText().toString().trim();
+                pass = binding.passwordBox.getText().toString().trim();
+                name = binding.nameBox.getText().toString().trim();
+                referShareCode = binding.referBox.getText().toString().trim();
 
                 if(TextUtils.isEmpty(name)){
                      binding.nameBox.setError("*");

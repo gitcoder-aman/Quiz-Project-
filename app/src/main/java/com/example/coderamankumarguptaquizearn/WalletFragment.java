@@ -1,5 +1,6 @@
 package com.example.coderamankumarguptaquizearn;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -43,7 +44,8 @@ public class WalletFragment extends Fragment {
     FirebaseFirestore database;
     UserDatabase userdatabase;
 
-    String[] paymentMethod = {"None","PhonePe","GooglePay","Paytm","UPI"};
+    String[] paymentMethod = {"None","PhonePe","GooglePay","Paytm"};
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,6 +65,11 @@ public class WalletFragment extends Fragment {
                        //binding.currentCoins.setText(user.getCoins() + " "); you can also write this.
                    }
                });
+
+
+        paymentOption();
+
+       // String payType = binding.paymentTypeBox.getText().toString().trim();
        //send button request process
 
         binding.sendRequestBtn.setOnClickListener(new View.OnClickListener() {
@@ -71,10 +78,10 @@ public class WalletFragment extends Fragment {
             public void onClick(View view) {
 
                 if (isConnected()) {
-                    paymentOption();
-                    String paymentType = binding.paymentTypeBox.getText().toString();
-                    String Coins = binding.numberOfCoins.getText().toString();
-                    String number = binding.number.getText().toString();
+
+                    String paymentType = binding.paymentTypeBox.getText().toString().trim();
+                    String Coins = binding.numberOfCoins.getText().toString().trim();
+                    String number = binding.number.getText().toString().trim();
 
                     if (paymentType.equals("None")) {
                         binding.paymentTypeBox.setError("*");
@@ -83,6 +90,7 @@ public class WalletFragment extends Fragment {
                         binding.paymentTypeBox.setError(null);
                         binding.paymentTypeBox.clearFocus();
                     }
+
                     if (TextUtils.isEmpty(number)) {
                         binding.number.setError("*");
                         return;
@@ -171,8 +179,6 @@ public class WalletFragment extends Fragment {
             }
         });
 
-
-        paymentOption();
         return binding.getRoot();
     }
 
@@ -187,7 +193,17 @@ public class WalletFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String OptionValue = parent.getItemAtPosition(position).toString();
                 binding.paymentTypeBox.setText(OptionValue);
+                String paymentType = binding.paymentTypeBox.getText().toString().trim();
 
+                if(paymentType.equals("GooglePay")){
+                    binding.number.setCompoundDrawablesWithIntrinsicBounds(R.drawable.googlepay,0,0,0);
+                }else if(paymentType.equals("Paytm")){
+                    binding.number.setCompoundDrawablesWithIntrinsicBounds(R.drawable.paytm,0,0,0);
+                }else if(paymentType.equals("PhonePe")){
+                    binding.number.setCompoundDrawablesWithIntrinsicBounds(R.drawable.phonepe,0,0,0);
+                }else{
+                    binding.number.setCompoundDrawablesWithIntrinsicBounds(R.drawable.questionmark,0,0,0);
+                }
             }
 
             @Override
