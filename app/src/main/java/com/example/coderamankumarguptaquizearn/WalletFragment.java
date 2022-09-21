@@ -43,7 +43,7 @@ public class WalletFragment extends Fragment {
     FirebaseFirestore database;
     UserDatabase userdatabase;
 
-    String[] paymentMethod = {"PhonePe","Google pay","Paytm","UPI"};
+    String[] paymentMethod = {"None","PhonePe","GooglePay","Paytm","UPI"};
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,15 +71,24 @@ public class WalletFragment extends Fragment {
             public void onClick(View view) {
 
                 if (isConnected()) {
-//                    String[] paymentMethod = paymentOption();
+                    paymentOption();
+                    String paymentType = binding.paymentTypeBox.getText().toString();
                     String Coins = binding.numberOfCoins.getText().toString();
-                    String paytm = binding.paytmEmailBox.getText().toString();
-                    if (TextUtils.isEmpty(paytm)) {
-                        binding.paytmEmailBox.setError("*");
+                    String number = binding.number.getText().toString();
+
+                    if (paymentType.equals("None")) {
+                        binding.paymentTypeBox.setError("*");
                         return;
                     } else {
-                        binding.paytmEmailBox.setError(null);
-                        binding.paytmEmailBox.clearFocus();
+                        binding.paymentTypeBox.setError(null);
+                        binding.paymentTypeBox.clearFocus();
+                    }
+                    if (TextUtils.isEmpty(number)) {
+                        binding.number.setError("*");
+                        return;
+                    } else {
+                        binding.number.setError(null);
+                        binding.number.clearFocus();
                     }
                     if (TextUtils.isEmpty(Coins)) {
                         binding.numberOfCoins.setError("*");
@@ -101,7 +110,9 @@ public class WalletFragment extends Fragment {
                         long rupees = numberOfCoins/1000;
 
                         String generateId = generateId(20);
-                        adminNotification notification = new adminNotification(generateId,paytm, userdatabase.getName(), numberOfCoins,"Pending",rupees,uid);
+                        adminNotification notification = new adminNotification(generateId,number, userdatabase.getName(), numberOfCoins,"Pending",rupees,uid,paymentType);
+                        binding.number.setText("");
+                        binding.numberOfCoins.setText("");
                         database
                                 .collection("adminNotification")
                                 .document(generateId)
@@ -131,7 +142,7 @@ public class WalletFragment extends Fragment {
                                     }
                                 });
 
-                        WithdrawRequest request = new WithdrawRequest(generateId, paytm, userdatabase.getName(), numberOfCoins,"Pending",rupees);
+                        WithdrawRequest request = new WithdrawRequest(generateId,number, userdatabase.getName(), numberOfCoins,"Pending",rupees,paymentType);
 
                         database
                                 .collection("withdraw")

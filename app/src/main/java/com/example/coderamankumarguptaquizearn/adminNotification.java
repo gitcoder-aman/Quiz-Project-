@@ -12,11 +12,12 @@ public class adminNotification {
     private long rupees;
     private String paymentId;
     private String uid;
+    private String paymentType;
 
     public adminNotification() {
     }
 
-    public adminNotification(String paymentId,String paytmNo, String requestedBy, long noOfCoins, String status,long rupees,String uid) {
+    public adminNotification(String paymentId,String paytmNo, String requestedBy, long noOfCoins, String status,long rupees,String uid,String paymentType) {
         this.paytmNo = paytmNo;
         this.requestedBy = requestedBy;
         this.noOfCoins = noOfCoins;
@@ -24,6 +25,15 @@ public class adminNotification {
         this.rupees = rupees;
         this.paymentId = paymentId;
         this.uid = uid;
+        this.paymentType = paymentType;
+    }
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
     }
 
 

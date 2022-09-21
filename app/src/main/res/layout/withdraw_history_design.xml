@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background = "#E4E4E4E4">
+    android:background = "@color/Green">
 
     <TextView
         android:id="@+id/w_index"
@@ -46,8 +45,11 @@
         android:id="@+id/w_name"
         android:layout_width="0dp"
         android:layout_height="23dp"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="65dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="80dp"
+        android:gravity = "center"
+        android:background = "@drawable/round_box"
         android:fontFamily = "@font/roboto_bold"
         app:layout_constraintBottom_toTopOf="@+id/view11"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,24 +74,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Paytm No ="
+        android:text="Payment Type ="
         app:layout_constraintEnd_toEndOf="@+id/textView_Name"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView_Name"
         app:layout_constraintTop_toBottomOf="@+id/textView_Name" />
 
     <TextView
-        android:id="@+id/w_paytm"
+        android:id="@+id/w_number"
         android:layout_width="0dp"
         android:layout_height="23dp"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="13dp"
         android:layout_marginTop="4dp"
-        android:fontFamily = "@font/roboto_bold"
+        android:layout_marginEnd="5dp"
+        android:gravity = "center"
+        android:background = "@drawable/round_box"
+        android:fontFamily="@font/roboto_bold"
+        app:layout_constraintEnd_toStartOf="@+id/w_payType"
         app:layout_constraintBottom_toTopOf="@+id/view12"
-        app:layout_constraintEnd_toEndOf="@+id/w_name"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/view11" />
+
+    <TextView
+        android:id="@+id/w_payType"
+        android:layout_width="70dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:text="GooglePay"
+        android:textColor = "@color/black"
+        android:fontFamily = "@font/roboto_bold"
+        android:background = "@color/purple_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/w_name" />
 
     <View
         android:id="@+id/view12"
@@ -109,7 +127,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Coins ="
-        android:textColor="#616161"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintHorizontal_bias="0.076"
         app:layout_constraintStart_toStartOf="@+id/textView"
@@ -118,12 +135,14 @@
     <TextView
         android:id="@+id/w_coins"
         android:layout_width="0dp"
-        android:layout_height="21dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="80dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="62dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="5dp"
+        android:gravity = "center"
+        android:background = "@drawable/round_box"
         android:fontFamily="@font/roboto_bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/w_rupees"
         app:layout_constraintStart_toEndOf="@+id/textView19"
         app:layout_constraintTop_toBottomOf="@+id/view12" />
 
@@ -132,9 +151,12 @@
         android:layout_width="0dp"
         android:layout_height="21dp"
         android:layout_marginTop="8dp"
+        android:layout_marginRight="27dp"
+        android:text = "Rs 100"
+        android:textColor = "@color/black"
+        android:background="@color/purple_200"
         android:fontFamily="@font/roboto_bold"
-        app:layout_constraintEnd_toEndOf="@+id/w_paytm"
-        app:layout_constraintStart_toEndOf="@+id/w_coins"
+        app:layout_constraintEnd_toEndOf="@+id/w_payType"
         app:layout_constraintTop_toBottomOf="@+id/view12" />
 
     <View
@@ -163,11 +185,14 @@
     <TextView
         android:id="@+id/w_sendTime"
         android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="5dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="35dp"
         android:layout_marginTop="8dp"
+        android:background = "@drawable/round_box"
+        android:textSize = "12sp"
+        android:gravity = "center"
         android:fontFamily="@font/roboto_bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/w_coins"
         app:layout_constraintStart_toEndOf="@+id/textView24"
         app:layout_constraintTop_toBottomOf="@+id/view13" />
 
@@ -200,7 +225,10 @@
         android:layout_height="30dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="78dp"
         android:fontFamily="@font/roboto_bold"
+        android:background = "@drawable/round_box"
+        android:gravity = "center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView25"
         app:layout_constraintTop_toBottomOf="@+id/view14" />
@@ -208,7 +236,7 @@
     <View
         android:id="@+id/view15"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="5dp"
         android:layout_marginTop="210dp"
         android:background="@color/colorPurple"
         app:layout_constraintEnd_toEndOf="parent"

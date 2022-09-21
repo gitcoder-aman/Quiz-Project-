@@ -11,18 +11,28 @@ public class WithdrawRequest {
     private long noOfCoins;
     private String status;
     private long rupees;
+    private String paymentType;
 
 
     public WithdrawRequest() {
     }
 
-    public WithdrawRequest(String paymentId, String paytmNo, String requestedBy, long noOfCoins,String status,long rupees) {
+    public WithdrawRequest(String paymentId, String paytmNo, String requestedBy, long noOfCoins,String status,long rupees,String paymentType) {
         this.paymentId = paymentId;
         this.paytmNo = paytmNo;
         this.requestedBy = requestedBy;
         this.noOfCoins = noOfCoins;
         this.status = status;
         this.rupees = rupees;
+        this.paymentType = paymentType;
+    }
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
     }
 
 
