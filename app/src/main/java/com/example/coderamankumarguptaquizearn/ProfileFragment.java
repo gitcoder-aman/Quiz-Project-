@@ -91,21 +91,6 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        binding.facebookId.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Uri location = Uri.parse("https://www.facebook.com/coder.amankumargupta");
-                Intent intent = new Intent(Intent.ACTION_VIEW, location);
-
-                try {
-                    startActivity(intent);
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(getContext(), "Link failed", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
         binding.help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

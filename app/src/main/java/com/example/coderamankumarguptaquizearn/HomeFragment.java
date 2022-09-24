@@ -3,6 +3,7 @@ package com.example.coderamankumarguptaquizearn;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -13,8 +14,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.coderamankumarguptaquizearn.databinding.FragmentHomeBinding;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import com.google.firebase.database.core.Tag;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,11 +52,15 @@ public class HomeFragment extends Fragment {
 
     FragmentHomeBinding binding;
     FirebaseFirestore database;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         binding = FragmentHomeBinding.inflate(inflater,container,false);
+
+
         final ArrayList<CategoryModel> categories = new ArrayList<>();
 
 //        categories.add(new CategoryModel("", "Mathematics", "https://img.freepik.com/premium-vector/math-icon-with-formular-tools_1639-26099.jpg"));
@@ -80,8 +95,7 @@ public class HomeFragment extends Fragment {
         binding.spinWheel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Log.d("Aman","Found");
-                startActivity(new Intent(getContext(),SpinnerActivity.class));
+                startActivity(new Intent(getActivity(),SpinnerActivity.class));
             }
         });
 

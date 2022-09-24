@@ -1,5 +1,6 @@
 package com.example.coderamankumarguptaquizearn;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -9,6 +10,9 @@ import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -18,6 +22,14 @@ import com.example.coderamankumarguptaquizearn.SpinWheel.LuckyWheelView;
 import com.example.coderamankumarguptaquizearn.SpinWheel.model.LuckyItem;
 import com.example.coderamankumarguptaquizearn.databinding.ActivitySpinnerBinding;
 
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -32,11 +44,18 @@ public class SpinnerActivity extends AppCompatActivity {
 
     ActivitySpinnerBinding binding;
     UserDatabase userdatabase;
+    RewardedAd mRewardedAd;
+    CountDownTimer countDownTimer;
+    private static int clicked =  0;
+    private int StartSpinChance;
+    private int countSpin = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding  = ActivitySpinnerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        loadAd();
 
         List<LuckyItem> data = new ArrayList<>();
 
@@ -110,22 +129,37 @@ public class SpinnerActivity extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         userdatabase = documentSnapshot.toObject(UserDatabase.class);
                         binding.coinsShow.setText(String.valueOf(userdatabase.getCoins()));
+                       // binding.spinChance.setText(String.valueOf(userdatabase.getSpinChance()));
 
                         //binding.currentCoins.setText(user.getCoins() + " "); you can also write this.
                     }
                 });
-
         MediaPlayer mp = MediaPlayer.create(this, R.raw.spin_sound);
-
         binding.spinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadAd();
+                if(clicked > 1 ){
+                    if(mRewardedAd != null) {
 
-                Random r = new Random();
-                int randomNumber = r.nextInt(8);
-                mp.start();
-                binding.wheelview.startLuckyWheelWithTargetIndex(randomNumber);
-
+                    mRewardedAd.show(SpinnerActivity.this, new OnUserEarnedRewardListener() {
+                        @Override
+                        public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                            clicked = 0;
+                            loadAd();
+                            Toast.makeText(SpinnerActivity.this, "Ad close", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    } else{
+                        Toast.makeText(SpinnerActivity.this, "Ad is not ready yet!", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                        Random r = new Random();
+                        int randomNumber = r.nextInt(8);
+                        mp.start();
+                        binding.wheelview.startLuckyWheelWithTargetIndex(randomNumber);
+                        clicked += 1;
+                }
             }
         });
         binding.wheelview.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
@@ -138,11 +172,88 @@ public class SpinnerActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(SpinnerActivity.this, "INTERNET NOT AVAILABLE", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
     }
+
+//    private void spinChanceUpdate() {
+//
+//        FirebaseFirestore database = FirebaseFirestore.getInstance();
+//        database
+//                .collection("users")
+//                .document(FirebaseAuth.getInstance().getUid())
+//                .update("spinChance", FieldValue.increment(countSpin)).addOnSuccessListener(new OnSuccessListener<Void>() {
+//
+//                    @Override
+//                    public void onSuccess(Void unused) {
+//
+//                        Toast toast = Toast.makeText(SpinnerActivity.this, "Coins added in account", Toast.LENGTH_LONG);
+//                    }
+//                });
+//    }
+
+    private void loadAd() {
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        RewardedAd.load(this, "ca-app-pub-3940256099942544/5224354917",
+                adRequest, new RewardedAdLoadCallback() {
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error.
+                        super.onAdFailedToLoad(loadAdError);
+                        Log.e("Error", loadAdError.toString());
+                        mRewardedAd = null;
+                    }
+
+                    @Override
+                    public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
+                        super.onAdLoaded(rewardedAd);
+                        mRewardedAd = rewardedAd;
+                        mRewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                            @Override
+                            public void onAdClicked() {
+                                super.onAdClicked();
+                            }
+
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                super.onAdDismissedFullScreenContent();
+                            }
+
+                            @Override
+                            public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                                super.onAdFailedToShowFullScreenContent(adError);
+                            }
+
+                            @Override
+                            public void onAdImpression() {
+                                super.onAdImpression();
+                            }
+
+                            @Override
+                            public void onAdShowedFullScreenContent() {
+                                super.onAdShowedFullScreenContent();
+                                mRewardedAd = null;
+                            }
+                        });
+
+                    }
+                });
+    }
+//    private void StartTimer(){
+//        countDownTimer = new CountDownTimer(30000,1000) {
+//            @Override
+//            public void onTick(long millisUntilFinished) {
+//
+//            }
+//            @Override
+//            public void onFinish() {
+////                spinChanceUpdate();
+//            }
+//        };
+//
+//    }
     private boolean isConnected() {
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -221,10 +332,26 @@ public class SpinnerActivity extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         userdatabase = documentSnapshot.toObject(UserDatabase.class);
                         binding.coinsShow.setText(String.valueOf(userdatabase.getCoins()));
+                       // binding.spinChance.setText(String.valueOf(userdatabase.getSpinChance()));
 
                         //binding.currentCoins.setText(user.getCoins() + " "); you can also write this.
                     }
                 });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mRewardedAd != null) {
+            mRewardedAd.show(SpinnerActivity.this, new OnUserEarnedRewardListener() {
+                @Override
+                public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                    SpinnerActivity.super.onBackPressed();
+                }
+            });
+        }else{
+            super.onBackPressed();
+        }
 
     }
 }

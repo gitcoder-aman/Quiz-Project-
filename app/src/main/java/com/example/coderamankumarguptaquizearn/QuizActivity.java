@@ -6,16 +6,23 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.coderamankumarguptaquizearn.databinding.ActivityQuizBinding;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,6 +43,7 @@ public class QuizActivity extends AppCompatActivity {
     CountDownTimer countDownTimer;
     FirebaseFirestore database;
     int correctAnswer = 0;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,19 @@ public class QuizActivity extends AppCompatActivity {
         binding = ActivityQuizBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        loadAds();
+        final AdRequest adRequest = new AdRequest.Builder().build();
+
+        binding.bannerAd.loadAd(adRequest);
+
+        binding.bannerAd.setAdListener(new AdListener() {
+
+            @Override
+            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                binding.bannerAd.loadAd(adRequest);
+            }
+        });
         questions = new ArrayList<>();
 //        questions.add(new Question("What is Earth?","Planet","Sun","Human","Car","Planet"));
 //        questions.add(new Question("What is Samosa?","Planet","Food","Human","Car","Food"));
@@ -95,10 +116,58 @@ public class QuizActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-
         StartTimer();
         setNextQuestion();
+    }
+
+    private void loadAds() {
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        mInterstitialAd = interstitialAd;
+                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                            @Override
+                            public void onAdClicked() {
+                                super.onAdClicked();
+                            }
+
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                super.onAdDismissedFullScreenContent();
+                            }
+
+                            @Override
+                            public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                                super.onAdFailedToShowFullScreenContent(adError);
+                            }
+
+                            @Override
+                            public void onAdImpression() {
+                                super.onAdImpression();
+                            }
+
+                            @Override
+                            public void onAdShowedFullScreenContent() {
+                                super.onAdShowedFullScreenContent();
+                                mInterstitialAd = null;
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        super.onAdFailedToLoad(loadAdError);
+                        Log.e("Error", loadAdError.toString());
+                        mInterstitialAd = null;
+                    }
+                });
     }
 
     private void StartTimer(){
@@ -219,17 +288,31 @@ public class QuizActivity extends AppCompatActivity {
                     setNextQuestion();
                 }
                 else{
-                    //for Going to ResultActivity Class and set correctAnswer and totalQuestions
-                    Intent intent = new Intent(QuizActivity.this,ResultActivity.class);
-                    intent.putExtra("correct",correctAnswer);
-                    intent.putExtra("total",questions.size());
-                    countDownTimer.cancel();
-                    startActivity(intent);
                     Toast.makeText(this, "Quiz Finished.", Toast.LENGTH_SHORT).show();
+                    //for Going to ResultActivity Class and set correctAnswer and totalQuestions
+                    loadAds();
+                    if(mInterstitialAd != null){
+                        mInterstitialAd.show(QuizActivity.this);
+                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                super.onAdDismissedFullScreenContent();
+                                mInterstitialAd = null;
+                                Intent intent = new Intent(QuizActivity.this,ResultActivity.class);
+                                intent.putExtra("correct",correctAnswer);
+                                intent.putExtra("total",questions.size());
+                                countDownTimer.cancel();
+                                startActivity(intent);
+                            }
+                        });
+                    }else{
+                        Log.e("Ad Pending","Ad is not ready yet!");
+                        startActivity(new Intent(QuizActivity.this,ResultActivity.class));
+                    }
+
                 }
                 break;
             case R.id.quitBtn:
-
                 ExitAlertdialog();
         }
     }
@@ -243,8 +326,22 @@ public class QuizActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        countDownTimer.cancel();
-                      finish();
+                        loadAds();
+                        if(mInterstitialAd != null){
+                            mInterstitialAd.show(QuizActivity.this);
+                            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                                @Override
+                                public void onAdDismissedFullScreenContent() {
+                                    mInterstitialAd = null;
+                                    countDownTimer.cancel();
+                                    finish();
+                                }
+                            });
+                        }else{
+                            Log.e("Ad Pending","Ad is not ready yet!");
+                            countDownTimer.cancel();
+                            finish();
+                        }
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override

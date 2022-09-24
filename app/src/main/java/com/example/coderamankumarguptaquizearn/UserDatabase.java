@@ -3,6 +3,7 @@ package com.example.coderamankumarguptaquizearn;
 public class UserDatabase {
     private String name,email,pass,referCode,uid,profile = "https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png";
     private long coins = 0;
+    private int spinChance = 15;
 
     public UserDatabase() {  //for firebase
     }
@@ -13,6 +14,15 @@ public class UserDatabase {
         this.pass = pass;
         this.referCode = referCode;
         this.uid = uid;
+    }
+
+
+    public int getSpinChance() {
+        return spinChance;
+    }
+
+    public void setSpinChance(int spinChance) {
+        this.spinChance = spinChance;
     }
 
     public String getUid(){

@@ -22,4 +22,8 @@
     <string name="paymentMethod">Select Payment Type</string>
     <string name="enterCoin">Enter coins for withdraw</string>
 
+    <string name="banner_homeUnitId">"ca-app-pub-6338558842934194/7498371287"</string>
+    <string name="banner_quizUnit">"ca-app-pub-6338558842934194/1425338400"</string>
+    <string name="interstitialAds_UintId">"ca-app-pub-6338558842934194/6589201026"</string>
+
 </resources>

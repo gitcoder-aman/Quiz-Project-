@@ -146,17 +146,14 @@
         app:layout_constraintTop_toTopOf="@+id/view11" />
 
     <TextView
-        android:id="@+id/facebookId"
+        android:id="@+id/developedBy"
         android:layout_width="0dp"
         android:layout_height="38dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
         android:fontFamily="@font/roboto_bold"
         android:gravity="center"
-        android:paddingLeft="70dp"
-        android:paddingRight="100dp"
-        android:text="coder.amankumargupta"
+        android:text="Aman Kumar Gupta"
         android:textColor="@color/black"
-        app:drawableLeftCompat="@drawable/facebook"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textView20"
         app:layout_constraintHorizontal_bias="1.0"
