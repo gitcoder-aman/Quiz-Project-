@@ -1,13 +1,15 @@
 package com.example.coderamankumarguptaquizearn;
 
-import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
+import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,14 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.coderamankumarguptaquizearn.databinding.FragmentWalletBinding;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +39,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class WalletFragment extends Fragment {
 
+
+     RewardedAd mRewardedAd;
+    private boolean isLoaded = false;
 
     public WalletFragment() {
         // Required empty public constructor
@@ -49,6 +62,8 @@ public class WalletFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+//        loadAd(); //hide for just want to minimum ads show in beginning
        binding = FragmentWalletBinding.inflate(inflater,container,false);
        database = FirebaseFirestore.getInstance();
 
@@ -180,6 +195,78 @@ public class WalletFragment extends Fragment {
         });
 
         return binding.getRoot();
+    }
+
+    private void loadAd() {
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        RewardedAd.load(getActivity(), "ca-app-pub-3940256099942544/5224354917",
+                adRequest, new RewardedAdLoadCallback() {
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error.
+                        super.onAdFailedToLoad(loadAdError);
+                        Log.e("Error", loadAdError.toString());
+                        mRewardedAd = null;
+                        Toast.makeText(getActivity(), "Eneter", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
+                        super.onAdLoaded(rewardedAd);
+                        mRewardedAd = rewardedAd;
+                        isLoaded = true;
+                        mRewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                            @Override
+                            public void onAdClicked() {
+                                super.onAdClicked();
+                            }
+
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                super.onAdDismissedFullScreenContent();
+                                mRewardedAd = null;
+                            }
+
+                            @Override
+                            public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                                super.onAdFailedToShowFullScreenContent(adError);
+                            }
+
+                            @Override
+                            public void onAdShowedFullScreenContent() {
+                                super.onAdShowedFullScreenContent();
+                                mRewardedAd = null;
+                            }
+                        });
+
+                    }
+                });
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(isLoaded){
+                    ProgressDialog dialog = ProgressDialog.show(getActivity(),"Ads Break","Please wait while an ad is being set up");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            dialog.dismiss();
+
+                            mRewardedAd.show(getActivity(), new OnUserEarnedRewardListener() {
+                                @Override
+                                public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                                    Toast.makeText(getActivity(),
+                                            "Ad close", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    },2000);
+                }
+                else{
+                    Toast.makeText(getActivity(), "Ad is not ready yet!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        },5000);
     }
 
     private void paymentOption() {

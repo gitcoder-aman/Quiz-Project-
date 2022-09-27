@@ -327,16 +327,24 @@ public class QuizActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         loadAds();
+                        ProgressDialog dialogue = ProgressDialog.show(QuizActivity.this,"Ads Break","Please wait Ad is Loading..");
                         if(mInterstitialAd != null){
-                            mInterstitialAd.show(QuizActivity.this);
-                            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                            new Handler().postDelayed(new Runnable() {
                                 @Override
-                                public void onAdDismissedFullScreenContent() {
-                                    mInterstitialAd = null;
-                                    countDownTimer.cancel();
-                                    finish();
+                                public void run() {
+                                    dialogue.dismiss();
+                                    mInterstitialAd.show(QuizActivity.this);
+                                    mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                                        @Override
+                                        public void onAdDismissedFullScreenContent() {
+                                            mInterstitialAd = null;
+                                            countDownTimer.cancel();
+                                            finish();
+                                        }
+                                    });
                                 }
-                            });
+                            },2000);
+
                         }else{
                             Log.e("Ad Pending","Ad is not ready yet!");
                             countDownTimer.cancel();

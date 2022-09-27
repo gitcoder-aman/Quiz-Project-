@@ -81,8 +81,9 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    //fancy gift dialog
+    implementation 'com.github.Shashank02051997:FancyGifDialog-Android:1.5'
     //Admob implement
     implementation 'com.google.android.gms:play-services-ads:21.2.0'
-
 
 }

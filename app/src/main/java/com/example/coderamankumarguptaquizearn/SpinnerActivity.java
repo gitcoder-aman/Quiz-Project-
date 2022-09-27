@@ -3,7 +3,7 @@ package com.example.coderamankumarguptaquizearn;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -12,10 +12,9 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.coderamankumarguptaquizearn.SpinWheel.LuckyWheelView;
@@ -35,6 +34,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,7 @@ public class SpinnerActivity extends AppCompatActivity {
     private static int clicked =  0;
     private int StartSpinChance;
     private int countSpin = 0;
+    private boolean isLoaded = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,7 +118,7 @@ public class SpinnerActivity extends AppCompatActivity {
         data.add(item8);
 
         binding.wheelview.setData(data);
-        binding.wheelview.setRound(5);
+        binding.wheelview.setRound(7);
 
         //Current coins Show in Spinner Activity
         FirebaseFirestore database;
@@ -139,20 +141,8 @@ public class SpinnerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadAd();
-                if(clicked > 1 ){
-                    if(mRewardedAd != null) {
-
-                    mRewardedAd.show(SpinnerActivity.this, new OnUserEarnedRewardListener() {
-                        @Override
-                        public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-                            clicked = 0;
-                            loadAd();
-                            Toast.makeText(SpinnerActivity.this, "Ad close", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    } else{
-                        Toast.makeText(SpinnerActivity.this, "Ad is not ready yet!", Toast.LENGTH_SHORT).show();
-                    }
+                if(clicked > 2 ){
+                    showAds();
                 }else{
                         Random r = new Random();
                         int randomNumber = r.nextInt(8);
@@ -175,6 +165,31 @@ public class SpinnerActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void showAds() {
+        if(isLoaded){
+            ProgressDialog dialog = ProgressDialog.show(SpinnerActivity.this,"Ads Break","Please wait while an ad is being set up");
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    dialog.dismiss();
+
+                        mRewardedAd.show(SpinnerActivity.this, new OnUserEarnedRewardListener() {
+                            @Override
+                            public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                                clicked = 0;
+                                loadAd();
+                                Toast.makeText(SpinnerActivity.this,
+                                        "Ad close", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                }
+            },2000);
+        }
+        else{
+            Toast.makeText(SpinnerActivity.this, "Ad is not ready yet!", Toast.LENGTH_SHORT).show();
+        }
     }
 
 //    private void spinChanceUpdate() {
@@ -210,6 +225,7 @@ public class SpinnerActivity extends AppCompatActivity {
                     public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
                         super.onAdLoaded(rewardedAd);
                         mRewardedAd = rewardedAd;
+                        isLoaded = true;
                         mRewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
                             @Override
                             public void onAdClicked() {
@@ -219,6 +235,7 @@ public class SpinnerActivity extends AppCompatActivity {
                             @Override
                             public void onAdDismissedFullScreenContent() {
                                 super.onAdDismissedFullScreenContent();
+                                mRewardedAd = null;
                             }
 
                             @Override
@@ -298,6 +315,47 @@ public class SpinnerActivity extends AppCompatActivity {
                 break;
         }
 
+        MediaPlayer mp = MediaPlayer.create(this,R.raw.coin_sound);
+        new FancyGifDialog.Builder(SpinnerActivity.this)
+                .setTitle("Congratulation you won") // You can also send title like R.string.from_resources
+                .setMessage("Coins: "+ cash) // or pass like R.string.description_from_resources
+                .setTitleTextColor(R.color.black)
+                .setDescriptionTextColor(R.color.black)
+                .setNegativeBtnText("Cancel") // or pass it like android.R.string.cancel
+                .setPositiveBtnBackground(R.color.Green)
+                .setPositiveBtnText("OK") // or pass it like android.R.string.ok
+                .setNegativeBtnBackground(R.color.orange)
+                .setGifResource(R.drawable.gif_win)   //Pass your Gif here
+                .isCancellable(false)
+                .OnPositiveClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        mp.start();
+                        //Current coins Show in Spinner Activity
+                        FirebaseFirestore database;
+                        database = FirebaseFirestore.getInstance();
+
+                        database.collection("users")
+                                .document(FirebaseAuth.getInstance().getUid())
+                                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        userdatabase = documentSnapshot.toObject(UserDatabase.class);
+                                        binding.coinsShow.setText(String.valueOf(userdatabase.getCoins()));
+                                        // binding.spinChance.setText(String.valueOf(userdatabase.getSpinChance()));
+                                        Toast.makeText(SpinnerActivity.this, "Coins Added", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                })
+                .OnNegativeClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        Toast.makeText(SpinnerActivity.this,"Cancel",Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .build();
+
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         database
                 .collection("users")
@@ -306,52 +364,35 @@ public class SpinnerActivity extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(Void unused) {
-
-                        Toast toast = Toast.makeText(SpinnerActivity.this, "Coins added in account", Toast.LENGTH_LONG);
-                        View toastView = toast.getView(); // This'll return the default View of the Toast.
-
-                        /* And now you can get the TextView of the default View of the Toast. */
-                        TextView toastMessage = (TextView) toastView.findViewById(android.R.id.message);
-                        toastMessage.setTextSize(20);
-                        toastMessage.setTextColor(Color.RED);
-                        toastMessage.setCompoundDrawablesWithIntrinsicBounds(R.drawable.coins, 0, 0, 0);
-                        toastMessage.setGravity(Gravity.CENTER);
-                        toastMessage.setCompoundDrawablePadding(16);
-                        toastView.setBackgroundColor(Color.CYAN);
-                        toast.show();
+                        Log.d("coins","Added");
                     }
                 });
-
-        //Current coins Show in Spinner Activity
-        database = FirebaseFirestore.getInstance();
-
-        database.collection("users")
-                .document(FirebaseAuth.getInstance().getUid())
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        userdatabase = documentSnapshot.toObject(UserDatabase.class);
-                        binding.coinsShow.setText(String.valueOf(userdatabase.getCoins()));
-                       // binding.spinChance.setText(String.valueOf(userdatabase.getSpinChance()));
-
-                        //binding.currentCoins.setText(user.getCoins() + " "); you can also write this.
-                    }
-                });
-
     }
 
     @Override
     public void onBackPressed() {
-        if(mRewardedAd != null) {
-            mRewardedAd.show(SpinnerActivity.this, new OnUserEarnedRewardListener() {
-                @Override
-                public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-                    SpinnerActivity.super.onBackPressed();
-                }
-            });
-        }else{
-            super.onBackPressed();
-        }
 
-    }
+        if(isLoaded){
+            ProgressDialog dialog = ProgressDialog.show(SpinnerActivity.this,"Ads Break","Please wait while an ad is being set up");
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    dialog.dismiss();
+
+                    mRewardedAd.show(SpinnerActivity.this, new OnUserEarnedRewardListener() {
+                        @Override
+                        public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                            Toast.makeText(SpinnerActivity.this,
+                                    "Ad close", Toast.LENGTH_SHORT).show();
+                            SpinnerActivity.super.onBackPressed();
+                        }
+                    });
+                }
+            },2000);
+        }
+        else{
+            onBackPressed();
+        }
+            Toast.makeText(SpinnerActivity.this, "Ad is not ready yet!", Toast.LENGTH_SHORT).show();
+        }
 }
