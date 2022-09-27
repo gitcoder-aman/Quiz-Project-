@@ -290,22 +290,29 @@ public class QuizActivity extends AppCompatActivity {
                 else{
                     Toast.makeText(this, "Quiz Finished.", Toast.LENGTH_SHORT).show();
                     //for Going to ResultActivity Class and set correctAnswer and totalQuestions
+                    ProgressDialog dialogue = ProgressDialog.show(QuizActivity.this,"Ads Break","Please wait Ad is Loading..");
                     loadAds();
                     if(mInterstitialAd != null){
-                        mInterstitialAd.show(QuizActivity.this);
-                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                            @Override
-                            public void onAdDismissedFullScreenContent() {
-                                super.onAdDismissedFullScreenContent();
-                                mInterstitialAd = null;
-                                Intent intent = new Intent(QuizActivity.this,ResultActivity.class);
-                                intent.putExtra("correct",correctAnswer);
-                                intent.putExtra("total",questions.size());
-                                countDownTimer.cancel();
-                                startActivity(intent);
-                            }
-                        });
-                    }else{
+                       new Handler().postDelayed(new Runnable() {
+                           @Override
+                           public void run() {
+                               mInterstitialAd.show(QuizActivity.this);
+                               mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                                   @Override
+                                   public void onAdDismissedFullScreenContent() {
+                                       super.onAdDismissedFullScreenContent();
+                                       mInterstitialAd = null;
+                                       Intent intent = new Intent(QuizActivity.this, ResultActivity.class);
+                                       intent.putExtra("correct", correctAnswer);
+                                       intent.putExtra("total", questions.size());
+                                       countDownTimer.cancel();
+                                       startActivity(intent);
+                                   }
+                               });
+                           }
+                       },2000);
+                    }
+                    else{
                         Log.e("Ad Pending","Ad is not ready yet!");
                         startActivity(new Intent(QuizActivity.this,ResultActivity.class));
                     }

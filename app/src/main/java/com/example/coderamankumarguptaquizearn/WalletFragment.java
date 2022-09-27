@@ -1,7 +1,9 @@
 package com.example.coderamankumarguptaquizearn;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -156,7 +158,7 @@ public class WalletFragment extends Fragment {
                                         toastMessage.setCompoundDrawablePadding(16);
                                         toastView.setBackgroundColor(Color.CYAN);
                                         toast.show();
-
+                                        AlertMessage();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -195,6 +197,20 @@ public class WalletFragment extends Fragment {
         });
 
         return binding.getRoot();
+    }
+
+    private void AlertMessage() {
+
+        new AlertDialog.Builder(getActivity())
+                .setIcon(R.drawable.ic_baseline_event_note_24)
+                .setTitle("Note")
+                .setMessage(getString(R.string.moneytext))
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).show();
     }
 
     private void loadAd() {

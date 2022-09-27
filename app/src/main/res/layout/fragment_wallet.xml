@@ -34,7 +34,7 @@
     <View
         android:id="@+id/view6"
         android:layout_width="0dp"
-        android:layout_height="160dp"
+        android:layout_height="150dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="24dp"
@@ -174,19 +174,6 @@
         app:layout_constraintEnd_toEndOf="@+id/numberOfCoins"
         app:layout_constraintStart_toStartOf="@+id/numberOfCoins"
         app:layout_constraintTop_toBottomOf="@+id/numberOfCoins" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="0dp"
-        android:layout_height="83dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/moneytext"
-        android:textColor="#FF0000"
-        app:layout_constraintEnd_toEndOf="@+id/sendRequestBtn"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="@+id/sendRequestBtn"
-        app:layout_constraintTop_toBottomOf="@+id/sendRequestBtn"
-        tools:ignore="TextContrastCheck" />
 
     <ProgressBar
         android:id="@+id/progressBarId"
