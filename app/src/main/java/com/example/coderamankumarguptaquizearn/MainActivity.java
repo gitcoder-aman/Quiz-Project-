@@ -1,18 +1,24 @@
 package com.example.coderamankumarguptaquizearn;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.coderamankumarguptaquizearn.databinding.ActivityMainBinding;
@@ -97,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     //for wallet image show in home page
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

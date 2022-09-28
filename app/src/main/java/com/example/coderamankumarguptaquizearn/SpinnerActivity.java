@@ -4,7 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
@@ -50,6 +54,7 @@ public class SpinnerActivity extends AppCompatActivity {
     private static int clicked =  0;
     static int getSpinCount = 0;
     private boolean isLoaded = false;
+    String TAG = "Main";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,9 +135,8 @@ public class SpinnerActivity extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         userdatabase = documentSnapshot.toObject(UserDatabase.class);
                         binding.coinsShow.setText(String.valueOf(userdatabase.getCoins()));
-                        binding.spinCount.setText(String.format("%d/20",userdatabase.getSpinCount()));
-//                        getSpinCount = Integer.valueOf(userdatabase.getSpinCount());
-//                        Toast.makeText(SpinnerActivity.this, (int) userdatabase.getCoins(), Toast.LENGTH_SHORT).show();
+                        getSpinCount = userdatabase.getSpinCount();
+                        binding.spinCount.setText(String.format("%d/20",getSpinCount));
                         //binding.currentCoins.setText(user.getCoins() + " "); you can also write this.
                     }
                 });
@@ -142,24 +146,23 @@ public class SpinnerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                loadAd();
-//                Toast.makeText(SpinnerActivity.this, getSpinCount, Toast.LENGTH_SHORT).show();
-              //  int totalSpin = Integer.parseInt(String.valueOf(binding.spinCount));
-                if(clicked > 2 ){
+//                if(clicked > 2 ){
 //                    showAds();
-                    clicked = 0;
-                }else{
+//                    clicked = 0;
+//                }else{
                     if(getSpinCount < 5) {
                         Random r = new Random();
                         int randomNumber = r.nextInt(8);
                         mp.start();
                         binding.wheelview.startLuckyWheelWithTargetIndex(randomNumber);
-                        clicked += 1;
+//                        clicked += 1;
                     }else{
                         Toast.makeText(SpinnerActivity.this, "Your total spin chance end.wait for next day", Toast.LENGTH_SHORT).show();
                     }
-                }
+//                }
             }
         });
+
         binding.wheelview.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
 
             @Override
@@ -208,6 +211,7 @@ public class SpinnerActivity extends AppCompatActivity {
                 .collection("users")
                 .document(FirebaseAuth.getInstance().getUid())
                 .update("spinCount", FieldValue.increment(1));
+
     }
 
     private void loadAd() {
@@ -260,19 +264,7 @@ public class SpinnerActivity extends AppCompatActivity {
                     }
                 });
     }
-//    private void StartTimer(){
-//        countDownTimer = new CountDownTimer(30000,1000) {
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//
-//            }
-//            @Override
-//            public void onFinish() {
-////                spinChanceUpdate();
-//            }
-//        };
-//
-//    }
+
     private boolean isConnected() {
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -344,7 +336,8 @@ public class SpinnerActivity extends AppCompatActivity {
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         userdatabase = documentSnapshot.toObject(UserDatabase.class);
                                         binding.coinsShow.setText(String.valueOf(userdatabase.getCoins()));
-                                        binding.spinCount.setText(String.format("%d/20",userdatabase.getSpinCount()));
+                                        getSpinCount = userdatabase.getSpinCount();
+                                        binding.spinCount.setText(String.format("%d/20",getSpinCount));
                                         Toast.makeText(SpinnerActivity.this, "Coins Added", Toast.LENGTH_SHORT).show();
                                     }
                                 });
