@@ -43,7 +43,7 @@ public class QuizActivity extends AppCompatActivity {
     CountDownTimer countDownTimer;
     FirebaseFirestore database;
     int correctAnswer = 0;
-    private InterstitialAd mInterstitialAd;
+    private InterstitialAd mInterstitialAd = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,19 +52,19 @@ public class QuizActivity extends AppCompatActivity {
         binding = ActivityQuizBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        loadAds();
-        final AdRequest adRequest = new AdRequest.Builder().build();
-
-        binding.bannerAd.loadAd(adRequest);
-
-        binding.bannerAd.setAdListener(new AdListener() {
-
-            @Override
-            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                super.onAdFailedToLoad(loadAdError);
-                binding.bannerAd.loadAd(adRequest);
-            }
-        });
+//        loadAds();
+//        final AdRequest adRequest = new AdRequest.Builder().build();
+//
+//        binding.bannerAd.loadAd(adRequest);
+//
+//        binding.bannerAd.setAdListener(new AdListener() {
+//
+//            @Override
+//            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+//                super.onAdFailedToLoad(loadAdError);
+//                binding.bannerAd.loadAd(adRequest);
+//            }
+//        });
         questions = new ArrayList<>();
 //        questions.add(new Question("What is Earth?","Planet","Sun","Human","Car","Planet"));
 //        questions.add(new Question("What is Samosa?","Planet","Food","Human","Car","Food"));
@@ -290,12 +290,13 @@ public class QuizActivity extends AppCompatActivity {
                 else{
                     Toast.makeText(this, "Quiz Finished.", Toast.LENGTH_SHORT).show();
                     //for Going to ResultActivity Class and set correctAnswer and totalQuestions
-                    ProgressDialog dialogue = ProgressDialog.show(QuizActivity.this,"Ads Break","Please wait Ad is Loading..");
-                    loadAds();
+//                    ProgressDialog dialogue = ProgressDialog.show(QuizActivity.this,"Ads Break","Please wait Ad is Loading..");
+//                    loadAds();
                     if(mInterstitialAd != null){
                        new Handler().postDelayed(new Runnable() {
                            @Override
                            public void run() {
+//                               dialogue.dismiss();
                                mInterstitialAd.show(QuizActivity.this);
                                mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
                                    @Override
@@ -314,7 +315,11 @@ public class QuizActivity extends AppCompatActivity {
                     }
                     else{
                         Log.e("Ad Pending","Ad is not ready yet!");
-                        startActivity(new Intent(QuizActivity.this,ResultActivity.class));
+                        Intent intent = new Intent(QuizActivity.this, ResultActivity.class);
+                        intent.putExtra("correct", correctAnswer);
+                        intent.putExtra("total", questions.size());
+                        countDownTimer.cancel();
+                        startActivity(intent);
                     }
 
                 }
@@ -333,13 +338,13 @@ public class QuizActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        loadAds();
-                        ProgressDialog dialogue = ProgressDialog.show(QuizActivity.this,"Ads Break","Please wait Ad is Loading..");
+//                        loadAds();
+//                        ProgressDialog dialogue = ProgressDialog.show(QuizActivity.this,"Ads Break","Please wait Ad is Loading..");
                         if(mInterstitialAd != null){
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    dialogue.dismiss();
+//                                    dialogue.dismiss();
                                     mInterstitialAd.show(QuizActivity.this);
                                     mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
                                         @Override

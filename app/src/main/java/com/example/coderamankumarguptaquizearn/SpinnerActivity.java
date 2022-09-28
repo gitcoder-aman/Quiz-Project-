@@ -48,8 +48,7 @@ public class SpinnerActivity extends AppCompatActivity {
     RewardedAd mRewardedAd;
     CountDownTimer countDownTimer;
     private static int clicked =  0;
-    private int StartSpinChance;
-    private int countSpin = 0;
+    static int getSpinCount = 0;
     private boolean isLoaded = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,7 @@ public class SpinnerActivity extends AppCompatActivity {
         binding  = ActivitySpinnerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        loadAd();
+//        loadAd();
 
         List<LuckyItem> data = new ArrayList<>();
 
@@ -131,24 +130,33 @@ public class SpinnerActivity extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         userdatabase = documentSnapshot.toObject(UserDatabase.class);
                         binding.coinsShow.setText(String.valueOf(userdatabase.getCoins()));
-                       // binding.spinChance.setText(String.valueOf(userdatabase.getSpinChance()));
-
+                        binding.spinCount.setText(String.format("%d/20",userdatabase.getSpinCount()));
+//                        getSpinCount = Integer.valueOf(userdatabase.getSpinCount());
+//                        Toast.makeText(SpinnerActivity.this, (int) userdatabase.getCoins(), Toast.LENGTH_SHORT).show();
                         //binding.currentCoins.setText(user.getCoins() + " "); you can also write this.
                     }
                 });
+
         MediaPlayer mp = MediaPlayer.create(this, R.raw.spin_sound);
         binding.spinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadAd();
+//                loadAd();
+//                Toast.makeText(SpinnerActivity.this, getSpinCount, Toast.LENGTH_SHORT).show();
+              //  int totalSpin = Integer.parseInt(String.valueOf(binding.spinCount));
                 if(clicked > 2 ){
-                    showAds();
+//                    showAds();
+                    clicked = 0;
                 }else{
+                    if(getSpinCount < 5) {
                         Random r = new Random();
                         int randomNumber = r.nextInt(8);
                         mp.start();
                         binding.wheelview.startLuckyWheelWithTargetIndex(randomNumber);
                         clicked += 1;
+                    }else{
+                        Toast.makeText(SpinnerActivity.this, "Your total spin chance end.wait for next day", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -158,6 +166,7 @@ public class SpinnerActivity extends AppCompatActivity {
             public void LuckyRoundItemSelected(int index) {
 
                 if(isConnected()){
+                    spinCountUpdate();
                     updateCash(index);
                 }else{
                     Toast.makeText(SpinnerActivity.this, "INTERNET NOT AVAILABLE", Toast.LENGTH_SHORT).show();
@@ -191,22 +200,15 @@ public class SpinnerActivity extends AppCompatActivity {
             Toast.makeText(SpinnerActivity.this, "Ad is not ready yet!", Toast.LENGTH_SHORT).show();
         }
     }
+    private void spinCountUpdate() {
 
-//    private void spinChanceUpdate() {
-//
-//        FirebaseFirestore database = FirebaseFirestore.getInstance();
-//        database
-//                .collection("users")
-//                .document(FirebaseAuth.getInstance().getUid())
-//                .update("spinChance", FieldValue.increment(countSpin)).addOnSuccessListener(new OnSuccessListener<Void>() {
-//
-//                    @Override
-//                    public void onSuccess(Void unused) {
-//
-//                        Toast toast = Toast.makeText(SpinnerActivity.this, "Coins added in account", Toast.LENGTH_LONG);
-//                    }
-//                });
-//    }
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+
+        database
+                .collection("users")
+                .document(FirebaseAuth.getInstance().getUid())
+                .update("spinCount", FieldValue.increment(1));
+    }
 
     private void loadAd() {
 
@@ -342,7 +344,7 @@ public class SpinnerActivity extends AppCompatActivity {
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         userdatabase = documentSnapshot.toObject(UserDatabase.class);
                                         binding.coinsShow.setText(String.valueOf(userdatabase.getCoins()));
-                                        // binding.spinChance.setText(String.valueOf(userdatabase.getSpinChance()));
+                                        binding.spinCount.setText(String.format("%d/20",userdatabase.getSpinCount()));
                                         Toast.makeText(SpinnerActivity.this, "Coins Added", Toast.LENGTH_SHORT).show();
                                     }
                                 });
@@ -391,8 +393,8 @@ public class SpinnerActivity extends AppCompatActivity {
             },2000);
         }
         else{
-            onBackPressed();
+            SpinnerActivity.super.onBackPressed();
         }
-            Toast.makeText(SpinnerActivity.this, "Ad is not ready yet!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(SpinnerActivity.this, "Ad is not ready yet!", Toast.LENGTH_SHORT).show();
         }
 }

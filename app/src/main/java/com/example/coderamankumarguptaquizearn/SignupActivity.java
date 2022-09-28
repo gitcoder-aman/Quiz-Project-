@@ -183,7 +183,7 @@ public class SignupActivity extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(Void unused) {
 
-                                                Toast.makeText(SignupActivity.this, "Referral 500 Coins added in account.", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(SignupActivity.this, "Referral 5000 Coins added in account.", Toast.LENGTH_SHORT).show();
                                             }
                                         });
                             }
