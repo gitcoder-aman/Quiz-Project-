@@ -4,6 +4,7 @@ public class UserDatabase {
     private String name,email,pass,referCode,uid,profile = "https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png";
     private long coins = 0;
     private int spinCount = 0;
+    private int spinCountTill = 20;
 
     public UserDatabase() {  //for firebase
     }
@@ -16,6 +17,13 @@ public class UserDatabase {
         this.uid = uid;
     }
 
+    public int getSpinCountTill() {
+        return spinCountTill;
+    }
+
+    public void setSpinCountTill(int spinCountTill) {
+        this.spinCountTill = spinCountTill;
+    }
 
     public int getSpinCount() {
         return spinCount;

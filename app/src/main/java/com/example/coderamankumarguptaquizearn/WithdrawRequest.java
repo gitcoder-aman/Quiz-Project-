@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class WithdrawRequest {
     private String paymentId;
-    private String paytmNo;
+    private String number;
     private String requestedBy;
     private long noOfCoins;
     private String status;
@@ -17,9 +17,9 @@ public class WithdrawRequest {
     public WithdrawRequest() {
     }
 
-    public WithdrawRequest(String paymentId, String paytmNo, String requestedBy, long noOfCoins,String status,long rupees,String paymentType) {
+    public WithdrawRequest(String paymentId, String number, String requestedBy, long noOfCoins,String status,long rupees,String paymentType) {
         this.paymentId = paymentId;
-        this.paytmNo = paytmNo;
+        this.number = number;
         this.requestedBy = requestedBy;
         this.noOfCoins = noOfCoins;
         this.status = status;
@@ -68,12 +68,12 @@ public class WithdrawRequest {
         this.paymentId = userId;
     }
 
-    public String getPaytmNo() {
-        return paytmNo;
+    public String getNumber() {
+        return number;
     }
 
-    public void setPaytmNo(String paytmNo) {
-        this.paytmNo = paytmNo;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getRequestedBy() {

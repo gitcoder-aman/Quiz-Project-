@@ -5,7 +5,7 @@ import com.google.firebase.firestore.ServerTimestamp;
 import java.util.Date;
 
 public class adminNotification {
-    private String paytmNo;
+    private String number;
     private String requestedBy;
     private long noOfCoins;
     private String status;
@@ -17,8 +17,8 @@ public class adminNotification {
     public adminNotification() {
     }
 
-    public adminNotification(String paymentId,String paytmNo, String requestedBy, long noOfCoins, String status,long rupees,String uid,String paymentType) {
-        this.paytmNo = paytmNo;
+    public adminNotification(String paymentId,String number, String requestedBy, long noOfCoins, String status,long rupees,String uid,String paymentType) {
+        this.number = number;
         this.requestedBy = requestedBy;
         this.noOfCoins = noOfCoins;
         this.status = status;
@@ -78,12 +78,12 @@ public class adminNotification {
         this.noOfCoins = noOfCoins;
     }
 
-    public String getPaytmNo() {
-        return paytmNo;
+    public String getNumber() {
+        return number;
     }
 
-    public void setPaytmNo(String paytmNo) {
-        this.paytmNo = paytmNo;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getRequestedBy() {

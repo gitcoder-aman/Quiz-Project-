@@ -50,11 +50,9 @@ public class SpinnerActivity extends AppCompatActivity {
     ActivitySpinnerBinding binding;
     UserDatabase userdatabase;
     RewardedAd mRewardedAd;
-    CountDownTimer countDownTimer;
     private static int clicked =  0;
-    static int getSpinCount = 0;
+    static int getSpinCount = 0,getSpinTill = 0;
     private boolean isLoaded = false;
-    String TAG = "Main";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,7 +134,8 @@ public class SpinnerActivity extends AppCompatActivity {
                         userdatabase = documentSnapshot.toObject(UserDatabase.class);
                         binding.coinsShow.setText(String.valueOf(userdatabase.getCoins()));
                         getSpinCount = userdatabase.getSpinCount();
-                        binding.spinCount.setText(String.format("%d/20",getSpinCount));
+                        getSpinTill = userdatabase.getSpinCountTill();
+                        binding.spinCount.setText(String.format("%d/%d",getSpinCount,getSpinTill));
                         //binding.currentCoins.setText(user.getCoins() + " "); you can also write this.
                     }
                 });
@@ -150,7 +149,7 @@ public class SpinnerActivity extends AppCompatActivity {
 //                    showAds();
 //                    clicked = 0;
 //                }else{
-                    if(getSpinCount < 5) {
+                    if(getSpinCount < getSpinTill) {
                         Random r = new Random();
                         int randomNumber = r.nextInt(8);
                         mp.start();
@@ -337,7 +336,7 @@ public class SpinnerActivity extends AppCompatActivity {
                                         userdatabase = documentSnapshot.toObject(UserDatabase.class);
                                         binding.coinsShow.setText(String.valueOf(userdatabase.getCoins()));
                                         getSpinCount = userdatabase.getSpinCount();
-                                        binding.spinCount.setText(String.format("%d/20",getSpinCount));
+                                        binding.spinCount.setText(String.format("%d/%d",getSpinCount,getSpinTill));
                                         Toast.makeText(SpinnerActivity.this, "Coins Added", Toast.LENGTH_SHORT).show();
                                     }
                                 });
