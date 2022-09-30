@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:485664167945:android:7cbb88c2d32e1d11bcc0d8",
         "android_client_info": {
-          "package_name": "com.example.coderamankumarguptaquizearn"
+          "package_name": "com.tech.coderamankumarguptaquizearn"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "485664167945-2b1ticjohkgm60pf33bm31h9s568k8jq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.coderamankumarguptaquizearn",
+            "package_name": "com.tech.coderamankumarguptaquizearn",
             "certificate_hash": "1ca90f04c99af3a3ba9de23b0a276d7dbfb8a115"
           }
         },
@@ -46,7 +46,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:485664167945:android:437cdd967e366535bcc0d8",
         "android_client_info": {
-          "package_name": "com.example.quizearn"
+          "package_name": "com.tech.quizearn"
         }
       },
       "oauth_client": [

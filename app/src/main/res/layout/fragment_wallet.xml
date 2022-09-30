@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/Light_grey"
-    tools:context=".WalletFragment">
+    tools:context="com.tech.coderamankumarguptaquizearn.WalletFragment">
 
     <View
         android:id="@+id/view7"

@@ -17,10 +17,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".WithdrawHistoryActivity"
+            android:name="com.tech.coderamankumarguptaquizearn.WithdrawHistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".splashActivity"
+            android:name="com.tech.coderamankumarguptaquizearn.splashActivity"
             android:exported="true">
 
             <!-- First Time Show Activity -->
@@ -31,32 +31,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".referActivity"
+            android:name="com.tech.coderamankumarguptaquizearn.referActivity"
             android:exported="false" />
         <activity
-            android:name=".termConditionActivity"
+            android:name="com.tech.coderamankumarguptaquizearn.termConditionActivity"
             android:exported="false" />
         <activity
-            android:name=".privacyActivity"
+            android:name="com.tech.coderamankumarguptaquizearn.privacyActivity"
             android:exported="false" />
         <activity
-            android:name=".SpinnerActivity"
+            android:name="com.tech.coderamankumarguptaquizearn.SpinnerActivity"
             android:exported="false" />
         <activity
-            android:name=".ResultActivity"
+            android:name="com.tech.coderamankumarguptaquizearn.ResultActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.tech.coderamankumarguptaquizearn.MainActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustNothing"/>
         <activity
-            android:name=".SignupActivity"
+            android:name="com.tech.coderamankumarguptaquizearn.SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".QuizActivity"
+            android:name="com.tech.coderamankumarguptaquizearn.QuizActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name="com.tech.coderamankumarguptaquizearn.LoginActivity"
             android:exported="false" />
 
         <meta-data

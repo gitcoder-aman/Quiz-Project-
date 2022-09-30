@@ -12,7 +12,7 @@ android {
         viewBinding true;
     }
     defaultConfig {
-        applicationId "com.example.coderamankumarguptaquizearn"
+        applicationId "com.tech.coderamankumarguptaquizearn"
         minSdk 19
         targetSdk 32
         versionCode 1
@@ -38,6 +38,9 @@ android {
                 srcDirs 'src/main/assets', 'src/main/assets/2'
             }
         }
+    }
+    lint {
+        baseline = file("lint-baseline.xml")
     }
 }
 
