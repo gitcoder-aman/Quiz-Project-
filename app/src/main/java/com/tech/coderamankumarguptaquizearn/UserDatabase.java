@@ -5,16 +5,25 @@ public class UserDatabase {
     private long coins = 0;
     private int spinCount = 0;
     private int spinCountTill = 20;
+    private int QCoins = 20;
 
     public UserDatabase() {  //for firebase
     }
 
-    public UserDatabase(String name, String email, String pass, String referCode,String uid) {
+    public UserDatabase(String name, String email, String pass, String referCode,String uid ) {
         this.name = name;
         this.email = email;
         this.pass = pass;
         this.referCode = referCode;
         this.uid = uid;
+    }
+
+    public int getQCoins() {
+        return QCoins;
+    }
+
+    public void setQCoins(int QCoins) {
+        this.QCoins = QCoins;
     }
 
     public int getSpinCountTill() {

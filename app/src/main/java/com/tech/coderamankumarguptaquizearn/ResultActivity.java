@@ -22,10 +22,10 @@ public class ResultActivity extends AppCompatActivity {
 
     ActivityResultBinding binding;
     UserDatabase userdatabase;
-    FirebaseFirestore database;
     ProgressDialog dialog;
 
-    int POINTS = 100;
+    static int POINTS = 0;
+    int points = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,27 +35,43 @@ public class ResultActivity extends AppCompatActivity {
         int correctAnswers = getIntent().getIntExtra("correct",0);
         int totalQuestions = getIntent().getIntExtra("total",0);
 
-        int points = correctAnswers * POINTS;
+        FirebaseFirestore database;
+        database = FirebaseFirestore.getInstance();
+        database.collection("users")
+                .document(FirebaseAuth.getInstance().getUid())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        userdatabase = documentSnapshot.toObject(UserDatabase.class);
+                        POINTS = userdatabase.getQCoins();
+                         points = correctAnswers * POINTS;
+                        binding.earnedCoins.setText(String.valueOf(points));// direct integer not passes in Activity XML.
 
-        binding.score.setText(String.format("%d/%d",correctAnswers,totalQuestions));
-        binding.earnedCoins.setText(String.valueOf(points));// direct integer not passes in Activity XML.
+                        binding.score.setText(String.format("%d/%d",correctAnswers,totalQuestions));
 
-        if(isConnected()) {
-            //Wallet update
-            database = FirebaseFirestore.getInstance();
-            database.collection("users")
-                    .document(FirebaseAuth.getInstance().getUid()) //unique id get of user
-                    .update("coins", FieldValue.increment(points));
-        }else{
-            Toast.makeText(this, "INTERNET NOT AVAILABLE Coins not added", Toast.LENGTH_SHORT).show();
-        }
+                        FirebaseFirestore database;
+                        database = FirebaseFirestore.getInstance();
+                        if(isConnected()) {
+                            //Wallet update
+                            database = FirebaseFirestore.getInstance();
+                            database.collection("users")
+                                    .document(FirebaseAuth.getInstance().getUid()) //unique id get of user
+                                    .update("coins", FieldValue.increment(points));
+                        }else{
+                            Toast.makeText(ResultActivity.this, "INTERNET NOT AVAILABLE Coins not added", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
 
 
         binding.shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // database = FirebaseFirestore.getInstance();
+
                 //ReferCode findout
+                FirebaseFirestore database;
+                 database = FirebaseFirestore.getInstance();
                 database.collection("users")
                         .document(FirebaseAuth.getInstance().getUid())
                         .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {

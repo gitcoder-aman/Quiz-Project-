@@ -23,7 +23,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public CategoryAdapter(Context context, ArrayList<CategoryModel> categoryModels){
         this.context = context;
         this.categoryModels = categoryModels;
-
     }
     @NonNull
     @Override

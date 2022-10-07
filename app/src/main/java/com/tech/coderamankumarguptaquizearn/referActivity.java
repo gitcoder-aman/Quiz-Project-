@@ -41,13 +41,10 @@ public class referActivity extends AppCompatActivity {
                     }
                 });
 
-        binding.referralBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ClipboardManager cm = (ClipboardManager)referActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
-                cm.setText(binding.referralBox.getText().toString());
-                Toast.makeText(referActivity.this, "Copied to Referral Code", Toast.LENGTH_SHORT).show();
-            }
+        binding.referralBox.setOnClickListener(view -> {
+            ClipboardManager cm = (ClipboardManager) referActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
+            cm.setText(binding.referralBox.getText().toString());
+            Toast.makeText(referActivity.this, "Copied to Referral Code", Toast.LENGTH_SHORT).show();
         });
         binding.invite.setOnClickListener(new View.OnClickListener() {
             @Override
