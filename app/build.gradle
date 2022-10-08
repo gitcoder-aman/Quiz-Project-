@@ -9,14 +9,14 @@ android {
     compileSdk 33
 
     buildFeatures{ //for binding all
-        viewBinding true;
+        viewBinding true
     }
     defaultConfig {
         applicationId "com.tech.coderamankumarguptaquizearn"
         minSdk 19
-        targetSdk 32
-        versionCode 2
-        versionName "1.1"
+        targetSdk 33
+        versionCode 4
+        versionName "1.3"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -46,12 +46,13 @@ android {
 
 dependencies {
 
-    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.mediarouter:mediarouter:1.3.1'
-    implementation 'com.google.firebase:firebase-database:20.0.0'
-    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.1'
+    implementation 'com.google.firebase:firebase-database:20.0.6'
+    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.2'
+//    implementation 'com.google.android.play:core:1.10.3'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -70,7 +71,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
 
     //theme.xml
-    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'com.google.android.material:material:1.6.1'
 
     //for connecting firebase
     implementation platform('com.google.firebase:firebase-bom:30.3.1')
@@ -81,13 +82,18 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore'
 
     //for using function of kotlin then implemented these dependencies. ex-  setOnItemSelectedListener using in MainActivity
-    implementation "androidx.core:core-ktx:+"
+    implementation "androidx.core:core-ktx:1.9.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     //fancy gift dialog
     implementation 'com.github.Shashank02051997:FancyGifDialog-Android:1.5'
     //Admob implement
     implementation 'com.google.android.gms:play-services-ads:21.2.0'
+
+    //Rating in App dependence
+    implementation 'com.google.android.play:core:1.10.3'
+
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
 
 
 }

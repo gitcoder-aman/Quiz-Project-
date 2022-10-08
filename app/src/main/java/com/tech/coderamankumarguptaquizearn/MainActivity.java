@@ -3,34 +3,58 @@ package com.tech.coderamankumarguptaquizearn;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.coderamankumarguptaquizearn.R;
 import com.example.coderamankumarguptaquizearn.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.InstallState;
+import com.google.android.play.core.install.InstallStateUpdatedListener;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.InstallStatus;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
+import com.google.android.play.core.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import me.ibrahimsn.lib.OnItemSelectedListener;
+import com.google.android.play.core.tasks.OnCompleteListener;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
+    private ReviewInfo reviewInfo;
+    private ReviewManager manager;
+    public static int UPDATE_CODE = 22;
+    AppUpdateManager appUpdateManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater()); // No need to findViewId because viewbinding is true in gradle app
         setContentView(binding.getRoot());
-
+        activateReviewInfo();
+        InAppUpdate();
         //Initialize  ads first
 
 //        MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -59,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.content,new HomeFragment());  //FragmentXML are replaced when clicked bottom Buttons
         transaction.commit();
 
-
         binding.bottomBar.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public boolean onItemSelect(int i) {
@@ -86,6 +109,95 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void InAppUpdate() {
+        appUpdateManager = AppUpdateManagerFactory.create(MainActivity.this);
+        Task<AppUpdateInfo> task = appUpdateManager.getAppUpdateInfo();
+        task.addOnSuccessListener(new com.google.android.play.core.tasks.OnSuccessListener<AppUpdateInfo>() {
+            @Override
+            public void onSuccess(AppUpdateInfo appUpdateInfo) {
+                 if(appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)){
+                     try {
+                         appUpdateManager.startUpdateFlowForResult(appUpdateInfo,AppUpdateType.IMMEDIATE,MainActivity.this,UPDATE_CODE);
+                     } catch (IntentSender.SendIntentException e) {
+                         e.printStackTrace();
+                         Log.d("UpdateError","OnSuccess: "+ e.toString());
+                     }
+                 }
+            }
+        });
+//        appUpdateManager.registerListener(listener); //install state update listner
+    }
+    InstallStateUpdatedListener listener = new InstallStateUpdatedListener() {
+        @Override
+        public void onStateUpdate(@NonNull InstallState installState) {
+            if (installState.installStatus() == InstallStatus.DOWNLOADED) {
+                MainActivity.this.popUp(); // show completed update
+            }
+        }
+    };
+
+    private void popUp() {
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),"App Update Almost Done.",Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction("Install", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appUpdateManager.completeUpdate();
+            }
+        });
+        snackbar.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Task<AppUpdateInfo> task = appUpdateManager.getAppUpdateInfo();
+        task.addOnSuccessListener(new com.google.android.play.core.tasks.OnSuccessListener<AppUpdateInfo>() {
+            @Override
+            public void onSuccess(AppUpdateInfo appUpdateInfo) {
+                if(appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS){
+                    try {
+                        appUpdateManager.startUpdateFlowForResult(appUpdateInfo,AppUpdateType.IMMEDIATE,MainActivity.this,UPDATE_CODE);
+                    } catch (IntentSender.SendIntentException e) {
+                        e.printStackTrace();
+                        Log.d("UpdateError","OnSuccess: "+ e.toString());
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == UPDATE_CODE){
+            Toast.makeText(this, "Start Download", Toast.LENGTH_SHORT).show();
+
+            if(requestCode != RESULT_OK){
+                Log.d("update","Update flow failed "+resultCode);
+            }
+        }
+    }
+
+    void activateReviewInfo(){
+        manager = ReviewManagerFactory.create(this);
+        Task<ReviewInfo> managerInfoTask = manager.requestReviewFlow();
+        managerInfoTask.addOnCompleteListener((task)->{
+            if(task.isSuccessful()){
+               reviewInfo = task.getResult();
+            }else{
+                Toast.makeText(this, "Review failed to start", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    void startReviewFlow(){
+        if(reviewInfo != null){
+            Task<Void>flow =  manager.launchReviewFlow(this,reviewInfo);
+            flow.addOnCompleteListener(task -> {
+                Toast.makeText(this, "Rating is completed.", Toast.LENGTH_SHORT).show();
+            });
+        }
+    }
     //for wallet image show in home page
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -99,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
     UserDatabase userdatabase;
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
         if(item.getItemId() == R.id.shareApp) {
 
             database = FirebaseFirestore.getInstance();
@@ -119,7 +232,8 @@ public class MainActivity extends AppCompatActivity {
                                     "Most popular money making app in India!!!\uD83D\uDC9B\uD83E\uDD0D\uD83D\uDC9A \n" +
                                     "Download APP, everyone can get ₹40!!!\uD83D\uDE3B\uD83D\uDE3B\uD83D\uDE3B \n" +
                                     "It's 100% true! \uD83D\uDE39 \n" +
-                                    "Click the link，you can get ₹500 a week like me! use REFERRAL CODE=" +userdatabase.getReferCode());
+                                    "Click the link，you can get ₹500 a week like me! YOUR REFERRAL CODE=" +userdatabase.getReferCode()+"\n"+
+                                    "https://play.google.com/store/apps/details?id=" + getPackageName());
                             sendIntent.setType("text/plain");
 
                             Intent shareIntent = Intent.createChooser(sendIntent, null);
@@ -138,6 +252,9 @@ public class MainActivity extends AppCompatActivity {
             auth.signOut();
             Toast.makeText(MainActivity.this, "Logged Out Successful", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        }
+        if(item.getItemId() == R.id.rateUs){
+            startReviewFlow();
         }
 
         return super.onOptionsItemSelected(item);
