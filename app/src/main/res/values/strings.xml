@@ -21,5 +21,17 @@
     <string name="terms_condition">Terms &amp; Conditions</string>
     <string name="paymentMethod">Select Payment Type</string>
     <string name="enterCoin">Enter coins for withdraw</string>
+    <string name="load">Load . . . .</string>
+    <string name="quiz_result">Quiz Result</string>
+    <string name="quiz_earn">Quiz Earn</string>
+    <string name="by_coderaman">By CoderAman</string>
+    <string name="logout">Logout</string>
+    <string name="name">Name =</string>
+    <string name="payment_type">Payment Type =</string>
+    <string name="googlepay">GooglePay</string>
+    <string name="coins">Coins =</string>
+    <string name="rs100">Rs100</string>
+    <string name="send_time">Send Time =</string>
+    <string name="payment_status">Payment Status =</string>
 
 </resources>

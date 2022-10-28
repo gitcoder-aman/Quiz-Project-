@@ -47,10 +47,10 @@ android {
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.mediarouter:mediarouter:1.3.1'
-    implementation 'com.google.firebase:firebase-database:20.0.6'
+    implementation 'com.google.firebase:firebase-database:20.1.0'
     implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.2'
 //    implementation 'com.google.android.play:core:1.10.3'
     testImplementation 'junit:junit:4.13.2'
@@ -71,7 +71,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
 
     //theme.xml
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.google.android.material:material:1.7.0'
 
     //for connecting firebase
     implementation platform('com.google.firebase:firebase-bom:30.3.1')
@@ -88,12 +88,18 @@ dependencies {
     //fancy gift dialog
     implementation 'com.github.Shashank02051997:FancyGifDialog-Android:1.5'
     //Admob implement
-    implementation 'com.google.android.gms:play-services-ads:21.2.0'
+    implementation 'com.google.android.gms:play-services-ads:21.3.0'
 
     //Rating in App dependence
     implementation 'com.google.android.play:core:1.10.3'
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+
+    //Responsive size
+    implementation 'com.intuit.sdp:sdp-android:1.1.0'
+
+    //Responsive size
+    implementation 'com.intuit.ssp:ssp-android:1.1.0'
 
 
 }

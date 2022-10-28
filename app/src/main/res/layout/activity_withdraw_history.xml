@@ -20,14 +20,14 @@
         android:id="@+id/recyclerView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop = "55dp"
+        android:layout_marginTop = "@dimen/_42sdp"
         tools:listitem="@layout/withdraw_history_design" />
 
 
     <ProgressBar
         android:id = "@+id/progressId"
         android:layout_width = "match_parent"
-        android:layout_height = "50dp"
+        android:layout_height = "@dimen/_40sdp"
         android:layout_gravity = "center"
         />
 </FrameLayout>

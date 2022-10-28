@@ -10,7 +10,7 @@
     <View
         android:id="@+id/view4"
         android:layout_width="wrap_content"
-        android:layout_height="130dp"
+        android:layout_height="@dimen/_110sdp"
         android:background="@drawable/background_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,7 @@
     <View
         android:id="@+id/view5"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="@dimen/_130sdp"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="8dp"
@@ -30,23 +30,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timer" />
 
-<!--    <com.google.android.gms.ads.AdView-->
-<!--        android:id="@+id/bannerAd"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:layout_marginBottom="2dp"-->
-<!--        app:adSize="BANNER"-->
-<!--        app:adUnitId="ca-app-pub-3940256099942544/6300978111"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"></com.google.android.gms.ads.AdView>-->
+    <!--    <com.google.android.gms.ads.AdView-->
+    <!--        android:id="@+id/bannerAd"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:layout_centerHorizontal="true"-->
+    <!--        android:layout_marginBottom="2dp"-->
+    <!--        app:adSize="BANNER"-->
+    <!--        app:adUnitId="ca-app-pub-3940256099942544/6300978111"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"></com.google.android.gms.ads.AdView>-->
 
     <ProgressBar
         android:id="@+id/progressBarId"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,45 +59,45 @@
         android:id="@+id/timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:drawablePadding="10dp"
+        android:layout_marginStart="@dimen/_14sdp"
+        android:layout_marginTop="@dimen/_14sdp"
+        android:drawablePadding="@dimen/_8sdp"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/_24"
         android:textColor="@color/color_white"
-        android:textSize="20sp"
+        android:textSize="19dp"
+        app:drawableStartCompat="@drawable/timer"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:drawableStartCompat="@drawable/timer" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/questionCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:drawablePadding="10dp"
+        android:layout_marginTop="@dimen/_14sdp"
+        android:layout_marginEnd="@dimen/_14sdp"
+        android:drawablePadding="@dimen/_8sdp"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/_1_10"
         android:textColor="@color/color_white"
+        app:drawableRightCompat="@drawable/question_mark"
         app:drawableTint="@color/color_white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:drawableRightCompat="@drawable/question_mark" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/question"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="@dimen/_14sdp"
+        android:layout_marginTop="@dimen/_14sdp"
+        android:layout_marginEnd="@dimen/_14sdp"
+        android:layout_marginBottom="@dimen/_14sdp"
         android:fontFamily="@font/roboto_bold"
         android:gravity="center"
-        android:text="Load . . . ."
+        android:text="@string/load"
         android:textColor="@color/color_white"
-        android:textSize="20sp"
+        android:textSize="19dp"
         app:layout_constraintBottom_toBottomOf="@+id/view5"
         app:layout_constraintEnd_toEndOf="@+id/view5"
         app:layout_constraintStart_toStartOf="@+id/view5"
@@ -105,21 +105,21 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="80dp"
+        android:layout_width="@dimen/_60sdp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:contentDescription="@string/todo"
         app:layout_constraintBottom_toBottomOf="@+id/view5"
         app:layout_constraintStart_toStartOf="@+id/view5"
         app:layout_constraintTop_toBottomOf="@+id/view5"
-        app:srcCompat="@drawable/fiftyfiftyline"
-        android:contentDescription="TODO" />
+        app:srcCompat="@drawable/fiftyfiftyline" />
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="80dp"
+        android:layout_width="@dimen/_60sdp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="@+id/view5"
         app:layout_constraintEnd_toEndOf="@+id/view5"
         app:layout_constraintTop_toBottomOf="@+id/view5"
@@ -129,64 +129,69 @@
         android:id="@+id/option_1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/option_unselected"
         android:onClick="onClick"
-        android:padding="15dp"
+        android:padding="@dimen/_10sdp"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="@+id/view5"
         app:layout_constraintStart_toStartOf="@+id/view5"
         app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/option_2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/option_unselected"
         android:onClick="onClick"
-        android:padding="15dp"
+        android:textSize="16dp"
+        android:padding="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="@+id/option_1"
         app:layout_constraintStart_toStartOf="@+id/option_1"
         app:layout_constraintTop_toBottomOf="@+id/option_1"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/option_3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/option_unselected"
         android:onClick="onClick"
-        android:padding="15dp"
+        android:textSize="16dp"
+        android:padding="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="@+id/option_2"
         app:layout_constraintStart_toStartOf="@+id/option_2"
         app:layout_constraintTop_toBottomOf="@+id/option_2"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/option_4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/option_unselected"
         android:onClick="onClick"
-        android:padding="15dp"
+        android:textSize="16dp"
+        android:padding="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="@+id/option_3"
         app:layout_constraintStart_toStartOf="@+id/option_3"
         app:layout_constraintTop_toBottomOf="@+id/option_3"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/quitBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
         android:background="@drawable/button_1"
         android:onClick="onClick"
         android:text="Quit"
+        android:textSize="14dp"
         android:textColor="@color/white"
         app:backgroundTint="#FF5722"
         app:layout_constraintBottom_toTopOf="@+id/bannerAd"
@@ -202,13 +207,13 @@
         android:id="@+id/Nextbtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="245dp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
         android:background="@drawable/button_2"
         android:onClick="onClick"
         android:text="Next"
+        android:textSize="14dp"
         android:textColor="@color/color_white"
         app:backgroundTint="#1A7E1E"
         app:layout_constraintBottom_toTopOf="@+id/bannerAd"

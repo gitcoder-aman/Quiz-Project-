@@ -7,26 +7,38 @@
     android:background="@drawable/background"
     tools:context="com.tech.coderamankumarguptaquizearn.LoginActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="244dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_125sdp"
+        android:layout_marginTop="@dimen/_14sdp"
         android:contentDescription="@string/todo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/quizlogo" />
+        app:srcCompat="@drawable/quizlogo"
+        tools:ignore="ImageContrastCheck" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:layout_marginBottom="@dimen/_30sdp"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,11 +55,11 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:gravity="center"
                 android:text="Login with account"
                 android:textColor="@color/colorPurple"
-                android:textSize="24sp"
+                android:textSize="24dp"
                 android:textStyle="bold" />
 
             <View
@@ -59,79 +71,109 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/background" />
 
-            <EditText
-                android:id="@+id/emailBox"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/TextInputLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginStart="@dimen/_14sdp"
+                android:layout_marginLeft="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginEnd="@dimen/_14sdp"
+                android:layout_marginRight="@dimen/_14sdp"
                 android:background="@drawable/textbox"
-                android:drawableLeft="@drawable/email"
-                android:drawablePadding="15dp"
-                android:drawableTint="@color/colorPurple"
-                android:ems="10"
-                android:hint="Email Address"
-                android:inputType="textEmailAddress"
-                android:minHeight="48dp"
-                android:padding="15dp"
-                android:textColorHint="#757575" />
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingTop="@dimen/_3sdp"
+                android:paddingBottom="@dimen/_3sdp">
 
-            <EditText
-                android:id="@+id/passwordBox"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:hint="Email"
+                    android:drawableLeft="@drawable/user"
+                    android:drawableTint="@color/colorPurple"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_3sdp"
+                    android:textSize="18dp"
+                    tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/TextInputLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginStart="@dimen/_14sdp"
+                android:layout_marginLeft="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginEnd="@dimen/_14sdp"
+                android:layout_marginRight="@dimen/_14sdp"
                 android:background="@drawable/textbox"
-                android:drawableLeft="@drawable/password"
-                android:drawablePadding="15dp"
-                android:drawableTint="@color/colorPurple"
-                android:ems="10"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:minHeight="48dp"
-                android:padding="15dp"
-                android:textColorHint="#757575" />
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingTop="@dimen/_3sdp"
+                android:paddingBottom="@dimen/_3sdp">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:drawableLeft="@drawable/password"
+                    android:drawableTint="@color/colorPurple"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:textSize="18dp"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_3sdp"
+                    tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
             <TextView
                 android:id="@+id/forgetPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
                 android:gravity="right"
                 android:text="Forget Your Password?"
-                android:textSize="14sp" />
+                android:textSize="12dp" />
 
             <Button
                 android:id="@+id/loginBtn"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:background="@drawable/login_btn"
                 android:text="Login"
+                android:textSize="14dp"
                 android:textColor="@color/white"
-                app:backgroundTint="@color/Green" />
+                app:backgroundTint="@color/Green"
+                tools:ignore="TextContrastCheck" />
 
             <Button
                 android:id="@+id/createNewBtn"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
                 android:background="@drawable/submit_btn"
                 android:text="Create an account"
+                android:textSize="14dp"
                 android:textColor="@color/white"
-                app:backgroundTint="@color/darkOrange" />
+                app:backgroundTint="@color/darkOrange"
+                tools:ignore="TextContrastCheck" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
