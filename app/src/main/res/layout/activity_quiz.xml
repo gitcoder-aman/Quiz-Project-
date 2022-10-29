@@ -30,19 +30,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timer" />
 
-    <!--    <com.google.android.gms.ads.AdView-->
-    <!--        android:id="@+id/bannerAd"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_alignParentBottom="true"-->
-    <!--        android:layout_centerHorizontal="true"-->
-    <!--        android:layout_marginBottom="2dp"-->
-    <!--        app:adSize="BANNER"-->
-    <!--        app:adUnitId="ca-app-pub-3940256099942544/6300978111"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"></com.google.android.gms.ads.AdView>-->
-
     <ProgressBar
         android:id="@+id/progressBarId"
         android:layout_width="match_parent"
@@ -146,8 +133,8 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/option_unselected"
         android:onClick="onClick"
-        android:textSize="16dp"
         android:padding="@dimen/_10sdp"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="@+id/option_1"
         app:layout_constraintStart_toStartOf="@+id/option_1"
         app:layout_constraintTop_toBottomOf="@+id/option_1"
@@ -160,8 +147,8 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/option_unselected"
         android:onClick="onClick"
-        android:textSize="16dp"
         android:padding="@dimen/_10sdp"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="@+id/option_2"
         app:layout_constraintStart_toStartOf="@+id/option_2"
         app:layout_constraintTop_toBottomOf="@+id/option_2"
@@ -174,8 +161,8 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/option_unselected"
         android:onClick="onClick"
-        android:textSize="16dp"
         android:padding="@dimen/_10sdp"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="@+id/option_3"
         app:layout_constraintStart_toStartOf="@+id/option_3"
         app:layout_constraintTop_toBottomOf="@+id/option_3"
@@ -191,10 +178,10 @@
         android:background="@drawable/button_1"
         android:onClick="onClick"
         android:text="Quit"
-        android:textSize="14dp"
         android:textColor="@color/white"
+        android:textSize="14dp"
         app:backgroundTint="#FF5722"
-        app:layout_constraintBottom_toTopOf="@+id/bannerAd"
+        app:layout_constraintBottom_toTopOf="@+id/banner_Ad"
         app:layout_constraintEnd_toStartOf="@+id/Nextbtn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -213,13 +200,24 @@
         android:background="@drawable/button_2"
         android:onClick="onClick"
         android:text="Next"
-        android:textSize="14dp"
         android:textColor="@color/color_white"
+        android:textSize="14dp"
         app:backgroundTint="#1A7E1E"
-        app:layout_constraintBottom_toTopOf="@+id/bannerAd"
+        app:layout_constraintBottom_toTopOf="@+id/banner_Ad"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/quitBtn"
         app:layout_constraintTop_toBottomOf="@+id/option_4"
         app:layout_constraintVertical_bias="0.0" />
+
+    <LinearLayout
+        android:id="@+id/banner_Ad"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

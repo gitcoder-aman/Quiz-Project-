@@ -1,9 +1,5 @@
 package com.tech.coderamankumarguptaquizearn;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -15,19 +11,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.coderamankumarguptaquizearn.R;
 import com.example.coderamankumarguptaquizearn.databinding.ActivitySpinnerBinding;
-import com.tech.coderamankumarguptaquizearn.SpinWheel.LuckyWheelView;
-import com.tech.coderamankumarguptaquizearn.SpinWheel.model.LuckyItem;
-
-import com.google.android.gms.ads.AdError;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.OnUserEarnedRewardListener;
-import com.google.android.gms.ads.rewarded.RewardItem;
-import com.google.android.gms.ads.rewarded.RewardedAd;
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -35,26 +22,90 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
+import com.tech.coderamankumarguptaquizearn.SpinWheel.LuckyWheelView;
+import com.tech.coderamankumarguptaquizearn.SpinWheel.model.LuckyItem;
+import com.unity3d.ads.IUnityAdsInitializationListener;
+import com.unity3d.ads.IUnityAdsLoadListener;
+import com.unity3d.ads.IUnityAdsShowListener;
+import com.unity3d.ads.UnityAds;
+import com.unity3d.ads.UnityAdsShowOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class SpinnerActivity extends AppCompatActivity {
+public class SpinnerActivity extends AppCompatActivity implements IUnityAdsInitializationListener {
+
+    private String Rewarded_Ad = "Rewarded_Android";
+   private String GameID = "4994113";
+    private Boolean TestMode = false;
 
     ActivitySpinnerBinding binding;
     UserDatabase userdatabase;
-    RewardedAd mRewardedAd;
-    private static int clicked =  0;
     static int getSpinCount = 0,getSpinTill = 0;
-    private boolean isLoaded = false;
+
+    private IUnityAdsLoadListener loadListener = new IUnityAdsLoadListener() {
+        @Override
+        public void onUnityAdsAdLoaded(String placementId) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    UnityAds.show(SpinnerActivity.this, Rewarded_Ad, new UnityAdsShowOptions(), showListener);
+                }
+            },10000);
+        }
+
+        @Override
+        public void onUnityAdsFailedToLoad(String placementId, UnityAds.UnityAdsLoadError error, String message) {
+            Log.e("UnityAdsExample", "Unity Ads failed to load ad for " + placementId + " with error: [" + error + "] " + message);
+        }
+    };
+
+    private IUnityAdsShowListener showListener = new IUnityAdsShowListener() {
+        @Override
+        public void onUnityAdsShowFailure(String placementId, UnityAds.UnityAdsShowError error, String message) {
+            Log.e("UnityAdsExample", "Unity Ads failed to show ad for " + placementId + " with error: [" + error + "] " + message);
+        }
+
+        @Override
+        public void onUnityAdsShowStart(String placementId) {
+            Log.v("UnityAdsExample", "onUnityAdsShowStart: " + placementId);
+        }
+
+        @Override
+        public void onUnityAdsShowClick(String placementId) {
+            Log.v("UnityAdsExample", "onUnityAdsShowClick: " + placementId);
+        }
+
+        @Override
+        public void onUnityAdsShowComplete(String placementId, UnityAds.UnityAdsShowCompletionState state) {
+            Log.v("UnityAdsExample", "onUnityAdsShowComplete: " + placementId);
+            if (state.equals(UnityAds.UnityAdsShowCompletionState.COMPLETED)) {
+                // Reward the user for watching the ad to completion
+            } else {
+                // Do not reward the user for skipping the ad
+            }
+        }
+    };
+    @Override
+    public void onInitializationComplete() {
+        DisplayRewardedAd();
+    }
+    @Override
+    public void onInitializationFailed(UnityAds.UnityAdsInitializationError unityAdsInitializationError, String s) {
+        Log.e("UnityAdsExample", "Unity Ads initialization failed with error: [" + unityAdsInitializationError + "] " + s);
+    }
+    private void DisplayRewardedAd() {
+        UnityAds.load(Rewarded_Ad, loadListener);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding  = ActivitySpinnerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-//        loadAd();
+        UnityAds.initialize(getApplicationContext(), GameID, TestMode, this); // rewarded sdk initialize
 
         List<LuckyItem> data = new ArrayList<>();
 
@@ -139,21 +190,16 @@ public class SpinnerActivity extends AppCompatActivity {
         binding.spinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                loadAd();
-//                if(clicked > 2 ){
-//                    showAds();
-//                    clicked = 0;
-//                }else{
+
                     if(getSpinCount < getSpinTill) {
                         Random r = new Random();
                         int randomNumber = r.nextInt(8);
                         mp.start();
                         binding.wheelview.startLuckyWheelWithTargetIndex(randomNumber);
-//                        clicked += 1;
                     }else{
                         Toast.makeText(SpinnerActivity.this, "Your total spin chance end.wait for next day", Toast.LENGTH_SHORT).show();
                     }
-//                }
+                UnityAds.load(Rewarded_Ad,loadListener);
             }
         });
 
@@ -172,31 +218,6 @@ public class SpinnerActivity extends AppCompatActivity {
         });
 
     }
-
-    private void showAds() {
-        if(isLoaded){
-            ProgressDialog dialog = ProgressDialog.show(SpinnerActivity.this,"Ads Break","Please wait while an ad is being set up");
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    dialog.dismiss();
-
-                        mRewardedAd.show(SpinnerActivity.this, new OnUserEarnedRewardListener() {
-                            @Override
-                            public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-                                clicked = 0;
-                                loadAd();
-                                Toast.makeText(SpinnerActivity.this,
-                                        "Ad close", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                }
-            },2000);
-        }
-        else{
-            Toast.makeText(SpinnerActivity.this, "Ad is not ready yet!", Toast.LENGTH_SHORT).show();
-        }
-    }
     private void spinCountUpdate() {
 
         FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -206,57 +227,6 @@ public class SpinnerActivity extends AppCompatActivity {
                 .document(FirebaseAuth.getInstance().getUid())
                 .update("spinCount", FieldValue.increment(1));
 
-    }
-
-    private void loadAd() {
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-        RewardedAd.load(this, "ca-app-pub-3940256099942544/5224354917",
-                adRequest, new RewardedAdLoadCallback() {
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        // Handle the error.
-                        super.onAdFailedToLoad(loadAdError);
-                        Log.e("Error", loadAdError.toString());
-                        mRewardedAd = null;
-                    }
-
-                    @Override
-                    public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
-                        super.onAdLoaded(rewardedAd);
-                        mRewardedAd = rewardedAd;
-                        isLoaded = true;
-                        mRewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                            @Override
-                            public void onAdClicked() {
-                                super.onAdClicked();
-                            }
-
-                            @Override
-                            public void onAdDismissedFullScreenContent() {
-                                super.onAdDismissedFullScreenContent();
-                                mRewardedAd = null;
-                            }
-
-                            @Override
-                            public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
-                                super.onAdFailedToShowFullScreenContent(adError);
-                            }
-
-                            @Override
-                            public void onAdImpression() {
-                                super.onAdImpression();
-                            }
-
-                            @Override
-                            public void onAdShowedFullScreenContent() {
-                                super.onAdShowedFullScreenContent();
-                                mRewardedAd = null;
-                            }
-                        });
-
-                    }
-                });
     }
 
     private boolean isConnected() {
@@ -361,27 +331,7 @@ public class SpinnerActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if(isLoaded){
-            ProgressDialog dialog = ProgressDialog.show(SpinnerActivity.this,"Ads Break","Please wait while an ad is being set up");
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    dialog.dismiss();
-
-                    mRewardedAd.show(SpinnerActivity.this, new OnUserEarnedRewardListener() {
-                        @Override
-                        public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-                            Toast.makeText(SpinnerActivity.this,
-                                    "Ad close", Toast.LENGTH_SHORT).show();
-                            SpinnerActivity.super.onBackPressed();
-                        }
-                    });
-                }
-            },2000);
-        }
-        else{
             SpinnerActivity.super.onBackPressed();
         }
-//            Toast.makeText(SpinnerActivity.this, "Ad is not ready yet!", Toast.LENGTH_SHORT).show();
-        }
+
 }

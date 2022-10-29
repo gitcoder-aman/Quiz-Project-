@@ -5,27 +5,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coderamankumarguptaquizearn.R;
 import com.example.coderamankumarguptaquizearn.databinding.ActivityQuizBinding;
-import com.google.android.gms.ads.AdError;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.unity3d.ads.UnityAds;
+import com.unity3d.services.banners.BannerView;
+import com.unity3d.services.banners.UnityBannerSize;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -33,6 +28,10 @@ import java.util.Random;
 public class QuizActivity extends AppCompatActivity {
 
     ActivityQuizBinding binding;
+    private String GameID = "4994113";
+    private String BannerID="Banner_Android";
+    private Boolean TestMode = false;
+    LinearLayout banner_Ad;
 
     ArrayList<Question>questions;
     int index = 0;
@@ -42,7 +41,6 @@ public class QuizActivity extends AppCompatActivity {
     CountDownTimer countDownTimer;
     FirebaseFirestore database;
     int correctAnswer = 0;
-    private InterstitialAd mInterstitialAd = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,19 +49,13 @@ public class QuizActivity extends AppCompatActivity {
         binding = ActivityQuizBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-//        loadAds();
-//        final AdRequest adRequest = new AdRequest.Builder().build();
-//
-//        binding.bannerAd.loadAd(adRequest);
-//
-//        binding.bannerAd.setAdListener(new AdListener() {
-//
-//            @Override
-//            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-//                super.onAdFailedToLoad(loadAdError);
-//                binding.bannerAd.loadAd(adRequest);
-//            }
-//        });
+                //banner ads of unity
+        banner_Ad=findViewById(R.id.banner_Ad);
+        UnityAds.initialize(this,GameID,TestMode); //initialize the unityAds sdk
+        BannerView view = new BannerView(QuizActivity.this,BannerID,new UnityBannerSize(320,50));
+        view.load();
+        banner_Ad.addView(view);
+
         questions = new ArrayList<>();
 //        questions.add(new Question("What is Earth?","Planet","Sun","Human","Car","Planet"));
 //        questions.add(new Question("What is Samosa?","Planet","Food","Human","Car","Food"));
@@ -117,56 +109,6 @@ public class QuizActivity extends AppCompatActivity {
                 });
         StartTimer();
         setNextQuestion();
-    }
-
-    private void loadAds() {
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-
-        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest,
-                new InterstitialAdLoadCallback() {
-                    @Override
-                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                        // The mInterstitialAd reference will be null until
-                        // an ad is loaded.
-                        mInterstitialAd = interstitialAd;
-                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                            @Override
-                            public void onAdClicked() {
-                                super.onAdClicked();
-                            }
-
-                            @Override
-                            public void onAdDismissedFullScreenContent() {
-                                super.onAdDismissedFullScreenContent();
-                            }
-
-                            @Override
-                            public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
-                                super.onAdFailedToShowFullScreenContent(adError);
-                            }
-
-                            @Override
-                            public void onAdImpression() {
-                                super.onAdImpression();
-                            }
-
-                            @Override
-                            public void onAdShowedFullScreenContent() {
-                                super.onAdShowedFullScreenContent();
-                                mInterstitialAd = null;
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        // Handle the error
-                        super.onAdFailedToLoad(loadAdError);
-                        Log.e("Error", loadAdError.toString());
-                        mInterstitialAd = null;
-                    }
-                });
     }
 
     private void StartTimer(){
@@ -289,38 +231,11 @@ public class QuizActivity extends AppCompatActivity {
                 else{
                     Toast.makeText(this, "Quiz Finished.", Toast.LENGTH_SHORT).show();
                     //for Going to ResultActivity Class and set correctAnswer and totalQuestions
-//                    ProgressDialog dialogue = ProgressDialog.show(QuizActivity.this,"Ads Break","Please wait Ad is Loading..");
-//                    loadAds();
-                    if(mInterstitialAd != null){
-                       new Handler().postDelayed(new Runnable() {
-                           @Override
-                           public void run() {
-//                               dialogue.dismiss();
-                               mInterstitialAd.show(QuizActivity.this);
-                               mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                                   @Override
-                                   public void onAdDismissedFullScreenContent() {
-                                       super.onAdDismissedFullScreenContent();
-                                       mInterstitialAd = null;
-                                       Intent intent = new Intent(QuizActivity.this, ResultActivity.class);
-                                       intent.putExtra("correct", correctAnswer);
-                                       intent.putExtra("total", questions.size());
-                                       countDownTimer.cancel();
-                                       startActivity(intent);
-                                   }
-                               });
-                           }
-                       },2000);
-                    }
-                    else{
-                        Log.e("Ad Pending","Ad is not ready yet!");
-                        Intent intent = new Intent(QuizActivity.this, ResultActivity.class);
-                        intent.putExtra("correct", correctAnswer);
-                        intent.putExtra("total", questions.size());
-                        countDownTimer.cancel();
-                        startActivity(intent);
-                    }
-
+                    Intent intent = new Intent(QuizActivity.this, ResultActivity.class);
+                    intent.putExtra("correct", correctAnswer);
+                    intent.putExtra("total", questions.size());
+                    countDownTimer.cancel();
+                    startActivity(intent);
                 }
                 break;
             case R.id.quitBtn:
@@ -337,30 +252,9 @@ public class QuizActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-//                        loadAds();
-//                        ProgressDialog dialogue = ProgressDialog.show(QuizActivity.this,"Ads Break","Please wait Ad is Loading..");
-                        if(mInterstitialAd != null){
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-//                                    dialogue.dismiss();
-                                    mInterstitialAd.show(QuizActivity.this);
-                                    mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                                        @Override
-                                        public void onAdDismissedFullScreenContent() {
-                                            mInterstitialAd = null;
-                                            countDownTimer.cancel();
-                                            finish();
-                                        }
-                                    });
-                                }
-                            },2000);
 
-                        }else{
-                            Log.e("Ad Pending","Ad is not ready yet!");
-                            countDownTimer.cancel();
-                            finish();
-                        }
+                        countDownTimer.cancel();
+                        finish();
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override

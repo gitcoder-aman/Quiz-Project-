@@ -5,12 +5,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,17 +38,86 @@ import com.google.android.play.core.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.unity3d.ads.IUnityAdsInitializationListener;
+import com.unity3d.ads.IUnityAdsLoadListener;
+import com.unity3d.ads.IUnityAdsShowListener;
+import com.unity3d.ads.UnityAds;
+import com.unity3d.ads.UnityAdsShowOptions;
+import com.unity3d.services.banners.BannerView;
+import com.unity3d.services.banners.UnityBannerSize;
 
 import me.ibrahimsn.lib.OnItemSelectedListener;
-import com.google.android.play.core.tasks.OnCompleteListener;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IUnityAdsInitializationListener {
+
+    final String GameID = "4994113";
+     final String BannerID="Banner_Android";
+     final Boolean TestMode = false; //(select any one. if you test then you select true)
+
+    private final String Rewarded_Ad = "Rewarded_Android";
+    LinearLayout bannerAd;
 
     ActivityMainBinding binding;
     private ReviewInfo reviewInfo;
     private ReviewManager manager;
     public static int UPDATE_CODE = 22;
     AppUpdateManager appUpdateManager;
+
+    private IUnityAdsLoadListener loadListener = new IUnityAdsLoadListener() {
+        @Override
+        public void onUnityAdsAdLoaded(String placementId) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    UnityAds.show(MainActivity.this, Rewarded_Ad, new UnityAdsShowOptions(), showListener);
+                }
+            },10000);
+        }
+
+        @Override
+        public void onUnityAdsFailedToLoad(String placementId, UnityAds.UnityAdsLoadError error, String message) {
+            Log.e("UnityAdsExample", "Unity Ads failed to load ad for " + placementId + " with error: [" + error + "] " + message);
+        }
+    };
+
+    private IUnityAdsShowListener showListener = new IUnityAdsShowListener() {
+        @Override
+        public void onUnityAdsShowFailure(String placementId, UnityAds.UnityAdsShowError error, String message) {
+            Log.e("UnityAdsExample", "Unity Ads failed to show ad for " + placementId + " with error: [" + error + "] " + message);
+        }
+
+        @Override
+        public void onUnityAdsShowStart(String placementId) {
+            Log.v("UnityAdsExample", "onUnityAdsShowStart: " + placementId);
+        }
+
+        @Override
+        public void onUnityAdsShowClick(String placementId) {
+            Log.v("UnityAdsExample", "onUnityAdsShowClick: " + placementId);
+        }
+
+        @Override
+        public void onUnityAdsShowComplete(String placementId, UnityAds.UnityAdsShowCompletionState state) {
+            Log.v("UnityAdsExample", "onUnityAdsShowComplete: " + placementId);
+            if (state.equals(UnityAds.UnityAdsShowCompletionState.COMPLETED)) {
+                // Reward the user for watching the ad to completion
+            } else {
+                // Do not reward the user for skipping the ad
+            }
+        }
+    };
+    @Override
+    public void onInitializationComplete() {
+        DisplayRewardedAd();
+    }
+    @Override
+    public void onInitializationFailed(UnityAds.UnityAdsInitializationError unityAdsInitializationError, String s) {
+        Log.e("UnityAdsExample", "Unity Ads initialization failed with error: [" + unityAdsInitializationError + "] " + s);
+    }
+    private void DisplayRewardedAd() {
+        UnityAds.load(Rewarded_Ad, loadListener);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,29 +125,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         activateReviewInfo();
         InAppUpdate();
-        //Initialize  ads first
-
-//        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-//            @Override
-//            public void onInitializationComplete(InitializationStatus initializationStatus) {
-//            }
-//        });
-
-//        AdRequest adRequest = new AdRequest.Builder().build();
-//        binding.adView.loadAd(adRequest);
-
-//        binding.adView.setAdListener(new AdListener() {
-//            @Override
-//            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-//                super.onAdFailedToLoad(loadAdError);
-//                binding.adView.loadAd(adRequest);
-//            }
-//        });
-
         //Log.d("Aman","Here error found");
-
         //before set in Manifest android:theme = "Theme.AppCompat.Light.NoActionBar"
         setSupportActionBar(binding.toolbar); // set title name "App name " in toolbar
+
+        //For rewarded sdk initialize
+        UnityAds.initialize(getApplicationContext(), GameID, TestMode, this);
+        //banner ads of unity
+        bannerAd=findViewById(R.id.bannerAd);
+        UnityAds.initialize(this,GameID,TestMode); //initialize the unityAds sdk
+        BannerView view = new BannerView(MainActivity.this,BannerID,new UnityBannerSize(320,50));
+        view.load();
+        bannerAd.addView(view);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction(); //already click on Home button
         transaction.replace(R.id.content,new HomeFragment());  //FragmentXML are replaced when clicked bottom Buttons
@@ -91,18 +150,22 @@ public class MainActivity extends AppCompatActivity {
                     case 0:
                         transaction.replace(R.id.content,new HomeFragment());
                         transaction.commit();
+                        UnityAds.load(Rewarded_Ad,loadListener);
                         break;
                     case 1:
                         transaction.replace(R.id.content,new LeaderboardsFragment());
                         transaction.commit();
+                        UnityAds.load(Rewarded_Ad,loadListener);
                         break;
                     case 2:
                         transaction.replace(R.id.content,new WalletFragment());
                         transaction.commit();
+                        UnityAds.load(Rewarded_Ad,loadListener);
                         break;
                     case 3:
                         transaction.replace(R.id.content,new ProfileFragment());
                         transaction.commit();
+                        UnityAds.load(Rewarded_Ad,loadListener);
                         break;
                 }
                 return false;
@@ -289,5 +352,4 @@ public class MainActivity extends AppCompatActivity {
                 }).show();
 
     }
-  
 }
